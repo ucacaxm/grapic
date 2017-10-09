@@ -56,11 +56,11 @@ namespace grapic
 //==================================================================================================
 //==================================================================================================
 //==================================================================================================
-* @brief The Grapic class
 //================================= GRAPIC CLASS ===================================================
 //==================================================================================================
 //==================================================================================================
 //==================================================================================================
+* @brief The Grapic class
 */
 class Grapic
 {
@@ -484,26 +484,27 @@ void pressSpace();
 class Image
 {
 public:
-    Image() : surface(NULL), texture(NULL), has_changed(false) {}
+    Image() : m_surface(NULL), m_texture(NULL), m_has_changed(false) {}
+    Image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a);
+    Image(int w, int h);
+    void savePNG(const char* filename) const;
+    bool isInit() const { return m_surface && m_texture; }
+    unsigned char get(int x, int y, int c);
+    void set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a);
+    void printInfo() const;
 
-    friend int image_width(const Image& im);
-    friend int image_height(const Image& im);
-    friend bool image_isInit(const Image& im);
-    friend Image image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a);
-    friend Image image(int w, int h);
-    friend void image_savePNG(const Image& im, const char* filename);
-    friend void image_draw(Image& im, int x, int y, int w, int h);
-    friend void image_draw(Image& im, int x, int y, int w, int h, float angle, int flip);
-    friend unsigned char image_get(const Image& im, int x, int y, int c);
-    friend void image_set(Image& im, int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a);
-    friend void image_printInfo(const Image& im);
+    const SDL_Surface* surface() const { return m_surface; }
 
-
+    void draw(int x, int y, int w, int h);
+    void draw(int x, int y, int w, int h, float angle, int flip);
+//    friend int image_width(const Image& im);
+//    friend int image_height(const Image& im);
+//    friend bool image_isInit(const Image& im);
 
 protected:
-    SDL_Surface* surface;
-    SDL_Texture* texture;
-    bool has_changed;
+    SDL_Surface* m_surface;
+    SDL_Texture* m_texture;
+    bool m_has_changed;
 };
 /// \endcond
 
@@ -524,28 +525,46 @@ protected:
     }
     ~~~~~~~~~~~~~~~
 */
-Image image(const char* filename, bool transparency=false, unsigned char r=255, unsigned char g=255, unsigned b=255, unsigned char a=255);
+inline Image image(const char* filename, bool transparency=false, unsigned char r=255, unsigned char g=255, unsigned b=255, unsigned char a=255)
+{
+    return Image(filename, transparency, r, g, b, a);
+}
 
 /** \brief Return an image of width=w and height=h
 */
-Image image(int w, int h);
+inline Image image(int w, int h)
+{
+    return Image(w,h);
+}
 
 /** \brief Save the image into the file: format is PNG
 */
-void image_savePNG(const Image& im, const char* filename);
+inline void image_savePNG(const Image& im, const char* filename)
+{
+    im.savePNG(filename);
+}
 
 /** \brief Draw the image at position (x,y) with width=w and height=h (if w<0 or h<0 the original size of the image is used)
 */
-void image_draw(Image& im, int x, int y, int w=-1, int h=-1);
+inline void image_draw(Image& im, int x, int y, int w=-1, int h=-1)
+{
+    im.draw(x,y,w,h);
+}
 
 /** \brief Draw the image at position (x,y) with width=w and height=h (if w<0 or h<0 the original size of the image is used); angle indicate the angle of rotation and flip: 0=no flip, 1=horizontal flip, 2=vertical flip
 */
-void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip=SDL_FLIP_NONE);
+inline void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip=SDL_FLIP_NONE)
+{
+    im.draw(x,y,w,h,angle,flip);
+}
 
 /** \brief return the color component c of the pixel (x,y) of the image im.
     c must be 0 for the red component, 1 for the green component, 2 for the blue component or 3 for the alpha/opacity component.
 */
-unsigned char image_get(const Image& im, int x, int y, int c=0);
+static inline unsigned char image_get(Image& im, int x, int y, int c=0)
+{
+    im.get(x,y,c);
+}
 
 /** \brief Set the pixel (x,y) of the image im with the color c
 */
@@ -555,14 +574,14 @@ void image_set(Image& im, int x, int y, unsigned char r, unsigned char g, unsign
 */
 inline int image_width(const Image& im)
 {
-    return im.surface->w;
+    return im.surface()->w;
 }
 
 /** \brief return the height of the image
 */
 inline int image_height(const Image& im)
 {
-    return im.surface->h;
+    return im.surface()->h;
 }
 
 /** \brief return true if the image is initialized
@@ -574,12 +593,15 @@ inline int image_height(const Image& im)
 */
 inline bool image_isInit(const Image& im)
 {
-    return im.surface && im.texture;
+    return im.isInit();
 }
 
 /** \brief Print the informations of the image im
 */
-void image_printInfo(const Image& im);
+inline void image_printInfo(const Image& im)
+{
+    im.printInfo();
+}
 
 
 /// \cond

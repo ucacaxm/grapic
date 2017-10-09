@@ -22,10 +22,10 @@ endif
 
 
 all: build/${OS}
-	cd build/${OS} ; make
+	mkdir -p build ; cd build/${OS} ; make
 	
 clean: build/${OS}
-	cd build/${OS} ; make clean
+	mkdir -p build ; cd build/${OS} ; make clean
 
 build/${OS}: premake4.lua
 

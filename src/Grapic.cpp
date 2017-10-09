@@ -862,17 +862,18 @@ Uint32 image_get(SDL_Surface *surface, int x, int y)
     }
 }
 
-unsigned char image_get(const Image& im, int x, int y, int c)
+
+unsigned char Image::get(int x, int y, int c)
 {
-    assert(im.surface);
-    SDL_Surface* surface = im.surface;
-    if ((x<0) || (y<0) || (x>=surface->w) || (y>=surface->h)) return 0;
-    SDL_PixelFormat *fmt = surface->format;
+    assert(surface());
+    SDL_Surface* surf = m_surface;
+    if ((x<0) || (y<0) || (x>=surf->w) || (y>=surf->h)) return 0;
+    SDL_PixelFormat *fmt = surf->format;
     Uint32 pixel;
 
-    SDL_LockSurface(surface);
-    pixel = image_get( surface, x, y);
-    SDL_UnlockSurface(surface);
+    SDL_LockSurface(surf);
+    pixel = image_get( surf, x, y);
+    SDL_UnlockSurface(surf);
 
     Uint8 red, green, blue, alpha;
     SDL_GetRGBA( pixel, fmt, &red, &green, &blue, &alpha);
@@ -931,34 +932,32 @@ void image_set(SDL_Surface *surface, int x, int y, Uint32 pixel)
     }
 }
 
-void image_set( Image& im, int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a)
+void Image::set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a)
 {
-    assert(im.surface);
-    SDL_Surface* surface = im.surface;
-    SDL_PixelFormat *fmt = surface->format;
+    assert(m_surface);
+    SDL_PixelFormat *fmt = m_surface->format;
     Uint32 pixel;
     Uint8 *p = (Uint8*)(&pixel);
 
-    if ((x<0) || (y<0) || (x>=surface->w) || (y>=surface->h)) return;
-    SDL_LockSurface(surface);
+    if ((x<0) || (y<0) || (x>=m_surface->w) || (y>=m_surface->h)) return;
+    SDL_LockSurface(m_surface);
     //pixel = SDL_MapRGBA(fmt, r,g,b,a);
     //pixel = SDL_MapRGBA(fmt, a,r,g,b);
     p[0] = b;
     p[1] = g;
     p[2] = r;
     p[3] = a;
-    image_set(surface, x, y, pixel);
-    SDL_UnlockSurface(surface);
+    image_set(m_surface, x, y, pixel);
+    SDL_UnlockSurface(m_surface);
 
-    im.has_changed = true;
+    m_has_changed = true;
 }
 
 
 
-Image image(int w, int h)
+Image::Image(int w, int h)
 {
     Grapic& g = Grapic::singleton();
-    Image res;
     Uint32 rmask, gmask, bmask, amask;
 
     /* SDL interprets each pixel as a 32-bit number, so our masks must depend
@@ -977,53 +976,52 @@ Image image(int w, int h)
 
     //rmask = gmask = bmask = amask = 0x00000000;
 
-    res.surface = SDL_CreateRGBSurface(0, w, h, 32, rmask, gmask, bmask, amask); // 0, 0, 0, 0);
+    m_surface = SDL_CreateRGBSurface(0, w, h, 32, rmask, gmask, bmask, amask); // 0, 0, 0, 0);
     //printf("image surface format=%d %d %d\n", res.surface->format, SDL_PIXELFORMAT_RGBA8888, SDL_PIXELFORMAT_BGRA8888);
-    if (res.surface == NULL)
+    if (m_surface == NULL)
     {
         printf("error: Can not create this surface: %dx%d\n", w, h);
-        return res;
+        return ;
     }
 
     //res.texture = SDL_CreateTexture( g.renderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, res.surface->w, res.surface->h);
-    res.texture = SDL_CreateTextureFromSurface( g.renderer(), res.surface);
-    if (res.texture == NULL)
+    m_texture = SDL_CreateTextureFromSurface( g.renderer(), m_surface);
+    if (m_texture == NULL)
     {
         printf("error: problem to create the texture\n");
-        return res;
+        return ;
     }
 
-    res.has_changed = false;
+    m_has_changed = false;
 
-    SDL_SetTextureBlendMode( res.texture, SDL_BLENDMODE_BLEND);
+    SDL_SetTextureBlendMode( m_texture, SDL_BLENDMODE_BLEND);
 
-    return res;
+    return ;
 }
 
 
 
 
-Image image(const char* filename, bool transparency,  unsigned char r, unsigned char g, unsigned b, unsigned char a)
+Image::Image(const char* filename, bool transparency,  unsigned char r, unsigned char g, unsigned b, unsigned char a)
 {
     Grapic& gp = Grapic::singleton();
-    Image res;
 
     //res.surface = SDL_LoadBMP(filename);
-    res.surface = IMG_Load(filename);
-    if (res.surface == NULL)
+    m_surface = IMG_Load(filename);
+    if (m_surface == NULL)
     {
         std::string nfn = std::string("../") + filename;
-        res.surface = IMG_Load(nfn.c_str());
-        if (res.surface == NULL)
+        m_surface = IMG_Load(nfn.c_str());
+        if (m_surface == NULL)
         {
             nfn = std::string("../") + nfn;
-            res.surface = IMG_Load(nfn.c_str());
+            m_surface = IMG_Load(nfn.c_str());
         }
     }
-    if (res.surface == NULL)
+    if (m_surface == NULL)
     {
         std::cout<<"error: Can not load "<< filename<<std::endl;
-        return res;
+        return ;
     }
 
     if (transparency)
@@ -1034,66 +1032,66 @@ Image image(const char* filename, bool transparency,  unsigned char r, unsigned 
         c.b=b;
         c.a=a;
         Uint32 cc = *((Uint32*)(&c));
-        SDL_SetColorKey(res.surface, SDL_TRUE, cc);
+        SDL_SetColorKey(m_surface, SDL_TRUE, cc);
     }
 
     //res.texture = SDL_CreateTexture(g.renderer(), SDL_PIXELFORMAT_ARGB8888, 	SDL_TEXTUREACCESS_STREAMING,	res.surface->w, res.surface->h);
-    res.texture = SDL_CreateTextureFromSurface( gp.renderer(), res.surface);
+    m_texture = SDL_CreateTextureFromSurface( gp.renderer(), m_surface);
 
-    if (res.texture == NULL)
+    if (m_texture == NULL)
     {
         printf("error: problem to create the texture of %s\n", filename);
-        return res;
+        return ;
     }
 
     //int ok = SDL_UpdateTexture(res.texture, NULL, res.surface->pixels, res.surface->pitch);
     //assert(ok==0);
 
     printf("Image loaded: %s\t", filename);
-    image_printInfo(res);
+    printInfo();
 
-    return res;
 }
 
 
-void image_draw(Image& im, int x, int y, int w, int h)
+void Image::draw(int x, int y, int w, int h)
 {
     int ok;
     Grapic& g = Grapic::singleton();
     SDL_Rect r;
     r.x = x;
     r.y = y;
-    r.w = (w<0)?im.surface->w:w;
-    r.h = (h<0)?im.surface->h:h;
+    r.w = (w<0)?surface()->w:w;
+    r.h = (h<0)?surface()->h:h;
     r.y = g.inverseY( r.y+r.h);
 
-    if (im.has_changed)
+    if (m_has_changed)
     {
-        ok = SDL_UpdateTexture(im.texture, NULL, im.surface->pixels, im.surface->pitch);
+        ok = SDL_UpdateTexture(m_texture, NULL, m_surface->pixels, m_surface->pitch);
         assert(ok == 0);
-        im.has_changed = false;
+        m_has_changed = false;
     }
 
-    ok = SDL_RenderCopy(g.renderer(), im.texture, NULL, &r);
+    ok = SDL_RenderCopy(g.renderer(), m_texture, NULL, &r);
     assert(ok == 0);
 }
 
-void image_draw(Image& im, int x, int y, int w, int h, float angle, int flip)
+
+void Image::draw(int x, int y, int w, int h, float angle, int flip)
 {
     int ok;
     Grapic& g = Grapic::singleton();
     SDL_Rect r;
     r.x = x;
     r.y = y;
-    r.w = (w<0)?im.surface->w:w;
-    r.h = (h<0)?im.surface->h:h;
+    r.w = (w<0)?m_surface->w:w;
+    r.h = (h<0)?m_surface->h:h;
     r.y = g.inverseY( r.y+r.h);
 
-    if (im.has_changed)
+    if (m_has_changed)
     {
-        ok = SDL_UpdateTexture(im.texture, NULL, im.surface->pixels, im.surface->pitch);
+        ok = SDL_UpdateTexture(m_texture, NULL, m_surface->pixels, m_surface->pitch);
         assert(ok == 0);
-        im.has_changed = false;
+        m_has_changed = false;
     }
 
     //ok = SDL_RenderCopy(g.renderer(), im.texture, NULL, &r);
@@ -1111,26 +1109,26 @@ void image_draw(Image& im, int x, int y, int w, int h, float angle, int flip)
         fl = SDL_FLIP_VERTICAL;
         break;
     };
-    ok = SDL_RenderCopyEx( g.renderer(), im.texture, NULL, &r, angle, NULL, fl );
+    ok = SDL_RenderCopyEx( g.renderer(), m_texture, NULL, &r, angle, NULL, fl );
     assert(ok == 0);
 }
 
 
-void image_savePNG(const Image& im, const char* filename)
+void Image::savePNG(const char* filename) const
 {
-    int r = IMG_SavePNG( im.surface, filename);
+    int r = IMG_SavePNG( m_surface, filename);
     if (r!=0) printf("image: error saving %s\n", filename);
 }
 
 
-void image_printInfo(const Image& im)
+void Image::printInfo() const
 {
-    if (!image_isInit(im))
+    if (!isInit())
     {
         printf("image not initialized\n");
         return;
     }
-    printf("image: %dx%d format=%d pitch=%d\n", im.surface->w, im.surface->h, im.surface->format->format, im.surface->pitch);
+    printf("image: %dx%d format=%d pitch=%d\n", m_surface->w, m_surface->h, m_surface->format->format, m_surface->pitch);
 }
 
 
