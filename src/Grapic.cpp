@@ -1134,44 +1134,41 @@ void Image::printInfo() const
 
 void menu_add(Menu& m, const std::string& str)
 {
-    m.txt.push_back(str);
+    m.add(str);
 }
 
 void menu_change(Menu& m, int i, const std::string& str)
 {
-    if ((i>=0) && (i<m.txt.size()))
-        m.txt[i] = str;
-    else
-        cerr<<"menu_change(...): i is not in the range of the menu"<<endl;
+    m.change(i,str);
 }
 
 int caseToPixel(const Menu& m, int c, int ymin, int ymax)
 {
-    return ymin + (m.txt.size()-c) * ( (ymax-ymin+1)/m.txt.size() );
+    return m.caseToPixel(c,ymin,ymax);
 }
 
-void menu_draw(Menu& m, int xmin, int ymin, int xmax, int ymax)
+void Menu::draw(int xmin, int ymin, int xmax, int ymax)
 {
-    if (m.txt.size()==0) return;
-    if (ymax<0) ymax = 25*m.txt.size();
+    if (m_txt.size()==0) return;
+    if (ymax<0) ymax = 25*m_txt.size();
     int i;
     const int fontsize = 12;
 
     if (isKeyPressed( SDLK_F1))
     {
-        m.visible = !m.visible;
-        cout<<"menu: "<< (m.visible?"on":"off")<<endl;
+        m_visible = !m_visible;
+        cout<<"menu: "<< (m_visible?"on":"off")<<endl;
     }
-    if (!m.visible) return;
+    if (!m_visible) return;
 
     if (xmax<0)
     {
         int nc=-1;
-        for(i=0; i<m.txt.size(); ++i)
+        for(i=0; i<m_txt.size(); ++i)
         {
-            if (nc < int(m.txt[i].length()) )
+            if (nc < int(m_txt[i].length()) )
             {
-                nc=int(m.txt[i].length());
+                nc=int(m_txt[i].length());
             }
         }
         xmax = xmin + 0.6f*fontsize*nc + 10;
@@ -1183,21 +1180,21 @@ void menu_draw(Menu& m, int xmin, int ymin, int xmax, int ymax)
         mousePos(x, y);
         if ((x>xmin) && (x<xmax) && (y>ymin) && (y<ymax))
         {
-            m.select = m.txt.size()-1 - (y-ymin) / ((ymax-ymin)/m.txt.size());
+            m_select = m_txt.size()-1 - (y-ymin) / ((ymax-ymin)/m_txt.size());
         }
     }
 
     fontSize(fontsize);                                           // Change the default size of the font
-    for(i=0; i<m.txt.size(); ++i)
+    for(i=0; i<m_txt.size(); ++i)
     {
-        if (i==m.select) color(255,55,124);
+        if (i==m_select) color(255,55,124);
         else color(255,255,255);
-        rectangleFill( xmin, caseToPixel(m,i,ymin,ymax), xmax, caseToPixel(m,i+1,ymin,ymax) );
+        rectangleFill( xmin, caseToPixel(i,ymin,ymax), xmax, caseToPixel(i+1,ymin,ymax) );
 
         color(0, 0, 0);                                       // Change the default color (the color of the pen)
-        rectangle( xmin, caseToPixel(m,i,ymin,ymax), xmax, caseToPixel(m,i+1,ymin,ymax) );
+        rectangle( xmin, caseToPixel(i,ymin,ymax), xmax, caseToPixel(i+1,ymin,ymax) );
 
-        print(xmin+10, caseToPixel(m,i+1,ymin,ymax)+(((ymax-ymin)/m.txt.size()) - fontsize)/2 -3,   m.txt[i].c_str());
+        print(xmin+10, caseToPixel(i+1,ymin,ymax)+(((ymax-ymin)/m_txt.size()) - fontsize)/2 -3,   m_txt[i].c_str());
     }
 }
 
@@ -1210,16 +1207,16 @@ struct sort_pred
     }
 };
 
-void plot_add(Plot& p, float x, float y, int curve_n)
+void Plot::add(float x, float y, int curve_n)
 {
     if (curve_n<0)
     {
         cerr<<"error==> plot_add: curve number invalid"<<endl;
         return;
     }
-    if (curve_n>=p.dat.size()) p.dat.resize(curve_n+1);
-    Curve& curve = p.dat[curve_n];
-    if ((p.nb_plot_max<0) || (curve.size()<p.nb_plot_max))
+    if (curve_n>=m_dat.size()) m_dat.resize(curve_n+1);
+    Curve& curve = m_dat[curve_n];
+    if ((m_nb_plot_max<0) || (curve.size()<m_nb_plot_max))
     {
         curve.push_back( std::make_pair(x,y) );
         std::sort(curve.begin(), curve.end(), sort_pred() );
@@ -1232,17 +1229,17 @@ void plot_add(Plot& p, float x, float y, int curve_n)
     }
 }
 
-void plot_minMax(  const Plot& p, float& fxmin, float& fymin, float& fxmax, float& fymax, int& maxsize)
+void Plot::minMax(float& fxmin, float& fymin, float& fxmax, float& fymax, int& maxsize) const
 {
     int i,j;
-    if (p.dat.size()==0) return;
+    if (m_dat.size()==0) return;
 
-    fxmin = fxmax = p.dat[0][0].first;
-    fymin = fymax = p.dat[0][0].second;
-    maxsize = p.dat[0].size();
-    for(j=0; j<p.dat.size(); ++j)
+    fxmin = fxmax = m_dat[0][0].first;
+    fymin = fymax = m_dat[0][0].second;
+    maxsize = m_dat[0].size();
+    for(j=0; j<m_dat.size(); ++j)
     {
-        const Curve& cu = p.dat[j];
+        const Curve& cu = m_dat[j];
         if (cu.size()>maxsize) maxsize = cu.size();
         for(i=0; i<cu.size(); ++i)
         {
@@ -1254,7 +1251,7 @@ void plot_minMax(  const Plot& p, float& fxmin, float& fymin, float& fxmax, floa
     }
 }
 
-void plot_draw( const Curve& cu, int xmin, int ymin, int xmax, int ymax, float fxmin, float fymin, float fxmax, float fymax)
+void Plot::draw( const Curve& cu, int xmin, int ymin, int xmax, int ymax, float fxmin, float fymin, float fxmax, float fymax) const
 {
     int i;
     float x1, y1, x2, y2;
@@ -1276,7 +1273,7 @@ void plot_draw( const Curve& cu, int xmin, int ymin, int xmax, int ymax, float f
     }
 }
 
-void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clearOrNot)
+void Plot::draw(int xmin, int ymin, int xmax, int ymax, bool clearOrNot) const
 {
     SDL_Color bg = Grapic::singleton().getBackgroundColor();
     SDL_Color col = Grapic::singleton().getColor();
@@ -1301,9 +1298,9 @@ void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clea
         //fxmin = cu[0].first;
         //fxmax = cu[ cu.size()-1 ].first;
         int maxsize;
-        plot_minMax( p, fxmin, fymin, fxmax, fymax, maxsize);
-        if (p.nb_plot_max>0)
-            fxmax = fxmin + ((fxmax-fxmin) * ((float)(p.nb_plot_max))) / maxsize;
+        minMax( fxmin, fymin, fxmax, fymax, maxsize);
+        if (m_nb_plot_max>0)
+            fxmax = fxmin + ((fxmax-fxmin) * ((float)(m_nb_plot_max))) / maxsize;
 
         fontSize(11);
         print( xmin-25, ymin-5, fymin);
@@ -1318,10 +1315,10 @@ void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clea
     const int N = 5;
     static const SDL_Color colcu[] = { {0,255,255, 255}, {0,255,0, 255}, {0,0,255, 255}, {255,255,0, 255}, {255,0,255, 255} };
     int i;
-    for(i=0; i<p.dat.size(); ++i)
+    for(i=0; i<m_dat.size(); ++i)
     {
         color( colcu[i%N].r, colcu[i%N].g, colcu[i%N].b, colcu[i%N].a );
-        plot_draw( p.dat[i], xmin, ymin, xmax, ymax, fxmin, fymin, fxmax, fymax);
+        draw( m_dat[i], xmin, ymin, xmax, ymax, fxmin, fymin, fxmax, fymax);
     }
     color(save.r,save.g,save.b,save.a);
 }

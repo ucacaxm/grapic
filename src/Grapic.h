@@ -51,6 +51,7 @@ namespace grapic
 
 
 
+/// \cond
 
 /**
 //==================================================================================================
@@ -111,6 +112,91 @@ protected:
 };
 
 
+class Image
+{
+public:
+    Image() : m_surface(NULL), m_texture(NULL), m_has_changed(false) {}
+    Image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a);
+    Image(int w, int h);
+    void savePNG(const char* filename) const;
+    bool isInit() const { return m_surface && m_texture; }
+    unsigned char get(int x, int y, int c);
+    void set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a);
+    void printInfo() const;
+
+    const SDL_Surface* surface() const { return m_surface; }
+
+    void draw(int x, int y, int w, int h);
+    void draw(int x, int y, int w, int h, float angle, int flip);
+
+protected:
+    SDL_Surface* m_surface;
+    SDL_Texture* m_texture;
+    bool m_has_changed;
+};
+
+
+
+class Menu
+{
+public:
+    Menu() : m_select(0), m_visible(true) {}
+    void add(const std::string& str) { m_txt.push_back(str); }
+    void change(int i, const std::string& str)
+    {
+        if ((i>=0) && (i<m_txt.size()))
+            m_txt[i] = str;
+        else
+            std::cerr<<"menu_change(...): i is not in the range of the menu"<<std::endl;
+    }
+
+    int select() const { return m_select; }
+    void setSelect(int s) { assert(s>=0); assert(s<m_txt.size()); m_select=s; }
+    int caseToPixel(int c, int ymin, int ymax) const
+    {
+        return ymin + (m_txt.size()-c) * ( (ymax-ymin+1)/m_txt.size() );
+    }
+
+    void draw(int xmin, int ymin, int xmax, int ymax);
+
+protected:
+    std::vector<std::string> m_txt;
+    int m_select;
+    bool m_visible;
+};
+
+
+
+typedef std::vector< std::pair<float,float> > Curve;
+class Plot
+{
+public:
+    Plot() : m_nb_plot_max(-1) {}
+
+    void clear()
+    {
+        for(int i=0; i<m_dat.size(); ++i)
+            m_dat[i].clear();
+        m_dat.clear();
+    }
+
+    void setSize(const int n)
+    {
+        clear();
+        m_nb_plot_max = n;
+    }
+
+    void add(float x, float y, int curve_n);
+    void draw(int xmin, int ymin, int xmax, int ymax, bool clearOrNot) const;
+    void draw( const Curve& cu, int xmin, int ymin, int xmax, int ymax, float fxmin, float fymin, float fxmax, float fymax) const;
+    void minMax(float& fxmin, float& fymin, float& fxmax, float& fymax, int& maxsize) const;
+
+protected:
+    std::vector< Curve  > m_dat;
+    int m_nb_plot_max;
+};
+
+
 
 inline void Grapic::help() const
 {
@@ -136,7 +222,7 @@ inline int Grapic::keyHasBeenPressed(unsigned int key)
 }
 
 
-inline    Grapic& Grapic::singleton(bool secure)
+inline Grapic& Grapic::singleton(bool secure)
 {
     if (secure)
     {
@@ -289,6 +375,7 @@ inline void Grapic::setFont(int s, const char* ttf)
 
 
 
+/// \endcond
 
 
 //==================================================================================================
@@ -423,7 +510,7 @@ void setKeyRepeatMode(bool repeat);
 	if (isKeyPressed('a')) { ... }          // if the key 'a' is pressed then do ...
     ~~~~~~~~~~~~~~~
 */
-inline void delay(int d)
+static inline void delay(int d)
 {
     //std::this_thread::sleep_for(std::chrono::milliseconds(d));
     SDL_Delay(d);
@@ -480,33 +567,6 @@ void print(int x, int y, float nb);
 void pressSpace();
 
 
-/// \cond
-class Image
-{
-public:
-    Image() : m_surface(NULL), m_texture(NULL), m_has_changed(false) {}
-    Image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a);
-    Image(int w, int h);
-    void savePNG(const char* filename) const;
-    bool isInit() const { return m_surface && m_texture; }
-    unsigned char get(int x, int y, int c);
-    void set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a);
-    void printInfo() const;
-
-    const SDL_Surface* surface() const { return m_surface; }
-
-    void draw(int x, int y, int w, int h);
-    void draw(int x, int y, int w, int h, float angle, int flip);
-//    friend int image_width(const Image& im);
-//    friend int image_height(const Image& im);
-//    friend bool image_isInit(const Image& im);
-
-protected:
-    SDL_Surface* m_surface;
-    SDL_Texture* m_texture;
-    bool m_has_changed;
-};
-/// \endcond
 
 
 /** \brief Return an image loaded from the file filename
@@ -525,35 +585,35 @@ protected:
     }
     ~~~~~~~~~~~~~~~
 */
-inline Image image(const char* filename, bool transparency=false, unsigned char r=255, unsigned char g=255, unsigned b=255, unsigned char a=255)
+static inline Image image(const char* filename, bool transparency=false, unsigned char r=255, unsigned char g=255, unsigned b=255, unsigned char a=255)
 {
     return Image(filename, transparency, r, g, b, a);
 }
 
 /** \brief Return an image of width=w and height=h
 */
-inline Image image(int w, int h)
+static inline Image image(int w, int h)
 {
     return Image(w,h);
 }
 
 /** \brief Save the image into the file: format is PNG
 */
-inline void image_savePNG(const Image& im, const char* filename)
+static inline void image_savePNG(const Image& im, const char* filename)
 {
     im.savePNG(filename);
 }
 
 /** \brief Draw the image at position (x,y) with width=w and height=h (if w<0 or h<0 the original size of the image is used)
 */
-inline void image_draw(Image& im, int x, int y, int w=-1, int h=-1)
+static inline void image_draw(Image& im, int x, int y, int w=-1, int h=-1)
 {
     im.draw(x,y,w,h);
 }
 
 /** \brief Draw the image at position (x,y) with width=w and height=h (if w<0 or h<0 the original size of the image is used); angle indicate the angle of rotation and flip: 0=no flip, 1=horizontal flip, 2=vertical flip
 */
-inline void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip=SDL_FLIP_NONE)
+static inline void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip=SDL_FLIP_NONE)
 {
     im.draw(x,y,w,h,angle,flip);
 }
@@ -563,7 +623,7 @@ inline void image_draw(Image& im, int x, int y, int w, int h, float angle, float
 */
 static inline unsigned char image_get(Image& im, int x, int y, int c=0)
 {
-    im.get(x,y,c);
+    return im.get(x,y,c);
 }
 
 /** \brief Set the pixel (x,y) of the image im with the color c
@@ -572,14 +632,14 @@ void image_set(Image& im, int x, int y, unsigned char r, unsigned char g, unsign
 
 /** \brief return the width of the image
 */
-inline int image_width(const Image& im)
+static inline int image_width(const Image& im)
 {
     return im.surface()->w;
 }
 
 /** \brief return the height of the image
 */
-inline int image_height(const Image& im)
+static inline int image_height(const Image& im)
 {
     return im.surface()->h;
 }
@@ -591,38 +651,19 @@ inline int image_height(const Image& im)
         d.im = image("../data/grapic.bmp", true, 255,255,255,255 );
     ~~~~~~~~~~~~~~~
 */
-inline bool image_isInit(const Image& im)
+static inline bool image_isInit(const Image& im)
 {
     return im.isInit();
 }
 
 /** \brief Print the informations of the image im
 */
-inline void image_printInfo(const Image& im)
+static inline void image_printInfo(const Image& im)
 {
     im.printInfo();
 }
 
 
-/// \cond
-class Menu
-{
-public:
-    Menu() : select(0), visible(true) {}
-
-    friend void menu_add(Menu& m, const std::string& str);
-    friend void menu_change(Menu& m, int i, const std::string& str);
-    friend void menu_draw(Menu& m, int xmin, int ymin, int xmax, int ymax);
-    friend int menu_select(const Menu& m);
-    friend void menu_setSelect(Menu& m, int s);
-    friend int caseToPixel(const Menu& m, int c, int ymin, int ymax);
-
-protected:
-    std::vector<std::string> txt;
-    int select;
-    bool visible;
-};
-/// \endcond
 
 /** \brief Add a line to the menu m with the text str
     ~~~~~~~~~~~~~~~{.c}
@@ -651,61 +692,51 @@ void menu_add(Menu& m, const std::string& str);
 void menu_change(Menu& m, int i, const std::string& str);
 
 //! \brief Draw the menu on the screen. See menu_add for an example of usage.
-void menu_draw(Menu& m, int xmin=5, int ymin=5, int xmax=-1, int ymax=-1);
-
-//! \brief return the line selected in the menu. See menu_add for an example of usage.
-inline int menu_select(const Menu& m)
+static inline void menu_draw(Menu& m, int xmin=5, int ymin=5, int xmax=-1, int ymax=-1)
 {
-    return m.select;
+    m.draw(xmin,ymin,xmax,ymax);
 }
 
 //! \brief return the line selected in the menu. See menu_add for an example of usage.
-inline void menu_setSelect(Menu& m, int s)
+static inline int menu_select(const Menu& m)
 {
-    m.select = s;
+    return m.select();
+}
+
+//! \brief return the line selected in the menu. See menu_add for an example of usage.
+static inline void menu_setSelect(Menu& m, int s)
+{
+    m.setSelect(s);
 }
 
 
-/// \cond
-typedef std::vector< std::pair<float,float> > Curve;
-class Plot
-{
-public:
-    Plot() : nb_plot_max(-1) {}
 
-    friend void plot_clear(Plot& p );
-    friend void plot_setSize(Plot& p, const int n);
-    friend void plot_add(Plot& p, float x, float y, int curve_n);
-    friend void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clearOrNot);
-    friend void plot_minMax(  const Plot& p, float& fxmin, float& fymin, float& fxmax, float& fymax, int& maxsize);
-
-protected:
-    std::vector< Curve  > dat;
-    int nb_plot_max;
-};
-/// \endcond
 
 //! @todo: plot: setColor for each curves
 //! @todo: setRangeXMinMax for each curves
 //! \brief Clear the data stored
-inline void plot_clear(Plot& p )
+static inline void plot_clear(Plot& p )
 {
-    for(int i=0; i<p.dat.size(); ++i) p.dat[i].clear();
-    p.dat.clear();
+    p.clear();
 }
 
 //! \brief Define the size of the stored value of the funtion (<0 means infinity)
-inline void plot_setSize(Plot& p, const int n)
+static inline void plot_setSize(Plot& p, const int n)
 {
-    plot_clear(p);
-    p.nb_plot_max = n;
+    p.setSize(n);
 }
 
 //! \brief Add a point (x,y=f(x)) to the curve number curve_n
-void plot_add(Plot& p, float x, float y, int curve_n=0);
+static inline void plot_add(Plot& p, float x, float y, int curve_n=0)
+{
+    p.add(x,y,curve_n);
+}
 
 //! \brief Draw the curve in the rectangle (xmin,ymin,xmax,ymax); clear the rectangle if clearOrNot is true
-void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clearOrNot=true);
+static inline void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clearOrNot=true)
+{
+    p.draw(xmin,ymin,xmax,ymax,clearOrNot);
+}
 
 
 
@@ -754,12 +785,6 @@ void polygonFill(int p[][2], unsigned int number);
 /** \brief Draw a polygon. (Code provided by Bastien DOIGNIES, many thanks)
  */
 void polygon(int p[][2], unsigned int number);
-
-
-
-
-
-
 
 
 
