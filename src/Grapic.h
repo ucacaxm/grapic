@@ -218,10 +218,7 @@ bool winHasFinished();
 
 /** \brief Clear the event queue of the window
 */
-static inline void winClearEvent()
-{
-    grapic::Grapic::singleton().clearEvent();
-}
+void winClearEvent();
 
 
 /** \brief Display the window. All drawing is hidden until this function is not called.

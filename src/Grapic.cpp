@@ -1856,6 +1856,11 @@ void polygon(int p[][2], unsigned int number)
     }
 }
 
+void winClearEvent()
+{
+    grapic::Grapic::singleton().clearEvent();
+}
+
 
 
 } // namespace
