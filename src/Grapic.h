@@ -687,10 +687,16 @@ static inline void image_printInfo(const Image& im)
 	winQuit();
     ~~~~~~~~~~~~~~~
 */
-void menu_add(Menu& m, const std::string& str);
+static inline void menu_add(Menu& m, const std::string& str)
+{
+    m.add(str);
+}
 
 //! \brief Change the text of a line in the menu
-void menu_change(Menu& m, int i, const std::string& str);
+static inline void menu_change(Menu& m, int i, const std::string& str)
+{
+    m.change(i,str);
+}
 
 //! \brief Draw the menu on the screen. See menu_add for an example of usage.
 static inline void menu_draw(Menu& m, int xmin=5, int ymin=5, int xmax=-1, int ymax=-1)
@@ -710,7 +716,11 @@ static inline void menu_setSelect(Menu& m, int s)
     m.setSelect(s);
 }
 
-
+//! \brief return the pixel from a line of the menu
+static inline int caseToPixel(const Menu& m, int c, int ymin, int ymax)
+{
+    return m.caseToPixel(c,ymin,ymax);
+}
 
 
 //! @todo: plot: setColor for each curves

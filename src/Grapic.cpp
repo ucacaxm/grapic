@@ -1132,21 +1132,6 @@ void Image::printInfo() const
 }
 
 
-void menu_add(Menu& m, const std::string& str)
-{
-    m.add(str);
-}
-
-void menu_change(Menu& m, int i, const std::string& str)
-{
-    m.change(i,str);
-}
-
-int caseToPixel(const Menu& m, int c, int ymin, int ymax)
-{
-    return m.caseToPixel(c,ymin,ymax);
-}
-
 void Menu::draw(int xmin, int ymin, int xmax, int ymax)
 {
     if (m_txt.size()==0) return;
