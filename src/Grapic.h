@@ -413,7 +413,7 @@ bool winHasFinished();
 
 /** \brief Clear the event queue of the window
 */
-static inline void winClearEvent();
+static inline void winClearEvent()
 {
     Grapic::singleton().clearEvent();
 }
