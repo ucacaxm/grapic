@@ -116,6 +116,8 @@ const SDL_Surface* Image::surface() const
     return m_surface;
 }
 
+    bool Image::isInit() const { return m_surface && m_texture; }
+
 
 Menu::Menu() : m_select(0), m_visible(true) {}
 

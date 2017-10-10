@@ -119,7 +119,7 @@ public:
     Image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a);
     Image(int w, int h);
     void savePNG(const char* filename) const;
-    bool isInit() const { return m_surface && m_texture; }
+    bool isInit() const;
     unsigned char get(int x, int y, int c);
     void set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a);
     void printInfo() const;
@@ -220,7 +220,7 @@ bool winHasFinished();
 */
 static inline void winClearEvent()
 {
-    Grapic::singleton().clearEvent();
+    grapic::Grapic::singleton().clearEvent();
 }
 
 
