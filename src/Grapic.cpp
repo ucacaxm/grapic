@@ -111,6 +111,58 @@ void Grapic::init(const char* name, int w, int h)
 }
 
 
+const SDL_Surface* Image::surface() const
+{
+    return m_surface;
+}
+
+
+Menu::Menu() : m_select(0), m_visible(true) {}
+
+void Menu::change(int i, const std::string& str)
+{
+    if ((i>=0) && (i<m_txt.size()))
+        m_txt[i] = str;
+    else
+        std::cerr<<"menu_change(...): i is not in the range of the menu"<<std::endl;
+}
+
+    Plot::Plot() : m_nb_plot_max(-1) {}
+
+    void Plot::clear()
+    {
+        for(int i=0; i<m_dat.size(); ++i)
+            m_dat[i].clear();
+        m_dat.clear();
+    }
+
+    void Plot::setSize(const int n)
+    {
+        clear();
+        m_nb_plot_max = n;
+    }
+
+
+int Menu::select() const
+{
+    return m_select;
+}
+void Menu::setSelect(int s)
+{
+    assert(s>=0);
+    assert(s<m_txt.size());
+    m_select=s;
+}
+int Menu::caseToPixel(int c, int ymin, int ymax) const
+{
+    return ymin + (m_txt.size()-c) * ( (ymax-ymin+1)/m_txt.size() );
+}
+
+void Menu::add(const std::string& str)
+{
+    m_txt.push_back(str);
+}
+
 
 bool saveScreenshotPNG(std::string filepath, SDL_Window* SDLWindow, SDL_Renderer* SDLRenderer)
 {

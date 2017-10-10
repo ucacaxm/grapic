@@ -124,7 +124,7 @@ public:
     void set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a);
     void printInfo() const;
 
-    const SDL_Surface* surface() const { return m_surface; }
+    const SDL_Surface* surface() const;
 
     void draw(int x, int y, int w, int h);
     void draw(int x, int y, int w, int h, float angle, int flip);
@@ -140,25 +140,13 @@ protected:
 class Menu
 {
 public:
-    Menu() : m_select(0), m_visible(true) {}
-    void change(int i, const std::string& str)
-    {
-        if ((i>=0) && (i<m_txt.size()))
-            m_txt[i] = str;
-        else
-            std::cerr<<"menu_change(...): i is not in the range of the menu"<<std::endl;
-    }
-
-    int select() const { return m_select; }
-    void setSelect(int s) { assert(s>=0); assert(s<m_txt.size()); m_select=s; }
-    int caseToPixel(int c, int ymin, int ymax) const
-    {
-        return ymin + (m_txt.size()-c) * ( (ymax-ymin+1)/m_txt.size() );
-    }
-
+    Menu();
+    void change(int i, const std::string& str);
+    int select() const;
+    void setSelect(int s);
+    int caseToPixel(int c, int ymin, int ymax) const;
     void draw(int xmin, int ymin, int xmax, int ymax);
-
-    void add(const std::string& str) { m_txt.push_back(str); }
+    void add(const std::string& str);
 
 protected:
     std::vector<std::string> m_txt;
@@ -172,21 +160,9 @@ typedef std::vector< std::pair<float,float> > Curve;
 class Plot
 {
 public:
-    Plot() : m_nb_plot_max(-1) {}
-
-    void clear()
-    {
-        for(int i=0; i<m_dat.size(); ++i)
-            m_dat[i].clear();
-        m_dat.clear();
-    }
-
-    void setSize(const int n)
-    {
-        clear();
-        m_nb_plot_max = n;
-    }
-
+    Plot();
+    void clear();
+    void setSize(const int n);
     void add(float x, float y, int curve_n);
     void draw(int xmin, int ymin, int xmax, int ymax, bool clearOrNot) const;
     void draw( const Curve& cu, int xmin, int ymin, int xmax, int ymax, float fxmin, float fymin, float fxmax, float fymax) const;
