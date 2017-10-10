@@ -1,8 +1,10 @@
+#!/bin/bash
 cd script
 export A=`cat ../doc/VERSION | cut -d '.' -f 1`
 export B=`cat ../doc/VERSION | cut -d '.' -f 2`
 export C=`cat ../doc/VERSION | cut -d '.' -f 3`
-export C=$((C+1))
+echo $A $B $C
+export C=$(($C + 1))
 echo "new version: $A.$B.$C"
 echo "$A.$B.$C"  > ../doc/VERSION
 

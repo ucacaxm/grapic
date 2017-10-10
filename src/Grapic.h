@@ -115,7 +115,7 @@ protected:
 class Image
 {
 public:
-    Image() : m_surface(NULL), m_texture(NULL), m_has_changed(false) {}
+    inline Image() : m_surface(NULL), m_texture(NULL), m_has_changed(false) {}
     Image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a);
     Image(int w, int h);
     void savePNG(const char* filename) const;

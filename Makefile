@@ -25,14 +25,14 @@ all: build/${OS}
 	mkdir -p build ; cd build/${OS} ; make
 	
 clean: build/${OS}
-	mkdir -p build ; cd build/${OS} ; make clean
+	rm -f bin/*.exe ; mkdir -p build ; cd build/${OS} ; make clean
 
 build/${OS}: premake4.lua
 
 doc: $(GRAPIC_HOME)/doc/* $(GRAPIC_HOME)/doc/images/* $(GRAPIC_HOME)/src/* FORCE
 	cd doc ; doxygen
 
-zip: version doc $(GRAPIC_HOME)/bin/remove_correction.exe premake
+zip: clean version doc $(GRAPIC_HOME)/bin/remove_correction.exe premake
 	$(GRAPIC_HOME)/script/make_zip.sh
 
 version: FORCE
@@ -51,8 +51,9 @@ premake:
 	$(PREMAKE4) --os=linux gmake
 	$(PREMAKE4) --os=linux codeblocks
 	$(PREMAKE4) --os=macosx gmake
-	$(PREMAKE4) --os=macosx xcode4
+	$(PREMAKE4) --os=macosx xcode3
 	$(PREMAKE5) vs2015
+	$(PREMAKE5) xcode4
 
 premake-beta:
 	rm -rf build
