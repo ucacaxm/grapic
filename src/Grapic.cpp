@@ -206,16 +206,194 @@ bool Grapic::manageEvent()
 }
 
 
-    void Grapic::clearEvent()
+void Grapic::clearEvent()
+{
+    SDL_Event events;
+    SDL_PumpEvents();
+    while (SDL_PollEvent(&events))
     {
-        SDL_Event events;
-        SDL_PumpEvents();
-        while (SDL_PollEvent(&events))
-        {
-        }
-        initKeyArray();
     }
+    initKeyArray();
+}
 
+
+Grapic& Grapic::singleton(bool secure)
+{
+    if (secure)
+    {
+        if (!currentGrapic.isInit())
+        {
+            std::cout<<"You have to call winInit before any call to Grapic functions !"<<std::endl;
+            exit(1);
+        }
+    }
+    return currentGrapic;
+}
+
+
+void Grapic::help() const
+{
+    printf("Help:\n");
+    printf("   q,ESC: quit\n");
+    printf("   F12: save the screen\n");
+    printf("   F1: hide/show the menu (if you use one in your program)\n");
+    printf("   h: help\n");
+}
+
+
+Image::Image() : m_surface(NULL), m_texture(NULL), m_has_changed(false)
+{}
+
+
+int Grapic::keyHasBeenPressed(unsigned int key)
+{
+    SDL_Scancode code= SDL_GetScancodeFromKey(key);
+    assert((size_t) code < m_keyStates.size());
+
+    int res = (int)  m_keyStates[code];
+    if (!m_keyRepeatMode)
+    {
+        m_keyStates[code]= 0;
+    }
+    return res;
+}
+
+
+inline    bool Grapic::hasFinished()
+{
+    return m_quit;
+}
+
+inline    bool Grapic::isInit()
+{
+    return m_window;
+}
+
+
+inline  const  SDL_Window* Grapic::window() const
+{
+    return m_window;
+}
+
+inline     SDL_Renderer * Grapic::renderer()
+{
+    return m_renderer;
+}
+
+inline TTF_Font* Grapic::font()
+{
+    return m_font;
+}
+
+
+inline void Grapic::initKeyArray()
+{
+    int keys;
+    const unsigned char *state= SDL_GetKeyboardState(&keys);
+    m_keyStates.assign(state, state + keys);
+}
+
+
+inline void Grapic::clear()
+{
+    // Clear the entire screen to our selected color.
+    SDL_SetRenderDrawColor(m_renderer, m_backgroundColor.r, m_backgroundColor.g, m_backgroundColor.b, m_backgroundColor.a);
+    SDL_RenderClear(m_renderer);
+    SDL_SetRenderDrawColor(m_renderer, m_currentColor.r, m_currentColor.g, m_currentColor.b, m_currentColor.a);
+}
+
+//inline void Grapic::clearEvent()
+//{
+//    SDL_Event events;
+//    SDL_PumpEvents();
+//    while (SDL_PollEvent(&events))
+//    {
+//    }
+//    initKeyArray();
+//}
+
+
+bool Grapic::display()
+{
+    manageEvent();
+    SDL_RenderPresent(m_renderer);
+    return m_quit;
+}
+
+
+void Grapic::quit()
+{
+    TTF_CloseFont(m_font);
+    SDL_DestroyWindow(m_window);
+    SDL_DestroyRenderer(m_renderer);
+    m_font = NULL;
+    m_window = NULL;
+    m_renderer = NULL;
+    SDL_Quit();
+}
+
+
+void Grapic::setKeyRepeatMode(bool kr)
+{
+    m_keyRepeatMode = kr;
+}
+
+void Grapic::color(unsigned char r, unsigned char g, unsigned b, unsigned char a)
+{
+    m_currentColor.r = r;
+    m_currentColor.g = g;
+    m_currentColor.b = b;
+    m_currentColor.a = a;
+    SDL_SetRenderDrawColor(m_renderer, m_currentColor.r, m_currentColor.g, m_currentColor.b, m_currentColor.a);
+}
+
+
+SDL_Color& Grapic::getColor()
+{
+    return m_currentColor;
+}
+
+SDL_Color& Grapic::getBackgroundColor()
+{
+    return m_backgroundColor;
+}
+
+
+void Grapic::backgroundColor(unsigned char r, unsigned char g, unsigned b, unsigned char a)
+{
+    m_backgroundColor.r = r;
+    m_backgroundColor.g = g;
+    m_backgroundColor.b = b;
+    m_backgroundColor.a = a;
+}
+
+
+int Grapic::inverseY(int y)
+{
+    SDL_GetRendererOutputSize(m_renderer, &m_width, &m_height);
+    return m_height - y - 1;
+}
+
+
+void Grapic::setFont(int s, const char* ttf)
+{
+    if ((m_fontSize==s) && (ttf && m_fontFile==std::string(ttf))) return;
+    if (m_font) TTF_CloseFont(m_font);
+    m_fontSize = s;
+    if (ttf) m_fontFile = ttf;
+    m_font = TTF_OpenFont( m_fontFile.c_str(), m_fontSize);
+    if (!m_font) m_font = TTF_OpenFont( ("../"+m_fontFile).c_str(), m_fontSize);
+    if (!m_font) m_font = TTF_OpenFont( ("../../"+m_fontFile).c_str(), m_fontSize);
+    if (!m_font) m_font = TTF_OpenFont( ("../../../"+m_fontFile).c_str(), m_fontSize);
+    if (!m_font) m_font = TTF_OpenFont( ("../../../../"+m_fontFile).c_str(), m_fontSize);
+    if (!m_font)
+    {
+        std::cout << "Erreur lors de l'initialisation de la police : " << SDL_GetError() << std::endl;
+        SDL_Quit();
+        assert(0);
+        exit(1);
+    }
+}
 
 
 
