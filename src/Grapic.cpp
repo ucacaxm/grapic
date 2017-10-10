@@ -259,34 +259,34 @@ int Grapic::keyHasBeenPressed(unsigned int key)
 }
 
 
-inline    bool Grapic::hasFinished()
+bool Grapic::hasFinished()
 {
     return m_quit;
 }
 
-inline    bool Grapic::isInit()
+bool Grapic::isInit()
 {
     return m_window;
 }
 
 
-inline  const  SDL_Window* Grapic::window() const
+const  SDL_Window* Grapic::window() const
 {
     return m_window;
 }
 
-inline     SDL_Renderer * Grapic::renderer()
+SDL_Renderer * Grapic::renderer()
 {
     return m_renderer;
 }
 
-inline TTF_Font* Grapic::font()
+TTF_Font* Grapic::font()
 {
     return m_font;
 }
 
 
-inline void Grapic::initKeyArray()
+void Grapic::initKeyArray()
 {
     int keys;
     const unsigned char *state= SDL_GetKeyboardState(&keys);
@@ -294,7 +294,7 @@ inline void Grapic::initKeyArray()
 }
 
 
-inline void Grapic::clear()
+void Grapic::clear()
 {
     // Clear the entire screen to our selected color.
     SDL_SetRenderDrawColor(m_renderer, m_backgroundColor.r, m_backgroundColor.g, m_backgroundColor.b, m_backgroundColor.a);
