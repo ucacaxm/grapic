@@ -115,7 +115,7 @@ protected:
 class Image
 {
 public:
-    inline Image() : m_surface(NULL), m_texture(NULL), m_has_changed(false) {}
+    Image() : m_surface(NULL), m_texture(NULL), m_has_changed(false) {}
     Image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a);
     Image(int w, int h);
     void savePNG(const char* filename) const;
@@ -141,7 +141,7 @@ class Menu
 {
 public:
     Menu() : m_select(0), m_visible(true) {}
-    void add(const std::string& str) { m_txt.push_back(str); }
+    inline void add(const std::string& str) { m_txt.push_back(str); }
     void change(int i, const std::string& str)
     {
         if ((i>=0) && (i<m_txt.size()))
