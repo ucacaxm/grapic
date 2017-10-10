@@ -175,13 +175,11 @@ protected:
 
 
 
-
-
-
-
-
-
 /// \endcond
+
+
+
+
 
 
 //==================================================================================================
@@ -649,63 +647,63 @@ make_project( "MYPROJECT", 	"apps/MYPROJECT/main_MYPROJECT.cpp" )
 <br>
 \subsection tuto1 Tutorial 1: Simple program
 \image html tuto_simple.jpg "The code of the tutorial 1 "simpleDrawing" illustrates the basis of Grapic" width=200px
-\include "../../apps/tutorials/tuto1_Simple.cpp"
+\include "../apps/tutorials/tuto1_Simple.cpp"
 
 <br>
 <br>
 <br>
 \subsection tuto2 Tutorial 2: First Loop
 \image html tuto_drawing.jpg "The code of the tutorial 2 shows how to write the main loop of a Grapic application" width=200px
-\include "../../apps/tutorials/tuto2_FirstLoop.cpp"
+\include "../apps/tutorials/tuto2_FirstLoop.cpp"
 
 <br>
 <br>
 <br>
 \subsection tuto3 Tutorial 3: Drawing
 \image html tuto_drawing.jpg "The code of the tutorial 3 shows how to draw rectangles, circles, lines, etc." width=200px
-\include "../../apps/tutorials/tuto3_Drawing.cpp"
+\include "../apps/tutorials/tuto3_Drawing.cpp"
 
 <br>
 <br>
 <br>
 \subsection tuto4 Tutorial 4: Keyboard
 \image html tuto_drawing.jpg "The code of the tutorial 4 shows how to manage the keyboard." width=200px
-\include "../../apps/tutorials/tuto4_Keyboard.cpp"
+\include "../apps/tutorials/tuto4_Keyboard.cpp"
 
 <br>
 <br>
 <br>
 \subsection tuto5 Tutorial 5: Mouse
 \image html tuto_mouse.jpg "The code of the tutorial 5 shows how manage the mouse to draw a square" width=200px
-\include "../../apps/tutorials/tuto5_Mouse.cpp"
+\include "../apps/tutorials/tuto5_Mouse.cpp"
 
 <br>
 <br>
 <br>
 \subsection tuto6 Tutorial 6: Menu
 \image html tuto_menu.jpg "The code of the tutorial 6 shows how to create a simple menu." width=200px
-\include "../../apps/tutorials/tuto6_Menu.cpp"
+\include "../apps/tutorials/tuto6_Menu.cpp"
 
 <br>
 <br>
 <br>
 \subsection tuto7 Tutorial 7: Animation
 \image html tuto_animation.jpg "The code of the tutorial 2 shows how to display a simple animation depending on the elapsed time." width=200px
-\include "../../apps/tutorials/tuto7_Animation.cpp"
+\include "../apps/tutorials/tuto7_Animation.cpp"
 
 <br>
 <br>
 <br>
 \subsection tuto8 Tutoria 8: Plot/Graph
 \image html tuto_plot.jpg "The plot code illustrates the drawing of a graph entering values of a function" width=200px
-\include "../../apps/tutorials/tuto8_Plot.cpp"
+\include "../apps/tutorials/tuto8_Plot.cpp"
 
 <br>
 <br>
 <br>
 \subsection tutoDemo Tutoria 9: Demo
 \image html tuto_demo.jpg "The demo code illustrates many functionalities of Grapic" width=200px
-\include "../../apps/tutorials/tuto9_demo.cpp"
+\include "../apps/tutorials/tuto9_demo.cpp"
 
 
 <br>
@@ -718,12 +716,12 @@ Grapic comes with several small examples. It can be used as source of inspiratio
 
 \subsection tetris Tetris
 \image html tetris.jpg "A example of tetris" width=200px
-\include "../../apps/demo_tetris/main_tetris.cpp"
+\include "../apps/demo_tetris/main_tetris.cpp"
 
 
 \subsection pacman Pacman
 \image html pacman.jpg "Pacman" width=200px
-\include "../../apps/demo_pacman/main_pacman.cpp"
+\include "../apps/demo_pacman/main_pacman.cpp"
 
 
 

@@ -2,7 +2,8 @@
 
 pause()
 {
-	read -p "Press [Enter] to continue..."
+#	read -p "Press [Enter] to continue..."
+	printf "Continue ...\n"
 }
 
 

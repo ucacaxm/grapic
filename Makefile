@@ -38,8 +38,17 @@ zip: clean version $(GRAPIC_HOME)/bin/remove_correction.exe premake
 version: FORCE
 	sh $(GRAPIC_HOME)/script/inc_version.sh
 
-web: version zip doc
+web-win: version zip doc
 	/c/Program\ Files\ \(x86\)/WinSCP/winscp.com -script=$(GRAPIC_HOME)/script/scp_script_toWeb.txt
+
+web: version zip doc	
+	rsync -ravuz $(GRAPIC_HOME)/doc ameyer@liris.cnrs.fr:/home/ameyer/grapic-new
+
+web-force:
+	rsync -az --delete $(GRAPIC_HOME)/doc/ ameyer@liris.cnrs.fr:/home/ameyer/grapic-new/
+
+
+#scp -r $(GRAPIC_HOME)/doc ameyer@liris.cnrs.fr:/home/ameyer/grapic-new
 	
 bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp
 	g++ -Wall $(GRAPIC_HOME)/script/remove_correction.cpp -o $(GRAPIC_HOME)/bin/remove_correction.exe
