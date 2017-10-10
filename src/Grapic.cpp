@@ -234,11 +234,6 @@ void winClear()
     Grapic::singleton().clear();
 }
 
-void winClearEvent()
-{
-    Grapic::singleton().clearEvent();
-}
-
 bool winHasFinished()
 {
     return Grapic::singleton().hasFinished();
