@@ -141,7 +141,6 @@ class Menu
 {
 public:
     Menu() : m_select(0), m_visible(true) {}
-    inline void add(const std::string& str) { m_txt.push_back(str); }
     void change(int i, const std::string& str)
     {
         if ((i>=0) && (i<m_txt.size()))
@@ -158,6 +157,8 @@ public:
     }
 
     void draw(int xmin, int ymin, int xmax, int ymax);
+
+    void add(const std::string& str) { m_txt.push_back(str); }
 
 protected:
     std::vector<std::string> m_txt;
