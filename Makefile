@@ -32,7 +32,7 @@ build/${OS}: premake4.lua
 doc: $(GRAPIC_HOME)/doc/* $(GRAPIC_HOME)/doc/images/* $(GRAPIC_HOME)/src/* FORCE
 	cd doc ; doxygen
 
-zip: clean version doc $(GRAPIC_HOME)/bin/remove_correction.exe premake
+zip: clean version $(GRAPIC_HOME)/bin/remove_correction.exe premake
 	$(GRAPIC_HOME)/script/make_zip.sh
 
 version: FORCE

@@ -27,7 +27,7 @@ namespace grapic
 using namespace std;
 
 
-grapic::Grapic Grapic::currentGrapic;
+Grapic Grapic::currentGrapic;
 
 
 Grapic::Grapic() :
@@ -356,15 +356,6 @@ void Grapic::clear()
     SDL_SetRenderDrawColor(m_renderer, m_currentColor.r, m_currentColor.g, m_currentColor.b, m_currentColor.a);
 }
 
-//inline void Grapic::clearEvent()
-//{
-//    SDL_Event events;
-//    SDL_PumpEvents();
-//    while (SDL_PollEvent(&events))
-//    {
-//    }
-//    initKeyArray();
-//}
 
 
 bool Grapic::display()
