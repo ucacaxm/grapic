@@ -9,15 +9,16 @@ pause()
 APPS="apps"
 #GRAPIC="grapic.github"
 GRAPIC=`pwd`
+DOWN="${GRAPIC}/.."
 VERSION=`cat doc/VERSION`
 SAVE_SHORT="grapic-${VERSION}"
 SAVE="${GRAPIC}/../${SAVE_SHORT}"
-TOCOPY="apps bin build data script extern src Makefile grapic.lua premake4.lua premake.bat README.md"
+TOCOPY="apps bin build data script extern src Makefile grapic.lua premake* README.md"
 
 TOZIP_SHORT="apps data src Makefile grapic.lua premake4.lua README.md"
 TOZIP_LINUX_SHORT="script/premake4.linux build/linux"
 TOZIP_MINGW_SHORT="extern/mingw bin/*.dll script/premake4.exe build/windows"
-TOZIP_MAC_SHORT="$extern/macosx script/premake4.macos script/premake5.macos build/macos"
+TOZIP_MAC_SHORT="extern/macosx script/premake4.macosx script/premake5.macosx build/macosx"
 TOZIP_VISUAL2015_SHORT="extern/visual2015 premake-visual.bat script/premake5.exe script/premake4.exe build/windows"
 
 
@@ -36,6 +37,19 @@ echo "TOZIP_LINUX=${TOZIP_LINUX}"
 echo "TOZIP_MINGW=${TOZIP_MINGW}"
 echo "TOZIP_MAC=${TOZIP_MAC}"
 echo "TOZIP_VISUAL2015=${TOZIP_VISUAL2015}"
+
+check()
+{
+	for arg
+	do
+		# faire quelque chose avec $arg
+		if [ ! -e "${DOWN}/$arg" ]; then
+			echo "File ${DOWN}/$arg not found! ERREUR"
+			exit 1
+		fi
+	done
+}
+
 pause
 #ZIP="/c/Program\ Files/7-Zip/7z.exe"
 ZIP="zip"
@@ -46,6 +60,12 @@ make bin/remove_correction.exe
 rm -rf ${SAVE}
 mkdir ${SAVE}
 cp -rf ${TOCOPY} ${SAVE} 
+check ${TOZIP}
+check ${TOZIP_MAC}
+check ${TOZIP_LINUX}
+check ${TOZIP_MINGW}
+check ${TOZIP_VISUAL2015}
+
 pause 
 
 echo "=============================> REMOVE CORRECTION: ${APPS}"
@@ -60,7 +80,7 @@ find apps -name "*.cpp" -exec ${GRAPIC}/bin/remove_correction.exe {} {} \;
 makezip () 
 {
 	cd ${SAVE}/..
-	rm $1
+	rm -f $1
 	echo "In `pwd`"
 	RUN="${ZIP} -q -r $1 $2 $3"
 	echo $RUN
@@ -79,11 +99,11 @@ echo "=============================> ZIP VISUAL2015"
 FILE="${GRAPIC}/doc/download/grapic-${VERSION}_visual2015.zip"
 makezip "${FILE}" "${TOZIP}" "${TOZIP_VISUAL2015}"
 echo "=============================> LINUX TGZ"
-FILETAR="${GRAPIC}/doc/download/grapic-${VERSION}.tar"
 FILETGZ="${GRAPIC}/doc/download/grapic-${VERSION}.tgz"
-makezip "${FILE}" "${TOZIP}" "${TOZIP_LINUX}"
-gzip -f ${FILETAR}
-#rm -rf ${FILETAR}
+cd ${SAVE}/..
+rm -f ${FILETGZ}
+tar cfz ${FILETGZ} ${TOZIP} ${TOZIP_LINUX}
+cd ${GRAPIC}
 
 pause
 
