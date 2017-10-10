@@ -71,7 +71,7 @@ public:
     bool manageEvent();
 
     inline void clear();
-    inline void clearEvent()
+    void clearEvent()
     {
         SDL_Event events;
         SDL_PumpEvents();
