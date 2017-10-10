@@ -71,16 +71,7 @@ public:
     bool manageEvent();
 
     inline void clear();
-    void clearEvent()
-    {
-        SDL_Event events;
-        SDL_PumpEvents();
-        while (SDL_PollEvent(&events))
-        {
-        }
-        initKeyArray();
-    }
-
+    void clearEvent();
     inline bool display();
     inline bool hasFinished();
     inline void quit();
