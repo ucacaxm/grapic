@@ -317,11 +317,7 @@ void setKeyRepeatMode(bool repeat);
 	if (isKeyPressed('a')) { ... }          // if the key 'a' is pressed then do ...
     ~~~~~~~~~~~~~~~
 */
-static inline void delay(int d)
-{
-    //std::this_thread::sleep_for(std::chrono::milliseconds(d));
-    SDL_Delay(d);
-}
+void delay(int d);
 
 /** \brief return true if the mouse button 'button' is pressed
     ~~~~~~~~~~~~~~~{.c}
@@ -392,46 +388,28 @@ void pressSpace();
     }
     ~~~~~~~~~~~~~~~
 */
-static inline Image image(const char* filename, bool transparency=false, unsigned char r=255, unsigned char g=255, unsigned b=255, unsigned char a=255)
-{
-    return Image(filename, transparency, r, g, b, a);
-}
+Image image(const char* filename, bool transparency=false, unsigned char r=255, unsigned char g=255, unsigned b=255, unsigned char a=255);
 
 /** \brief Return an image of width=w and height=h
 */
-static inline Image image(int w, int h)
-{
-    return Image(w,h);
-}
+Image image(int w, int h);
 
 /** \brief Save the image into the file: format is PNG
 */
-static inline void image_savePNG(const Image& im, const char* filename)
-{
-    im.savePNG(filename);
-}
+void image_savePNG(const Image& im, const char* filename);
 
 /** \brief Draw the image at position (x,y) with width=w and height=h (if w<0 or h<0 the original size of the image is used)
 */
-static inline void image_draw(Image& im, int x, int y, int w=-1, int h=-1)
-{
-    im.draw(x,y,w,h);
-}
+void image_draw(Image& im, int x, int y, int w=-1, int h=-1);
 
 /** \brief Draw the image at position (x,y) with width=w and height=h (if w<0 or h<0 the original size of the image is used); angle indicate the angle of rotation and flip: 0=no flip, 1=horizontal flip, 2=vertical flip
 */
-static inline void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip=SDL_FLIP_NONE)
-{
-    im.draw(x,y,w,h,angle,flip);
-}
+void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip=SDL_FLIP_NONE);
 
 /** \brief return the color component c of the pixel (x,y) of the image im.
     c must be 0 for the red component, 1 for the green component, 2 for the blue component or 3 for the alpha/opacity component.
 */
-static inline unsigned char image_get(Image& im, int x, int y, int c=0)
-{
-    return im.get(x,y,c);
-}
+unsigned char image_get(Image& im, int x, int y, int c=0);
 
 /** \brief Set the pixel (x,y) of the image im with the color c
 */
@@ -439,17 +417,11 @@ void image_set(Image& im, int x, int y, unsigned char r, unsigned char g, unsign
 
 /** \brief return the width of the image
 */
-static inline int image_width(const Image& im)
-{
-    return im.surface()->w;
-}
+int image_width(const Image& im);
 
 /** \brief return the height of the image
 */
-static inline int image_height(const Image& im)
-{
-    return im.surface()->h;
-}
+int image_height(const Image& im);
 
 /** \brief return true if the image is initialized
     ~~~~~~~~~~~~~~~{.c}
@@ -458,18 +430,11 @@ static inline int image_height(const Image& im)
         d.im = image("../data/grapic.bmp", true, 255,255,255,255 );
     ~~~~~~~~~~~~~~~
 */
-static inline bool image_isInit(const Image& im)
-{
-    return im.isInit();
-}
+bool image_isInit(const Image& im);
 
 /** \brief Print the informations of the image im
 */
-static inline void image_printInfo(const Image& im)
-{
-    im.printInfo();
-}
-
+void image_printInfo(const Image& im);
 
 
 /** \brief Add a line to the menu m with the text str
@@ -493,67 +458,37 @@ static inline void image_printInfo(const Image& im)
 	winQuit();
     ~~~~~~~~~~~~~~~
 */
-static inline void menu_add(Menu& m, const std::string& str)
-{
-    m.add(str);
-}
+void menu_add(Menu& m, const std::string& str);
 
 //! \brief Change the text of a line in the menu
-static inline void menu_change(Menu& m, int i, const std::string& str)
-{
-    m.change(i,str);
-}
+void menu_change(Menu& m, int i, const std::string& str);
 
 //! \brief Draw the menu on the screen. See menu_add for an example of usage.
-static inline void menu_draw(Menu& m, int xmin=5, int ymin=5, int xmax=-1, int ymax=-1)
-{
-    m.draw(xmin,ymin,xmax,ymax);
-}
+void menu_draw(Menu& m, int xmin=5, int ymin=5, int xmax=-1, int ymax=-1);
 
 //! \brief return the line selected in the menu. See menu_add for an example of usage.
-static inline int menu_select(const Menu& m)
-{
-    return m.select();
-}
+int menu_select(const Menu& m);
 
 //! \brief return the line selected in the menu. See menu_add for an example of usage.
-static inline void menu_setSelect(Menu& m, int s)
-{
-    m.setSelect(s);
-}
+void menu_setSelect(Menu& m, int s);
 
 //! \brief return the pixel from a line of the menu
-static inline int caseToPixel(const Menu& m, int c, int ymin, int ymax)
-{
-    return m.caseToPixel(c,ymin,ymax);
-}
+int caseToPixel(const Menu& m, int c, int ymin, int ymax);
 
 
 //! @todo: plot: setColor for each curves
 //! @todo: setRangeXMinMax for each curves
 //! \brief Clear the data stored
-static inline void plot_clear(Plot& p )
-{
-    p.clear();
-}
+void plot_clear(Plot& p );
 
 //! \brief Define the size of the stored value of the funtion (<0 means infinity)
-static inline void plot_setSize(Plot& p, const int n)
-{
-    p.setSize(n);
-}
+void plot_setSize(Plot& p, const int n);
 
 //! \brief Add a point (x,y=f(x)) to the curve number curve_n
-static inline void plot_add(Plot& p, float x, float y, int curve_n=0)
-{
-    p.add(x,y,curve_n);
-}
+void plot_add(Plot& p, float x, float y, int curve_n=0);
 
 //! \brief Draw the curve in the rectangle (xmin,ymin,xmax,ymax); clear the rectangle if clearOrNot is true
-static inline void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clearOrNot=true)
-{
-    p.draw(xmin,ymin,xmax,ymax,clearOrNot);
-}
+void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clearOrNot=true);
 
 
 

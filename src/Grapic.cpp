@@ -1861,6 +1861,114 @@ void winClearEvent()
     grapic::Grapic::singleton().clearEvent();
 }
 
+void delay(int d)
+{
+    //std::this_thread::sleep_for(std::chrono::milliseconds(d));
+    SDL_Delay(d);
+}
+
+
+Image image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a)
+{
+    return Image(filename, transparency, r, g, b, a);
+}
+
+Image image(int w, int h)
+{
+    return Image(w,h);
+}
+void image_savePNG(const Image& im, const char* filename)
+{
+    im.savePNG(filename);
+}
+
+void image_draw(Image& im, int x, int y, int w, int h)
+{
+    im.draw(x,y,w,h);
+}
+
+void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip)
+{
+    im.draw(x,y,w,h,angle,flip);
+}
+
+unsigned char image_get(Image& im, int x, int y, int c)
+{
+    return im.get(x,y,c);
+}
+
+int image_width(const Image& im)
+{
+    return im.surface()->w;
+}
+
+int image_height(const Image& im)
+{
+    return im.surface()->h;
+}
+
+bool image_isInit(const Image& im)
+{
+    return im.isInit();
+}
+
+void image_printInfo(const Image& im)
+{
+    im.printInfo();
+}
+
+void menu_add(Menu& m, const std::string& str)
+{
+    m.add(str);
+}
+
+void menu_change(Menu& m, int i, const std::string& str)
+{
+    m.change(i,str);
+}
+
+void menu_draw(Menu& m, int xmin, int ymin, int xmax, int ymax)
+{
+    m.draw(xmin,ymin,xmax,ymax);
+}
+
+int menu_select(const Menu& m)
+{
+    return m.select();
+}
+
+void menu_setSelect(Menu& m, int s)
+{
+    m.setSelect(s);
+}
+
+int caseToPixel(const Menu& m, int c, int ymin, int ymax)
+{
+    return m.caseToPixel(c,ymin,ymax);
+}
+
+
+void plot_clear(Plot& p )
+{
+    p.clear();
+}
+
+
+void plot_setSize(Plot& p, const int n)
+{
+    p.setSize(n);
+}
+
+
+void plot_add(Plot& p, float x, float y, int curve_n)
+{
+    p.add(x,y,curve_n);
+}
+
+void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clearOrNot)
+{
+    p.draw(xmin,ymin,xmax,ymax,clearOrNot);
+}
 
 
 } // namespace
