@@ -1,16 +1,23 @@
 
 solution "grapic"
 
+	--  ugly hack to use clang
+	-- premake.gcc.cc  = 'clang'
+	-- premake.gcc.cxx = 'clang++'
+
 	configurations { "debug", "release" }
 	-- platforms { "native", "x32", "x64"  }
 	-- platforms { "x64", "x32"  }
 	-- platforms { "native" }
 
 	--~ location ("build/" .. os.get() .. "/" .. _ACTION)
-	location ("build/" .. os.get())
 
-	objdir "./obj"
-	includedirs { ".", "./src" }
+	grapic_dir = path.getabsolute(".")
+
+	location (grapic_dir .. "/build/" .. os.get())
+
+	objdir = grapic_dir.."/obj"
+	includedirs { grapic_dir.."/.", grapic_dir .. "/src" }
 
 
 	configuration { "linux" }
@@ -32,8 +39,8 @@ solution "grapic"
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
 		buildoptions { "-g"}
 		linkoptions { "-g"}
-		includedirs { "extern/mingw/include", "extern/mingw/include/SDL2" }
-		libdirs { "extern/mingw/lib" }
+		includedirs { grapic_dir .. "/extern/mingw/include", grapic_dir .. "/extern/mingw/include/SDL2" }
+		libdirs { grapic_dir .. "/extern/mingw/lib" }
 		links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
 
 	configuration { "windows", "codeblocks" }
@@ -42,7 +49,7 @@ solution "grapic"
 		linkoptions { "-g"}
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
 		includedirs { "extern/mingw/include", "extern/mingw/include/SDL2" }
-		libdirs { "extern/mingw/lib" }
+		libdirs { grapic_dir .. "/extern/mingw/lib" }
 		links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
 
 	configuration { "windows", "vs2015"}
@@ -52,7 +59,7 @@ solution "grapic"
 		end
 		buildoptions { "-g"}
 		includedirs { "extern/visual2015/include", "extern/visual2015/include/SDL2" }
-		libdirs { "extern/visual2015/lib" }
+		libdirs { grapic_dir .. "/extern/visual2015/lib" }
 		links { "SDL2", "SDL2main", "SDL2_image", "SDL2_ttf"}
 
 		
@@ -60,13 +67,13 @@ solution "grapic"
 	configuration "macosx"
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing" }
 		buildoptions { "-std=c++11" }
-		includedirs {	"extern/macosx/SDL2.framework/Versions/A/Headers/",
-						"extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
-						"extern/macosx/SDL2_image.framework/Versions/A/Headers",
-						"extern/macosx/SDL2_ttf.framework/Versions/A/Headers" }
-		linkoptions {	"../../extern/macosx/SDL2.framework/Versions/A/SDL2",
-						"../../extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
-						"../../extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+		includedirs {	grapic_dir .."/extern/macosx/SDL2.framework/Versions/A/Headers/",
+						grapic_dir .."/extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+						grapic_dir .."/extern/macosx/SDL2_image.framework/Versions/A/Headers",
+						grapic_dir .."/extern/macosx/SDL2_ttf.framework/Versions/A/Headers" }
+		linkoptions {	grapic_dir .. "/../../extern/macosx/SDL2.framework/Versions/A/SDL2",
+						grapic_dir .. "/../../extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+						grapic_dir .. "/../../extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
 						"-rpath @executable_path/../extern/macosx"
 						}
 
@@ -79,9 +86,15 @@ function make_project(name, filesToCompile)
 		language "C++"
 		kind "ConsoleApp"
 		targetdir "bin"
-		files { "src/Grapic.cpp", "src/Grapic.h",
-			}
+		files { grapic_dir.."/src/Grapic.cpp",  grapic_dir.."/src/Grapic.h", }
 		files { filesToCompile }
+end
+
+
+-- quand ce premake4.lua est inclus par un autre premake qui definit no_project=true (donc quand gkit2light est utilisé comme une lib),
+-- ceci stoppe la creation des projects suivants (tuto, etc.)
+if no_project then
+	do return end
 end
 
 
@@ -98,7 +111,7 @@ make_project( "tuto5_Mouse", 		"apps/tutorials/tuto5_Mouse.cpp" )
 make_project( "tuto6_Menu", 		"apps/tutorials/tuto6_Menu.cpp" )
 make_project( "tuto7_Animation", 	"apps/tutorials/tuto7_Animation.cpp" )
 make_project( "tuto8_Plot",			"apps/tutorials/tuto8_Plot.cpp" )
-make_project( "tuto9_demo",			"apps/tutorials/tuto9_Demo.cpp" )
+make_project( "tuto9_Demo",			"apps/tutorials/tuto9_Demo.cpp" )
 
 -- demo
 make_project( "demo_Minesweeper", 	"apps/demo_minesweeper/main_minesweeper.cpp" )

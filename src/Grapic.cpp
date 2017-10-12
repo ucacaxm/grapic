@@ -1090,7 +1090,7 @@ Uint32 image_get(SDL_Surface *surface, int x, int y)
 }
 
 
-unsigned char Image::get(int x, int y, int c)
+unsigned char Image::get(int x, int y, int c) const
 {
     assert(surface());
     SDL_Surface* surf = m_surface;
@@ -1178,6 +1178,11 @@ void Image::set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsi
     SDL_UnlockSurface(m_surface);
 
     m_has_changed = true;
+}
+
+void image_set(Image& im, int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a)
+{
+    im.set(x,y,r,g,b,a);
 }
 
 
@@ -1883,7 +1888,7 @@ void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip)
     im.draw(x,y,w,h,angle,flip);
 }
 
-unsigned char image_get(Image& im, int x, int y, int c)
+unsigned char image_get(const Image& im, int x, int y, int c)
 {
     return im.get(x,y,c);
 }

@@ -120,7 +120,7 @@ public:
     Image(int w, int h);
     void savePNG(const char* filename) const;
     bool isInit() const;
-    unsigned char get(int x, int y, int c);
+    unsigned char get(int x, int y, int c) const;
     void set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a);
     void printInfo() const;
 
@@ -407,7 +407,7 @@ void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip=S
 /** \brief return the color component c of the pixel (x,y) of the image im.
     c must be 0 for the red component, 1 for the green component, 2 for the blue component or 3 for the alpha/opacity component.
 */
-unsigned char image_get(Image& im, int x, int y, int c=0);
+unsigned char image_get(const Image& im, int x, int y, int c=0);
 
 /** \brief Set the pixel (x,y) of the image im with the color c
 */
