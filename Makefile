@@ -42,7 +42,7 @@ web-win: version zip doc
 	/c/Program\ Files\ \(x86\)/WinSCP/winscp.com -script=$(GRAPIC_HOME)/script/scp_script_toWeb.txt
 
 web: version zip doc	
-	rsync -ravuz $(GRAPIC_HOME)/doc ameyer@liris.cnrs.fr:/home/ameyer/grapic-new
+	rsync -ravuz $(GRAPIC_HOME)/doc/ ameyer@liris.cnrs.fr:/home/ameyer/grapic-new/
 
 web-force:
 	rsync -az --delete $(GRAPIC_HOME)/doc/ ameyer@liris.cnrs.fr:/home/ameyer/grapic-new/
@@ -54,7 +54,7 @@ bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp
 	g++ -Wall $(GRAPIC_HOME)/script/remove_correction.cpp -o $(GRAPIC_HOME)/bin/remove_correction.exe
 
 premake:
-	rm -rf build
+	rm -rf build ; chmod 755 script/premake*
 	$(PREMAKE4) --os=windows gmake
 	$(PREMAKE4) --os=windows codeblocks
 	$(PREMAKE4) --os=linux gmake
@@ -65,7 +65,7 @@ premake:
 	$(PREMAKE5) xcode4
 
 premake-beta:
-	rm -rf build
+	rm -rf build  ; chmod 755 script/premake*
 	$(PREMAKE4) --target=beta --os=windows gmake
 	$(PREMAKE4) --target=beta --os=windows codeblocks
 	$(PREMAKE4) --target=beta --os=linux gmake
