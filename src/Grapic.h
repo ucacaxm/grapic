@@ -577,6 +577,8 @@ The Grapic archive comes with the needed SDL part, you do not have to install SD
 Download and install the last version:\htmlinclude "VERSION.html".
 Previous versions may be downloaded from the [download](../download) directory.
 
+Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/grapic](https://github.com/ucacaxm/grapic)
+
 <br>
 <br>
 <br>
