@@ -41,13 +41,13 @@ version: FORCE
 web-win: version zip doc
 	/c/Program\ Files\ \(x86\)/WinSCP/winscp.com -script=$(GRAPIC_HOME)/script/scp_script_toWeb.txt
 
-web: version zip doc	
-	rsync -ravuz $(GRAPIC_HOME)/doc/ ameyer@liris.cnrs.fr:/home/ameyer/grapic-new/
+web: version zip doc web-force
 
 web-force:
-	rsync -az --delete $(GRAPIC_HOME)/doc/ ameyer@liris.cnrs.fr:/home/ameyer/grapic-new/
+	rsync -ravuz --delete $(GRAPIC_HOME)/doc/ ameyer@liris.cnrs.fr:/home/ameyer/grapic/
 
-
+#web-force:
+#	rsync -az --delete $(GRAPIC_HOME)/doc/ ameyer@liris.cnrs.fr:/home/ameyer/grapic/
 #scp -r $(GRAPIC_HOME)/doc ameyer@liris.cnrs.fr:/home/ameyer/grapic-new
 	
 bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp
