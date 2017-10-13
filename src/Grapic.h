@@ -711,7 +711,7 @@ make_project( "MYPROJECT", 	"apps/MYPROJECT/main_MYPROJECT.cpp" )
 <br>
 <br>
 <br>
-\section Examples
+\section examples Examples
 
 Grapic comes with several small examples. It can be used as source of inspiration.
 
@@ -729,7 +729,10 @@ Grapic comes with several small examples. It can be used as source of inspiratio
 
 <br>
 <br>
-\section problems Current problems
+\section questions Questions and problems
+
+You can check and ask your question in the issues section of GitHub : [https://github.com/ucacaxm/grapic/issues](https://github.com/ucacaxm/grapic/issues)
+
 
 - int main() ==> int main(int , char **)
 
