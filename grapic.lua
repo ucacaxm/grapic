@@ -12,8 +12,13 @@ solution "grapic"
 
 	--~ location ("build/" .. os.get() .. "/" .. _ACTION)
 
-	grapic_dir = path.getabsolute(".")
+	if grapic_run_only_config then
+		grapic_dir = path.getabsolute(".")
+	else
+		grapic_dir = "."
+	end
 
+	
 	location (grapic_dir .. "/build/" .. os.get())
 
 	objdir = grapic_dir.."/obj"
@@ -93,7 +98,7 @@ end
 
 -- quand ce premake4.lua est inclus par un autre premake qui definit no_project=true (donc quand gkit2light est utilisé comme une lib),
 -- ceci stoppe la creation des projects suivants (tuto, etc.)
-if no_project then
+if grapic_run_only_config then
 	do return end
 end
 
