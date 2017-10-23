@@ -705,7 +705,7 @@ make_project( "MYPROJECT", 	"apps/MYPROJECT/main_MYPROJECT.cpp" )
 <br>
 \subsection tutoDemo Tutoria 9: Demo
 \image html tuto_demo.jpg "The demo code illustrates many functionalities of Grapic" width=200px
-\include "../apps/tutorials/tuto9_demo.cpp"
+\include "../apps/tutorials/tuto9_Demo.cpp"
 
 
 <br>
