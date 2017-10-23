@@ -23,7 +23,7 @@ endif(UNIX)
 
 include_directories(${INCLUDE_DIR})
 
-set(GRAPIC_FILES ${GRAPIC_DIR}/src/Grapic.cpp;${GRAPIC_DIR}/src/Grapic.h;${GRAPIC_DIR}/src/Grapic_func.cpp;${GRAPIC_DIR}/src/Grapic_func.h )
+set(GRAPIC_FILES ${GRAPIC_DIR}/src/Grapic.cpp;${GRAPIC_DIR}/src/Grapic.h )
 
 
 FUNCTION(GRAPIC_ADD_EXEC MY_NAME MY_FILES)

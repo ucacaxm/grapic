@@ -86,6 +86,7 @@ void Grapic::init(const char* name, int w, int h)
     setFont( 20, "data/ttf/Roboto-Regular.ttf");
 
     // Creation de la fenetre
+    if (m_window) SDL_DestroyWindow(m_window);
     m_window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN ); //| SDL_WINDOW_RESIZABLE);
     if (m_window == NULL)
     {
@@ -422,7 +423,7 @@ int Grapic::inverseY(int y)
 
 void Grapic::setFont(int s, const char* ttf)
 {
-    if ((m_fontSize==s) && (ttf && m_fontFile==std::string(ttf))) return;
+    if ((m_font) && (m_fontSize==s) && (ttf && m_fontFile==std::string(ttf))) return;
     if (m_font) TTF_CloseFont(m_font);
     m_fontSize = s;
     if (ttf) m_fontFile = ttf;
@@ -1040,14 +1041,14 @@ void fontSize(int s)
 
 void print(int x, int y, int nb)
 {
-    char txt[32];
+    char txt[64];
     sprintf(txt,"%d", nb);
     print(x,y,txt);
 }
 
 void print(int x, int y, float nb)
 {
-    char txt[32];
+    char txt[64];
     sprintf(txt,"%.2f", nb);
     print(x,y,txt);
 }
