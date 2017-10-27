@@ -108,4 +108,4 @@ cd ${GRAPIC}
 pause
 
 cd ${GRAPIC}
-#rm -rf ${SAVE}
+rm -rf ${SAVE}

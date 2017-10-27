@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cassert>
 
 using namespace std;
 
@@ -24,7 +25,7 @@ int main(int argc, char** argv)
     {
 		line = "";
         getline( in_stream, line);
-		if (line.find("#ifdef CORRECTION")) 
+		if (line.find("#ifdef CORRECTION")!=string::npos) 
 		{ 
 			ok=false; 
 			list.push_back( string("\t// A faire\n")); 
@@ -32,8 +33,9 @@ int main(int argc, char** argv)
         
 		if (ok) { list.push_back(line); ++n; } else ne++;
 		
-		if (line.find("#endif //CORRECTION")) ok=true;
+		if (line.find("#endif //CORRECTION")!=string::npos) ok=true;
     }
+	if (!ok) { cout<<"end file without \"#endif //CORRECTION\" "<<endl; assert(ok); }
     in_stream.close();
 	
 
