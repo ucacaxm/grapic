@@ -1,0 +1,260 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		63BF5CAC3AC709FC533B3895 /* main_minesweeper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7051532B79D27FE9086E43B7 /* main_minesweeper.cpp */; };
+		6EB843F414FD515B68C26C36 /* Grapic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 047100707EB06E655C5A25F1 /* Grapic.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7051532B79D27FE9086E43B7 /* main_minesweeper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "main_minesweeper.cpp"; path = "../../apps/demo_minesweeper/main_minesweeper.cpp"; sourceTree = "<group>"; };
+		047100707EB06E655C5A25F1 /* Grapic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Grapic.cpp"; path = "../../src/Grapic.cpp"; sourceTree = "<group>"; };
+		374D7E627607169613DE5EDB /* Grapic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Grapic.h"; path = "../../src/Grapic.h"; sourceTree = "<group>"; };
+		4A3859832143764D0ABD0972 /* demo_Minesweeper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "demo_Minesweeper"; path = "demo_Minesweeper"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		44315113653E18FB0AF73398 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0A8C0AD9230469801A8225C7 /* demo_Minesweeper */ = {
+			isa = PBXGroup;
+			children = (
+				660808451D043F187FD830D3 /* apps */,
+				5432318A0F6740D505693F40 /* src */,
+				565843B228A73972340239AE /* Products */,
+			);
+			name = "demo_Minesweeper";
+			sourceTree = "<group>";
+		};
+		660808451D043F187FD830D3 /* apps */ = {
+			isa = PBXGroup;
+			children = (
+				4BA01BAC0D1B0B4273E24176 /* demo_minesweeper */,
+			);
+			name = "apps";
+			sourceTree = "<group>";
+		};
+		4BA01BAC0D1B0B4273E24176 /* demo_minesweeper */ = {
+			isa = PBXGroup;
+			children = (
+				7051532B79D27FE9086E43B7 /* main_minesweeper.cpp */,
+			);
+			name = "demo_minesweeper";
+			sourceTree = "<group>";
+		};
+		5432318A0F6740D505693F40 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				047100707EB06E655C5A25F1 /* Grapic.cpp */,
+				374D7E627607169613DE5EDB /* Grapic.h */,
+			);
+			name = "src";
+			sourceTree = "<group>";
+		};
+		565843B228A73972340239AE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4A3859832143764D0ABD0972 /* demo_Minesweeper */,
+			);
+			name = "Products";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3531668D7021081F38E9376D /* demo_Minesweeper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1406209B4EF412CD390415CB /* Build configuration list for PBXNativeTarget "demo_Minesweeper" */;
+			buildPhases = (
+				63241A4278DB6CE74E2E6B43 /* Resources */,
+				25B503FD383E066012B72332 /* Sources */,
+				44315113653E18FB0AF73398 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "demo_Minesweeper";
+			productInstallPath = "$(HOME)/bin";
+			productName = "demo_Minesweeper";
+			productReference = 4A3859832143764D0ABD0972 /* demo_Minesweeper */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "demo_Minesweeper" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 0A8C0AD9230469801A8225C7 /* demo_Minesweeper */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3531668D7021081F38E9376D /* demo_Minesweeper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		63241A4278DB6CE74E2E6B43 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		25B503FD383E066012B72332 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63BF5CAC3AC709FC533B3895 /* main_minesweeper.cpp in Sources */,
+				6EB843F414FD515B68C26C36 /* Grapic.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6629340A1DD716563A99563E /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CONFIGURATION_BUILD_DIR = ../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "demo_Minesweeper";
+			};
+			name = "debug";
+		};
+		743F04D02B361CE811982CE6 /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CONFIGURATION_BUILD_DIR = ../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "demo_Minesweeper";
+			};
+			name = "release";
+		};
+		14F4630F5C757DD0070A21AC /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../..",
+					"../../src",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+					"../../extern/macosx/SDL2_image.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2_ttf.framework/Versions/A/Headers",
+				);
+				OBJROOT = "obj/debug/demo_Minesweeper";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing",
+					"-std=c++11",
+				);
+				OTHER_LDFLAGS = (
+					"./extern/macosx/SDL2.framework/Versions/A/SDL2",
+					"./extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+					"./extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+					"-rpath @executable_path/../extern/macosx",
+				);
+				SYMROOT = "../../bin";
+			};
+			name = "debug";
+		};
+		2AD04DC22A4A32443894261B /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../..",
+					"../../src",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+					"../../extern/macosx/SDL2_image.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2_ttf.framework/Versions/A/Headers",
+				);
+				OBJROOT = "obj/release/demo_Minesweeper";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing",
+					"-std=c++11",
+				);
+				OTHER_LDFLAGS = (
+					"./extern/macosx/SDL2.framework/Versions/A/SDL2",
+					"./extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+					"./extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+					"-rpath @executable_path/../extern/macosx",
+				);
+				SYMROOT = "../../bin";
+			};
+			name = "release";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1406209B4EF412CD390415CB /* Build configuration list for PBXNativeTarget "demo_Minesweeper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6629340A1DD716563A99563E /* debug */,
+				743F04D02B361CE811982CE6 /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "debug";
+		};
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "demo_Minesweeper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14F4630F5C757DD0070A21AC /* debug */,
+				2AD04DC22A4A32443894261B /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "debug";
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

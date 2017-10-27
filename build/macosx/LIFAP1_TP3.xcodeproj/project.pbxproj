@@ -1,0 +1,260 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		78BD50286CCD62DE3E9E4BBB /* main_LIFAP1_TP3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 67B3045B371A10EB48B83F43 /* main_LIFAP1_TP3.cpp */; };
+		53054CD473E177821FB4758D /* Grapic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01894DC82EA864DD7AB30704 /* Grapic.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		67B3045B371A10EB48B83F43 /* main_LIFAP1_TP3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "main_LIFAP1_TP3.cpp"; path = "../../apps/LIFAP1/main_LIFAP1_TP3.cpp"; sourceTree = "<group>"; };
+		01894DC82EA864DD7AB30704 /* Grapic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Grapic.cpp"; path = "../../src/Grapic.cpp"; sourceTree = "<group>"; };
+		11A9098F0DA00CD240FF535E /* Grapic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Grapic.h"; path = "../../src/Grapic.h"; sourceTree = "<group>"; };
+		558B10403DE87CCC04FB088C /* LIFAP1_TP3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "LIFAP1_TP3"; path = "LIFAP1_TP3"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6D744D6138F031723ECC78C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		768D556557934F961BDA4A52 /* LIFAP1_TP3 */ = {
+			isa = PBXGroup;
+			children = (
+				348C46AD48CF58086BF4241C /* apps */,
+				74B9346B02447B180DF23015 /* src */,
+				02FE2596385823A07D8D492B /* Products */,
+			);
+			name = "LIFAP1_TP3";
+			sourceTree = "<group>";
+		};
+		348C46AD48CF58086BF4241C /* apps */ = {
+			isa = PBXGroup;
+			children = (
+				35CE506B56EB30134F935D56 /* LIFAP1 */,
+			);
+			name = "apps";
+			sourceTree = "<group>";
+		};
+		35CE506B56EB30134F935D56 /* LIFAP1 */ = {
+			isa = PBXGroup;
+			children = (
+				67B3045B371A10EB48B83F43 /* main_LIFAP1_TP3.cpp */,
+			);
+			name = "LIFAP1";
+			sourceTree = "<group>";
+		};
+		74B9346B02447B180DF23015 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				01894DC82EA864DD7AB30704 /* Grapic.cpp */,
+				11A9098F0DA00CD240FF535E /* Grapic.h */,
+			);
+			name = "src";
+			sourceTree = "<group>";
+		};
+		02FE2596385823A07D8D492B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				558B10403DE87CCC04FB088C /* LIFAP1_TP3 */,
+			);
+			name = "Products";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		296D04423AC803D75DB5002D /* LIFAP1_TP3 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 14103C54321C28B512092FE1 /* Build configuration list for PBXNativeTarget "LIFAP1_TP3" */;
+			buildPhases = (
+				454E02DF30961462019A11CC /* Resources */,
+				349701412E9515515AE50B07 /* Sources */,
+				6D744D6138F031723ECC78C8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "LIFAP1_TP3";
+			productInstallPath = "$(HOME)/bin";
+			productName = "LIFAP1_TP3";
+			productReference = 558B10403DE87CCC04FB088C /* LIFAP1_TP3 */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "LIFAP1_TP3" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 768D556557934F961BDA4A52 /* LIFAP1_TP3 */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				296D04423AC803D75DB5002D /* LIFAP1_TP3 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		454E02DF30961462019A11CC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		349701412E9515515AE50B07 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				78BD50286CCD62DE3E9E4BBB /* main_LIFAP1_TP3.cpp in Sources */,
+				53054CD473E177821FB4758D /* Grapic.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		56A32D242ED95AC141E31219 /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CONFIGURATION_BUILD_DIR = ../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "LIFAP1_TP3";
+			};
+			name = "debug";
+		};
+		4F3077C864C35F3D0A7E5BDD /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CONFIGURATION_BUILD_DIR = ../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "LIFAP1_TP3";
+			};
+			name = "release";
+		};
+		7E111C0C756804A0257F35FA /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../..",
+					"../../src",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+					"../../extern/macosx/SDL2_image.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2_ttf.framework/Versions/A/Headers",
+				);
+				OBJROOT = "obj/debug/LIFAP1_TP3";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing",
+					"-std=c++11",
+				);
+				OTHER_LDFLAGS = (
+					"./extern/macosx/SDL2.framework/Versions/A/SDL2",
+					"./extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+					"./extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+					"-rpath @executable_path/../extern/macosx",
+				);
+				SYMROOT = "../../bin";
+			};
+			name = "debug";
+		};
+		44C82FA10838553C43492D88 /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../..",
+					"../../src",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+					"../../extern/macosx/SDL2_image.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2_ttf.framework/Versions/A/Headers",
+				);
+				OBJROOT = "obj/release/LIFAP1_TP3";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing",
+					"-std=c++11",
+				);
+				OTHER_LDFLAGS = (
+					"./extern/macosx/SDL2.framework/Versions/A/SDL2",
+					"./extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+					"./extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+					"-rpath @executable_path/../extern/macosx",
+				);
+				SYMROOT = "../../bin";
+			};
+			name = "release";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		14103C54321C28B512092FE1 /* Build configuration list for PBXNativeTarget "LIFAP1_TP3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56A32D242ED95AC141E31219 /* debug */,
+				4F3077C864C35F3D0A7E5BDD /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "debug";
+		};
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "LIFAP1_TP3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E111C0C756804A0257F35FA /* debug */,
+				44C82FA10838553C43492D88 /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "debug";
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

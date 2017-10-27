@@ -1106,11 +1106,11 @@ unsigned char Image::get(int x, int y, int c) const
 
     switch(c)
     {
-    case 2:
+    case 0: //2
         return red;
     case 1:
         return green;
-    case 0:
+    case 2: // 0
         return blue;
     case 3:
         return alpha;
@@ -1254,7 +1254,9 @@ Image::Image(const char* filename, bool transparency,  unsigned char r, unsigned
         std::cout<<"error: Can not load "<< filename<<std::endl;
         return ;
     }
-
+    SDL_Surface * surfaceCorrectPixelFormat = SDL_ConvertSurfaceFormat(m_surface,SDL_PIXELFORMAT_ARGB8888,0);
+    SDL_FreeSurface(m_surface);
+    m_surface = surfaceCorrectPixelFormat;
     if (transparency)
     {
         SDL_Color c;

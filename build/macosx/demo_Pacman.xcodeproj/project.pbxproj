@@ -1,0 +1,278 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		677D03FC4D78574F7D591D3B /* Jeu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E3C0DC10742314033B61F37 /* Jeu.cpp */; };
+		579D797C15FD12CF5B496336 /* Pacman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05514C6A4B3622BE6FCF5F50 /* Pacman.cpp */; };
+		5FC62C43338451C72C5C4831 /* Terrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 698451AC767D7DE21D181A77 /* Terrain.cpp */; };
+		616955270C0C38B267AE011C /* main_pacman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EE7298F74521B060C655883 /* main_pacman.cpp */; };
+		0C225052322862A46BA96BDA /* Grapic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CF3402D20CC0CBC797353EA /* Grapic.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0E3C0DC10742314033B61F37 /* Jeu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Jeu.cpp"; path = "../../apps/demo_pacman/Jeu.cpp"; sourceTree = "<group>"; };
+		31815B1E246949D51A9A565D /* Jeu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Jeu.h"; path = "../../apps/demo_pacman/Jeu.h"; sourceTree = "<group>"; };
+		05514C6A4B3622BE6FCF5F50 /* Pacman.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Pacman.cpp"; path = "../../apps/demo_pacman/Pacman.cpp"; sourceTree = "<group>"; };
+		0CD05B911D9059FD35E56554 /* Pacman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Pacman.h"; path = "../../apps/demo_pacman/Pacman.h"; sourceTree = "<group>"; };
+		698451AC767D7DE21D181A77 /* Terrain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Terrain.cpp"; path = "../../apps/demo_pacman/Terrain.cpp"; sourceTree = "<group>"; };
+		4EEA5546370F25CC05396C35 /* Terrain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Terrain.h"; path = "../../apps/demo_pacman/Terrain.h"; sourceTree = "<group>"; };
+		4EE7298F74521B060C655883 /* main_pacman.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "main_pacman.cpp"; path = "../../apps/demo_pacman/main_pacman.cpp"; sourceTree = "<group>"; };
+		3CF3402D20CC0CBC797353EA /* Grapic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Grapic.cpp"; path = "../../src/Grapic.cpp"; sourceTree = "<group>"; };
+		197B46311EB33AEE6FE60331 /* Grapic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Grapic.h"; path = "../../src/Grapic.h"; sourceTree = "<group>"; };
+		49AA75EA06137B073F520EAE /* demo_Pacman */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "demo_Pacman"; path = "demo_Pacman"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		14A869FA45C317584B3D6F56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2941165831EF6FC418E7784A /* demo_Pacman */ = {
+			isa = PBXGroup;
+			children = (
+				01AA0721096624492180676A /* apps */,
+				322015DF7A2D02D05BAE7E74 /* src */,
+				052C145B0D5A3CE5741F7C8E /* Products */,
+			);
+			name = "demo_Pacman";
+			sourceTree = "<group>";
+		};
+		01AA0721096624492180676A /* apps */ = {
+			isa = PBXGroup;
+			children = (
+				276B12D96C32736B31641441 /* demo_pacman */,
+			);
+			name = "apps";
+			sourceTree = "<group>";
+		};
+		276B12D96C32736B31641441 /* demo_pacman */ = {
+			isa = PBXGroup;
+			children = (
+				0E3C0DC10742314033B61F37 /* Jeu.cpp */,
+				31815B1E246949D51A9A565D /* Jeu.h */,
+				05514C6A4B3622BE6FCF5F50 /* Pacman.cpp */,
+				0CD05B911D9059FD35E56554 /* Pacman.h */,
+				698451AC767D7DE21D181A77 /* Terrain.cpp */,
+				4EEA5546370F25CC05396C35 /* Terrain.h */,
+				4EE7298F74521B060C655883 /* main_pacman.cpp */,
+			);
+			name = "demo_pacman";
+			sourceTree = "<group>";
+		};
+		322015DF7A2D02D05BAE7E74 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3CF3402D20CC0CBC797353EA /* Grapic.cpp */,
+				197B46311EB33AEE6FE60331 /* Grapic.h */,
+			);
+			name = "src";
+			sourceTree = "<group>";
+		};
+		052C145B0D5A3CE5741F7C8E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				49AA75EA06137B073F520EAE /* demo_Pacman */,
+			);
+			name = "Products";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7ACD5B0773064DB72F8B668A /* demo_Pacman */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 19DE1B45537B5C49397A574C /* Build configuration list for PBXNativeTarget "demo_Pacman" */;
+			buildPhases = (
+				49180F9B2F53619714F5610E /* Resources */,
+				3C17572E02C445223B9B38A2 /* Sources */,
+				14A869FA45C317584B3D6F56 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "demo_Pacman";
+			productInstallPath = "$(HOME)/bin";
+			productName = "demo_Pacman";
+			productReference = 49AA75EA06137B073F520EAE /* demo_Pacman */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "demo_Pacman" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 2941165831EF6FC418E7784A /* demo_Pacman */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7ACD5B0773064DB72F8B668A /* demo_Pacman */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		49180F9B2F53619714F5610E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3C17572E02C445223B9B38A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				677D03FC4D78574F7D591D3B /* Jeu.cpp in Sources */,
+				579D797C15FD12CF5B496336 /* Pacman.cpp in Sources */,
+				5FC62C43338451C72C5C4831 /* Terrain.cpp in Sources */,
+				616955270C0C38B267AE011C /* main_pacman.cpp in Sources */,
+				0C225052322862A46BA96BDA /* Grapic.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		17A164926DB371AA7A270C37 /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CONFIGURATION_BUILD_DIR = ../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "demo_Pacman";
+			};
+			name = "debug";
+		};
+		02B0443B58FA4AC970A72ADA /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CONFIGURATION_BUILD_DIR = ../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "demo_Pacman";
+			};
+			name = "release";
+		};
+		595C161D28BF35DC206A4840 /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../..",
+					"../../src",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+					"../../extern/macosx/SDL2_image.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2_ttf.framework/Versions/A/Headers",
+				);
+				OBJROOT = "obj/debug/demo_Pacman";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing",
+					"-std=c++11",
+				);
+				OTHER_LDFLAGS = (
+					"./extern/macosx/SDL2.framework/Versions/A/SDL2",
+					"./extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+					"./extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+					"-rpath @executable_path/../extern/macosx",
+				);
+				SYMROOT = "../../bin";
+			};
+			name = "debug";
+		};
+		5FCC218A5900213C0EA47E46 /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../..",
+					"../../src",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+					"../../extern/macosx/SDL2_image.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2_ttf.framework/Versions/A/Headers",
+				);
+				OBJROOT = "obj/release/demo_Pacman";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing",
+					"-std=c++11",
+				);
+				OTHER_LDFLAGS = (
+					"./extern/macosx/SDL2.framework/Versions/A/SDL2",
+					"./extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+					"./extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+					"-rpath @executable_path/../extern/macosx",
+				);
+				SYMROOT = "../../bin";
+			};
+			name = "release";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		19DE1B45537B5C49397A574C /* Build configuration list for PBXNativeTarget "demo_Pacman" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17A164926DB371AA7A270C37 /* debug */,
+				02B0443B58FA4AC970A72ADA /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "debug";
+		};
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "demo_Pacman" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				595C161D28BF35DC206A4840 /* debug */,
+				5FCC218A5900213C0EA47E46 /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "debug";
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

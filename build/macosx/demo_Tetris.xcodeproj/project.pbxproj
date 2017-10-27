@@ -1,0 +1,260 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01407ADF12CC25DC6098074E /* main_tetris.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0F034F7110A55A4157B70AAA /* main_tetris.cpp */; };
+		751168303F3057CC6912481F /* Grapic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7ED36CD451A12CFB7B1B37E0 /* Grapic.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0F034F7110A55A4157B70AAA /* main_tetris.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "main_tetris.cpp"; path = "../../apps/demo_tetris/main_tetris.cpp"; sourceTree = "<group>"; };
+		7ED36CD451A12CFB7B1B37E0 /* Grapic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Grapic.cpp"; path = "../../src/Grapic.cpp"; sourceTree = "<group>"; };
+		45CC41F45CE051220BB92291 /* Grapic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Grapic.h"; path = "../../src/Grapic.h"; sourceTree = "<group>"; };
+		57AE783154C37EF212246F01 /* demo_Tetris */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "demo_Tetris"; path = "demo_Tetris"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7D27243F0A4C03DA1B017547 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		34D661184FAF4900703D59A9 /* demo_Tetris */ = {
+			isa = PBXGroup;
+			children = (
+				75E875D71D7A7FEF1D6243C6 /* apps */,
+				366007BB5F637EF74F862725 /* src */,
+				24203F60774C36307A7B4BE6 /* Products */,
+			);
+			name = "demo_Tetris";
+			sourceTree = "<group>";
+		};
+		75E875D71D7A7FEF1D6243C6 /* apps */ = {
+			isa = PBXGroup;
+			children = (
+				2CD7139A155F5A1729463162 /* demo_tetris */,
+			);
+			name = "apps";
+			sourceTree = "<group>";
+		};
+		2CD7139A155F5A1729463162 /* demo_tetris */ = {
+			isa = PBXGroup;
+			children = (
+				0F034F7110A55A4157B70AAA /* main_tetris.cpp */,
+			);
+			name = "demo_tetris";
+			sourceTree = "<group>";
+		};
+		366007BB5F637EF74F862725 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				7ED36CD451A12CFB7B1B37E0 /* Grapic.cpp */,
+				45CC41F45CE051220BB92291 /* Grapic.h */,
+			);
+			name = "src";
+			sourceTree = "<group>";
+		};
+		24203F60774C36307A7B4BE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				57AE783154C37EF212246F01 /* demo_Tetris */,
+			);
+			name = "Products";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		720145687A70405127B24EB1 /* demo_Tetris */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 593057632A8C47FA6A6414B6 /* Build configuration list for PBXNativeTarget "demo_Tetris" */;
+			buildPhases = (
+				1BFC02AB6B8762E40CEB2CAD /* Resources */,
+				49543F4B7A922E646A69569E /* Sources */,
+				7D27243F0A4C03DA1B017547 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "demo_Tetris";
+			productInstallPath = "$(HOME)/bin";
+			productName = "demo_Tetris";
+			productReference = 57AE783154C37EF212246F01 /* demo_Tetris */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "demo_Tetris" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 34D661184FAF4900703D59A9 /* demo_Tetris */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				720145687A70405127B24EB1 /* demo_Tetris */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1BFC02AB6B8762E40CEB2CAD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		49543F4B7A922E646A69569E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01407ADF12CC25DC6098074E /* main_tetris.cpp in Sources */,
+				751168303F3057CC6912481F /* Grapic.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0B686690663C48FE7BD7109E /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CONFIGURATION_BUILD_DIR = ../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "demo_Tetris";
+			};
+			name = "debug";
+		};
+		1FEB602158FB442D3AC84214 /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CONFIGURATION_BUILD_DIR = ../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "demo_Tetris";
+			};
+			name = "release";
+		};
+		4E47557F22B1683C4F22770D /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../..",
+					"../../src",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+					"../../extern/macosx/SDL2_image.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2_ttf.framework/Versions/A/Headers",
+				);
+				OBJROOT = "obj/debug/demo_Tetris";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing",
+					"-std=c++11",
+				);
+				OTHER_LDFLAGS = (
+					"./extern/macosx/SDL2.framework/Versions/A/SDL2",
+					"./extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+					"./extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+					"-rpath @executable_path/../extern/macosx",
+				);
+				SYMROOT = "../../bin";
+			};
+			name = "debug";
+		};
+		6FCA4D082E9C58A37E3432BF /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../..",
+					"../../src",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+					"../../extern/macosx/SDL2_image.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2_ttf.framework/Versions/A/Headers",
+				);
+				OBJROOT = "obj/release/demo_Tetris";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing",
+					"-std=c++11",
+				);
+				OTHER_LDFLAGS = (
+					"./extern/macosx/SDL2.framework/Versions/A/SDL2",
+					"./extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+					"./extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+					"-rpath @executable_path/../extern/macosx",
+				);
+				SYMROOT = "../../bin";
+			};
+			name = "release";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		593057632A8C47FA6A6414B6 /* Build configuration list for PBXNativeTarget "demo_Tetris" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B686690663C48FE7BD7109E /* debug */,
+				1FEB602158FB442D3AC84214 /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "debug";
+		};
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "demo_Tetris" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E47557F22B1683C4F22770D /* debug */,
+				6FCA4D082E9C58A37E3432BF /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "debug";
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
