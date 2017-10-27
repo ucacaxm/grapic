@@ -93,8 +93,8 @@ void init(Jeu& jj)
 {
 	jj.dx = 10;
 	jj.dy = 10;
-	jj.im_mine = image("data/mine.png");
-	jj.im_drapeau = image("data/flag.png");
+	jj.im_mine = image("data/mines/mine.png");
+	jj.im_drapeau = image("data/mines/flag.png");
 	int i,j;
 	for(i=0;i<jj.dx;++i)
         for(j=0;j<jj.dy;++j)
