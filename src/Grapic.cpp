@@ -1108,11 +1108,11 @@ unsigned char Image::get(int x, int y, int c) const
 
     switch(c)
     {
-    case 0:
+    case 0: //2
         return red;
     case 1:
         return green;
-    case 2:
+    case 2: // 0
         return blue;
     case 3:
         return alpha;

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+	version = "1.0">
+	<FileRef
+		location = "group:Start.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:tuto1_Simple.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:tuto2_FirstLoop.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:tuto3_Drawing.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:tuto4_Keyboard.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:tuto5_Mouse.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:tuto6_Menu.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:tuto7_Animation.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:tuto8_Plot.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:tuto9_Demo.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:demo_Minesweeper.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:demo_Tetris.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:demo_Checkers.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:demo_Pacman.xcodeproj">
+	</FileRef>
+	<FileRef
+		location = "group:LIFAP1_TP3.xcodeproj">
+	</FileRef>
+</Workspace>

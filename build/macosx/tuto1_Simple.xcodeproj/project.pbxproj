@@ -1,0 +1,260 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		154326FD567E011C6053462D /* tuto1_Simple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 69B279A917B4166E07994441 /* tuto1_Simple.cpp */; };
+		7752316D17FB426112EA3451 /* Grapic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36F173BF2794018736C82367 /* Grapic.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		69B279A917B4166E07994441 /* tuto1_Simple.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "tuto1_Simple.cpp"; path = "../../apps/tutorials/tuto1_Simple.cpp"; sourceTree = "<group>"; };
+		36F173BF2794018736C82367 /* Grapic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "Grapic.cpp"; path = "../../src/Grapic.cpp"; sourceTree = "<group>"; };
+		508C0E3623132C1C66927133 /* Grapic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Grapic.h"; path = "../../src/Grapic.h"; sourceTree = "<group>"; };
+		6A8E2505126C1C04514A24FA /* tuto1_Simple */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "tuto1_Simple"; path = "tuto1_Simple"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		788C5E1B251B74BF34DB509D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5EA148017E985FE0554B6FF5 /* tuto1_Simple */ = {
+			isa = PBXGroup;
+			children = (
+				1B29242834C75DC7791E2F3F /* apps */,
+				68132E3525C238F34AC2485B /* src */,
+				333457AF3A3834626B827477 /* Products */,
+			);
+			name = "tuto1_Simple";
+			sourceTree = "<group>";
+		};
+		1B29242834C75DC7791E2F3F /* apps */ = {
+			isa = PBXGroup;
+			children = (
+				52DE3AAD5D2C32185F896E4B /* tutorials */,
+			);
+			name = "apps";
+			sourceTree = "<group>";
+		};
+		52DE3AAD5D2C32185F896E4B /* tutorials */ = {
+			isa = PBXGroup;
+			children = (
+				69B279A917B4166E07994441 /* tuto1_Simple.cpp */,
+			);
+			name = "tutorials";
+			sourceTree = "<group>";
+		};
+		68132E3525C238F34AC2485B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				36F173BF2794018736C82367 /* Grapic.cpp */,
+				508C0E3623132C1C66927133 /* Grapic.h */,
+			);
+			name = "src";
+			sourceTree = "<group>";
+		};
+		333457AF3A3834626B827477 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6A8E2505126C1C04514A24FA /* tuto1_Simple */,
+			);
+			name = "Products";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		524F085546A75B331CF64FA6 /* tuto1_Simple */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 31080DB936695E41266A5E90 /* Build configuration list for PBXNativeTarget "tuto1_Simple" */;
+			buildPhases = (
+				552E61504567365927D272AD /* Resources */,
+				2FB36D8B2C3942BF15EB6CDF /* Sources */,
+				788C5E1B251B74BF34DB509D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "tuto1_Simple";
+			productInstallPath = "$(HOME)/bin";
+			productName = "tuto1_Simple";
+			productReference = 6A8E2505126C1C04514A24FA /* tuto1_Simple */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "tuto1_Simple" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 5EA148017E985FE0554B6FF5 /* tuto1_Simple */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				524F085546A75B331CF64FA6 /* tuto1_Simple */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		552E61504567365927D272AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2FB36D8B2C3942BF15EB6CDF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				154326FD567E011C6053462D /* tuto1_Simple.cpp in Sources */,
+				7752316D17FB426112EA3451 /* Grapic.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7FA67AC477564B0E7A0B1B5A /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CONFIGURATION_BUILD_DIR = ../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "tuto1_Simple";
+			};
+			name = "debug";
+		};
+		176405455F6C05C753B348A9 /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				CONFIGURATION_BUILD_DIR = ../../bin;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = "tuto1_Simple";
+			};
+			name = "release";
+		};
+		668C09C81B091A16596E271C /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../..",
+					"../../src",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+					"../../extern/macosx/SDL2_image.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2_ttf.framework/Versions/A/Headers",
+				);
+				OBJROOT = "obj/debug/tuto1_Simple";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing",
+					"-std=c++11",
+				);
+				OTHER_LDFLAGS = (
+					"./extern/macosx/SDL2.framework/Versions/A/SDL2",
+					"./extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+					"./extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+					"-rpath @executable_path/../extern/macosx",
+				);
+				SYMROOT = "../../bin";
+			};
+			name = "debug";
+		};
+		28897BD15BAC57B656BD6E65 /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../..",
+					"../../src",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+					"../../extern/macosx/SDL2_image.framework/Versions/A/Headers",
+					"../../extern/macosx/SDL2_ttf.framework/Versions/A/Headers",
+				);
+				OBJROOT = "obj/release/tuto1_Simple";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing",
+					"-std=c++11",
+				);
+				OTHER_LDFLAGS = (
+					"./extern/macosx/SDL2.framework/Versions/A/SDL2",
+					"./extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+					"./extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+					"-rpath @executable_path/../extern/macosx",
+				);
+				SYMROOT = "../../bin";
+			};
+			name = "release";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		31080DB936695E41266A5E90 /* Build configuration list for PBXNativeTarget "tuto1_Simple" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FA67AC477564B0E7A0B1B5A /* debug */,
+				176405455F6C05C753B348A9 /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "debug";
+		};
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "tuto1_Simple" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				668C09C81B091A16596E271C /* debug */,
+				28897BD15BAC57B656BD6E65 /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = "debug";
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

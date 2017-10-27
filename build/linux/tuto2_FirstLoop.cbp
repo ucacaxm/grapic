@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="tuto2_FirstLoop" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="debug">
+				<Option output="../../bin/tuto2_FirstLoop" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/debug/tuto2_FirstLoop" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-ggdb" />
+					<Add option="-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" />
+					<Add directory="../.." />
+					<Add directory="../../src" />
+					<Add directory="/usr/include/SDL2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-ggdb" />
+					<Add directory="." />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
+				</Linker>
+			</Target>
+			<Target title="release">
+				<Option output="../../bin/tuto2_FirstLoop" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/release/tuto2_FirstLoop" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-ggdb" />
+					<Add option="-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" />
+					<Add directory="../.." />
+					<Add directory="../../src" />
+					<Add directory="/usr/include/SDL2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-ggdb" />
+					<Add directory="." />
+					<Add library="SDL2" />
+					<Add library="SDL2_image" />
+					<Add library="SDL2_ttf" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="../../src/Grapic.cpp">
+			<Option virtualFolder="src" />
+		</Unit>
+		<Unit filename="../../src/Grapic.h">
+			<Option virtualFolder="src" />
+		</Unit>
+		<Unit filename="../../apps/tutorials/tuto2_FirstLoop.cpp">
+			<Option virtualFolder="apps/tutorials" />
+		</Unit>
+		<Extensions>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
+
