@@ -254,6 +254,14 @@ void circle(int xc, int yc, int radius);
 */
 void circleFill(int xc, int yc, int radius);
 
+/** \brief Draw an ellipse at (xc, yc), horizontal radius and vertical radius, rotation optional (Thanks to Annass LAHNIN)
+*/
+void ellipse(int xc, int yc, int horizontal, int vertical);
+
+/** \brief Draw a filled ellipse at (xc, yc), horizontal radius and vertical radius, rotation optional  (a bit long when drawing at angle != {90*k, k∈ℤ})
+*/
+void ellipseFill(int xc, int yc, int horizontal, int vertical);
+
 /** \brief Draw a rectangle from (xmin,ymin) to (xmax,ymax)
 */
 void rectangle(int xmin, int ymin, int xmax, int ymax);

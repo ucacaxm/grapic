@@ -536,8 +536,6 @@ void rectangleFill(int xmin, int ymin, int xmax, int ymax)
     SDL_RenderFillRect(renderer(), &r);
 }
 
-
-
 int filledEllipseRGBA(SDL_Renderer* m_renderer, Sint16 x, Sint16 y, Sint16 rx, Sint16 ry, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
     int result;
@@ -1558,7 +1556,6 @@ void triangle(int x1, int y1,  int x2, int y2, int x3, int y3)
 
 void regular_polygone(int x, int y, unsigned int apotheme, unsigned int line_number)
 {
-
     //A polygon must have at least 3 vertices
     if(line_number < 3)
     {
@@ -1677,6 +1674,26 @@ void triangleFill( int x1, int y1,
     }
 }
 
+
+void ellipse(int xc, int yc, int h, int v)
+{
+    Grapic& g = Grapic::singleton();
+    Uint32 cc = *((Uint32*)(&g.getColor()));
+    Uint8 *c = (Uint8 *)&cc;
+    color(c[0], c[1], c[2]);
+
+    aaellipseRGBA(g.renderer(), xc, g.inverseY(yc), h, v, c[0], c[1], c[2], c[3]);
+}
+
+
+void ellipseFill(int xc, int yc, int h, int v)
+{
+    Grapic& g = Grapic::singleton();
+    Uint32 cc = *((Uint32*)(&g.getColor()));
+    Uint8 *c = (Uint8 *)&cc;
+
+    filledEllipseRGBA(g.renderer(), xc, g.inverseY(yc), h, v, c[0], c[1], c[2], c[3]);
+}
 
 
 void regular_polygonFill(int x, int y, unsigned int apotheme, unsigned int line_number)
