@@ -72,15 +72,15 @@ solution "grapic"
 	configuration "macosx"
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing" }
 		buildoptions { "-std=c++11" }
-		includedirs {	grapic_dir .."/extern/macosx/SDL2.framework/Versions/A/Headers/",
-						grapic_dir .."/extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
-						grapic_dir .."/extern/macosx/SDL2_image.framework/Versions/A/Headers",
-						grapic_dir .."/extern/macosx/SDL2_ttf.framework/Versions/A/Headers" }
-		linkoptions {	grapic_dir .. "/extern/macosx/SDL2.framework/Versions/A/SDL2",
-						grapic_dir .. "/extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
-						grapic_dir .. "/extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
-						"-rpath @executable_path/../extern/macosx"
-						}
+		includedirs {	"extern/macosx/SDL2.framework/Versions/A/Headers/",
+				"extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
+				"extern/macosx/SDL2_image.framework/Versions/A/Headers",
+				"extern/macosx/SDL2_ttf.framework/Versions/A/Headers" }
+		linkoptions {	"../../extern/macosx/SDL2.framework/Versions/A/SDL2",
+				"../../extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
+				"../../extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
+				"-rpath @executable_path/../extern/macosx"
+		}
 
 
 
