@@ -36,6 +36,8 @@ along with Grapic.  If not, see <http://www.gnu.org/licenses/>.
 #include <chrono>
 #include <vector>
 #include <algorithm>
+#include <stdio.h>
+#include <math.h>
 
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -69,6 +71,8 @@ public:
     Grapic();
     void init(const char* name, int w, int h);
     bool manageEvent();
+    int getWinHeight() const   {  return m_height;}
+    int getWinWidth() const    {  return m_width;}
 
     void clear();
     void clearEvent();
@@ -174,10 +178,9 @@ protected:
 };
 
 
-
 /// \endcond
 
-
+using namespace std;
 
 
 
@@ -218,6 +221,13 @@ bool winHasFinished();
 */
 void winClearEvent();
 
+/** \brief Returns the height of the window
+*/
+int winHeight();
+
+/** \brief Returns the width of the window
+*/
+int winWidth();
 
 /** \brief Display the window. All drawing is hidden until this function is not called.
     ~~~~~~~~~~~~~~~{.c}
@@ -254,19 +264,19 @@ void circle(int xc, int yc, int radius);
 */
 void circleFill(int xc, int yc, int radius);
 
-/** \brief Draw an ellipse at (xc, yc), horizontal radius and vertical radius, rotation optional (Thanks to Annass LAHNIN)
+/** \brief Draw an ellipse at (xc, yc), horizontal radius and vertical radius, rotation optional
 */
-void ellipse(int xc, int yc, int horizontal, int vertical);
+void ellipse(int xc, int yc, int horizontal, int vertical, int angle_deg=0);
 
-/** \brief Draw a filled ellipse at (xc, yc), horizontal radius and vertical radius, rotation optional  (a bit long when drawing at angle != {90*k, k∈ℤ})
+/** \brief Draw a filled ellipse at (xc, yc), horizontal radius and vertical radius, rotation optional
 */
-void ellipseFill(int xc, int yc, int horizontal, int vertical);
+void ellipseFill(int xc, int yc, int horizontal, int vertical, int angle_deg=0);
 
-/** \brief Draw a rectangle from (xmin,ymin) to (xmax,ymax)
+/** \brief Draw a rectangle from (xmin,ymin) to (xmax,ymax) (rotation theta optional)
 */
 void rectangle(int xmin, int ymin, int xmax, int ymax);
 
-/** \brief Draw a filled rectangle from (xmin,ymin) to (xmax,ymax)
+/** \brief Draw a filled rectangle from (xmin,ymin) to (xmax,ymax) (rotation theta optional)
 */
 void rectangleFill(int xmin, int ymin, int xmax, int ymax);
 
@@ -713,7 +723,7 @@ make_project( "MYPROJECT", 	"apps/MYPROJECT/main_MYPROJECT.cpp" )
 <br>
 \subsection tutoDemo Tutoria 9: Demo
 \image html tuto_demo.jpg "The demo code illustrates many functionalities of Grapic" width=200px
-\include "../apps/tutorials/tuto9_Demo.cpp"
+\include "../apps/tutorials/tuto9_demo.cpp"
 
 
 <br>

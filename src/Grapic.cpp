@@ -86,7 +86,6 @@ void Grapic::init(const char* name, int w, int h)
     setFont( 20, "data/ttf/Roboto-Regular.ttf");
 
     // Creation de la fenetre
-    if (m_window) SDL_DestroyWindow(m_window);
     m_window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN ); //| SDL_WINDOW_RESIZABLE);
     if (m_window == NULL)
     {
@@ -117,8 +116,10 @@ const SDL_Surface* Image::surface() const
     return m_surface;
 }
 
-    bool Image::isInit() const { return m_surface && m_texture; }
-
+bool Image::isInit() const
+{
+    return m_surface && m_texture;
+}
 
 Menu::Menu() : m_select(0), m_visible(true) {}
 
@@ -130,20 +131,20 @@ void Menu::change(int i, const std::string& str)
         std::cerr<<"menu_change(...): i is not in the range of the menu"<<std::endl;
 }
 
-    Plot::Plot() : m_nb_plot_max(-1) {}
+Plot::Plot() : m_nb_plot_max(-1) {}
 
-    void Plot::clear()
-    {
-        for(int i=0; i<m_dat.size(); ++i)
-            m_dat[i].clear();
-        m_dat.clear();
-    }
+void Plot::clear()
+{
+    for(int i=0; i<m_dat.size(); ++i)
+        m_dat[i].clear();
+    m_dat.clear();
+}
 
-    void Plot::setSize(const int n)
-    {
-        clear();
-        m_nb_plot_max = n;
-    }
+void Plot::setSize(const int n)
+{
+    clear();
+    m_nb_plot_max = n;
+}
 
 
 int Menu::select() const
@@ -165,7 +166,6 @@ void Menu::add(const std::string& str)
 {
     m_txt.push_back(str);
 }
-
 
 bool saveScreenshotPNG(std::string filepath, SDL_Window* SDLWindow, SDL_Renderer* SDLRenderer)
 {
@@ -423,7 +423,7 @@ int Grapic::inverseY(int y)
 
 void Grapic::setFont(int s, const char* ttf)
 {
-    if ((m_font) && (m_fontSize==s) && (ttf && m_fontFile==std::string(ttf))) return;
+    if ((m_fontSize==s) && (ttf && m_fontFile==std::string(ttf))) return;
     if (m_font) TTF_CloseFont(m_font);
     m_fontSize = s;
     if (ttf) m_fontFile = ttf;
@@ -495,7 +495,12 @@ void backgroundColor(unsigned char _r, unsigned char _g, unsigned char _b, unsig
 
 void pressSpace()
 {
+    Grapic& g = Grapic::singleton();
+    Uint32 cc = *((Uint32*)(&g.getColor()));
+    Uint8 *c = (Uint8 *)&cc;
+
     winClearEvent();
+    color(c[0], c[1], c[2]);
     winDisplay();
     print(10,10,"Press space");
     winDisplay();
@@ -535,6 +540,8 @@ void rectangleFill(int xmin, int ymin, int xmax, int ymax)
     r.h = ymax - ymin + 1;
     SDL_RenderFillRect(renderer(), &r);
 }
+
+
 
 int filledEllipseRGBA(SDL_Renderer* m_renderer, Sint16 x, Sint16 y, Sint16 rx, Sint16 ry, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
@@ -939,8 +946,6 @@ void circleFill(int xc, int yc, int circleR)
     filledEllipseRGBA(g.renderer(), xc, g.inverseY(yc), circleR, circleR, c[0], c[1], c[2], c[3]);
 }
 
-
-
 void line(int xmin, int ymin, int xmax, int ymax)
 {
     Grapic& g = Grapic::singleton();
@@ -997,6 +1002,17 @@ float elapsedTime()
     return 0.001f * SDL_GetTicks();
 }
 
+int winHeight()
+{
+    Grapic& g = Grapic::singleton();
+    return g.getWinHeight();
+}
+
+int winWidth()
+{
+    Grapic& g = Grapic::singleton();
+    return g.getWinWidth();
+}
 
 
 int isKeyPressed(int key)
@@ -1039,14 +1055,14 @@ void fontSize(int s)
 
 void print(int x, int y, int nb)
 {
-    char txt[64];
+    char txt[32];
     sprintf(txt,"%d", nb);
     print(x,y,txt);
 }
 
 void print(int x, int y, float nb)
 {
-    char txt[64];
+    char txt[32];
     sprintf(txt,"%.2f", nb);
     print(x,y,txt);
 }
@@ -1106,11 +1122,11 @@ unsigned char Image::get(int x, int y, int c) const
 
     switch(c)
     {
-    case 0: //2
+    case 2:
         return red;
     case 1:
         return green;
-    case 2: // 0
+    case 0:
         return blue;
     case 3:
         return alpha;
@@ -1254,9 +1270,7 @@ Image::Image(const char* filename, bool transparency,  unsigned char r, unsigned
         std::cout<<"error: Can not load "<< filename<<std::endl;
         return ;
     }
-    SDL_Surface * surfaceCorrectPixelFormat = SDL_ConvertSurfaceFormat(m_surface,SDL_PIXELFORMAT_ARGB8888,0);
-    SDL_FreeSurface(m_surface);
-    m_surface = surfaceCorrectPixelFormat;
+
     if (transparency)
     {
         SDL_Color c;
@@ -1554,10 +1568,9 @@ void triangle(int x1, int y1,  int x2, int y2, int x3, int y3)
 
 }
 
-
-
 void regular_polygone(int x, int y, unsigned int apotheme, unsigned int line_number)
 {
+
     //A polygon must have at least 3 vertices
     if(line_number < 3)
     {
@@ -1572,7 +1585,6 @@ void regular_polygone(int x, int y, unsigned int apotheme, unsigned int line_num
     }
 
 }
-
 
 
 void triangleFill( int x1, int y1,
@@ -1676,28 +1688,6 @@ void triangleFill( int x1, int y1,
     }
 }
 
-
-void ellipse(int xc, int yc, int h, int v)
-{
-    Grapic& g = Grapic::singleton();
-    Uint32 cc = *((Uint32*)(&g.getColor()));
-    Uint8 *c = (Uint8 *)&cc;
-    color(c[0], c[1], c[2]);
-
-    aaellipseRGBA(g.renderer(), xc, g.inverseY(yc), h, v, c[0], c[1], c[2], c[3]);
-}
-
-
-void ellipseFill(int xc, int yc, int h, int v)
-{
-    Grapic& g = Grapic::singleton();
-    Uint32 cc = *((Uint32*)(&g.getColor()));
-    Uint8 *c = (Uint8 *)&cc;
-
-    filledEllipseRGBA(g.renderer(), xc, g.inverseY(yc), h, v, c[0], c[1], c[2], c[3]);
-}
-
-
 void regular_polygonFill(int x, int y, unsigned int apotheme, unsigned int line_number)
 {
     const int MAX_TRIANGLE = 30;
@@ -1756,7 +1746,6 @@ bool isInTriangle(float px, float py, float ax, float ay, float bx, float by, fl
 
     return (u >= 0) && (v >= 0) && (u + v < 1);
 }
-
 
 void polygonFill(int p[][2], unsigned int number)
 {
@@ -1863,13 +1852,109 @@ void polygonFill(int p[][2], unsigned int number)
 
 }
 
-
 void polygon(int p[][2], unsigned int number)
 {
     for(int i = 0; i < number; i++)
     {
-        grapic::line(p[i % number][0], p[i % number][1], p[(i + 1) % number][0], p[(i + 1)% number][1]);
+        line(p[i % number][0], p[i % number][1], p[(i + 1) % number][0], p[(i + 1)% number][1]);
     }
+}
+
+void ellipse(int xc, int yc, int h, int v, int angle_deg /*=0*/)
+{
+    Grapic& g = Grapic::singleton();
+    Uint32 cc = *((Uint32*)(&g.getColor()));
+    Uint8 *c = (Uint8 *)&cc;
+    yc = g.inverseY(yc);
+
+    int Val[1000][2];
+    int i;
+    float t;
+
+    angle_deg = angle_deg%360;
+    double angle_rad = angle_deg*M_PI/180;
+
+    if (angle_rad==0 || angle_rad==M_PI)    //Normal ellipse
+    {
+        aaellipseRGBA(g.renderer(), xc, yc, h, v, c[0], c[1], c[2], c[3]);
+    }
+    else if ((0<angle_rad && angle_rad<(M_PI/2)) || (M_PI<angle_rad && angle_rad<(3.0*M_PI/2)))     //Rotated 0~90° cos(1-t), sin(t)
+    {
+        for (t=0, i=0 ; t<2.0*M_PI ; t+=0.01, i++)
+        {
+            Val[i][0] = xc + h * cos(1-t);
+            Val[i][1] = yc + v * sin(t);
+        }
+    }
+    else if (angle_rad==(M_PI/2) || angle_rad==(3.0*M_PI/2))    //90° ellipse
+    {
+        aaellipseRGBA(g.renderer(), xc, yc, v, h, c[0], c[1], c[2], c[3]);
+    }
+    else
+    {
+        for (t=0, i=0 ; t<2.0*M_PI ; t+=0.01, i++)      //Rotated 90~180° -cos(1-t), sin(t)
+        {
+            Val[i][0] = xc - h * cos(1-t);
+            Val[i][1] = yc + v * sin(t);
+        }
+    }
+
+    color(c[0], c[1], c[2]);
+    //La fonction polygon() déconne un peu, donc solution temporaire
+    //polygon(Val, 628);
+    for (i=0 ; i<628 ; i++)
+    {        point(Val[i][0], Val[i][1]);
+    }
+}
+
+void ellipseFill(int xc, int yc, int h, int v, int angle_deg /*=0*/)
+{
+    Grapic& g = Grapic::singleton();
+    Uint32 cc = *((Uint32*)(&g.getColor()));
+    Uint8 *c = (Uint8 *)&cc;
+    yc = g.inverseY(yc);
+
+    int ValFill[1000][2];
+    int i;
+    float t;
+
+    angle_deg = angle_deg%360;
+    double angle_rad = angle_deg*M_PI/180;
+
+    if (angle_rad==0 || angle_rad==M_PI)    //Normal ellipse
+    {
+        filledEllipseRGBA(g.renderer(), xc, yc, h, v, c[0], c[1], c[2], c[3]);
+    }
+    else if ((0<angle_rad && angle_rad<(M_PI/2)) || (M_PI<angle_rad && angle_rad<(3.0*M_PI/2)))     //Rotated 0~90° cos(1-t), sin(t)
+    {
+        for (t=0, i=0 ; t<2.0*M_PI ; t+=0.01, i++)
+        {
+            ValFill[i][0] = xc + h * cos(1-t);
+            ValFill[i][1] = yc + v * sin(t);
+        }
+    }
+    else if (angle_rad==(M_PI/2) || angle_rad==(3.0*M_PI/2))    //90° ellipse
+    {
+        filledEllipseRGBA(g.renderer(), xc, yc, v, h, c[0], c[1], c[2], c[3]);
+    }
+    else
+    {
+        for (t=0, i=0 ; t<2.0*M_PI ; t+=0.01, i++)      //Rotated 90~180° -cos(1-t), sin(t)
+        {
+            ValFill[i][0] = xc - h * cos(1-t);
+            ValFill[i][1] = yc + v * sin(t);
+        }
+    }
+
+    color(c[0], c[1], c[2]);
+
+    //La fonction polygonFill déconne un peu, donc solution temporaire
+    //polygonFill(ValFill, 628)
+    for (i=0 ; i<314  ; i++)
+    {
+        line(ValFill[i][0], ValFill[i][1], ValFill[628-i][0], ValFill[628-i][1]);
+    }
+    //------
 }
 
 void winClearEvent()
