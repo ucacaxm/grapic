@@ -36,8 +36,6 @@ along with Grapic.  If not, see <http://www.gnu.org/licenses/>.
 #include <chrono>
 #include <vector>
 #include <algorithm>
-#include <stdio.h>
-#include <math.h>
 
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -45,7 +43,7 @@ along with Grapic.  If not, see <http://www.gnu.org/licenses/>.
 
 /// \endcond
 
-
+using namespace std;
 namespace grapic
 {
 
@@ -71,8 +69,6 @@ public:
     Grapic();
     void init(const char* name, int w, int h);
     bool manageEvent();
-    int getWinHeight() const   {  return m_height;}
-    int getWinWidth() const    {  return m_width;}
 
     void clear();
     void clearEvent();
@@ -178,9 +174,10 @@ protected:
 };
 
 
+
 /// \endcond
 
-using namespace std;
+
 
 
 
@@ -221,13 +218,6 @@ bool winHasFinished();
 */
 void winClearEvent();
 
-/** \brief Returns the height of the window
-*/
-int winHeight();
-
-/** \brief Returns the width of the window
-*/
-int winWidth();
 
 /** \brief Display the window. All drawing is hidden until this function is not called.
     ~~~~~~~~~~~~~~~{.c}
@@ -272,11 +262,11 @@ void ellipse(int xc, int yc, int horizontal, int vertical, int angle_deg=0);
 */
 void ellipseFill(int xc, int yc, int horizontal, int vertical, int angle_deg=0);
 
-/** \brief Draw a rectangle from (xmin,ymin) to (xmax,ymax) (rotation theta optional)
+/** \brief Draw a rectangle from (xmin,ymin) to (xmax,ymax)
 */
 void rectangle(int xmin, int ymin, int xmax, int ymax);
 
-/** \brief Draw a filled rectangle from (xmin,ymin) to (xmax,ymax) (rotation theta optional)
+/** \brief Draw a filled rectangle from (xmin,ymin) to (xmax,ymax)
 */
 void rectangleFill(int xmin, int ymin, int xmax, int ymax);
 
@@ -723,7 +713,7 @@ make_project( "MYPROJECT", 	"apps/MYPROJECT/main_MYPROJECT.cpp" )
 <br>
 \subsection tutoDemo Tutoria 9: Demo
 \image html tuto_demo.jpg "The demo code illustrates many functionalities of Grapic" width=200px
-\include "../apps/tutorials/tuto9_demo.cpp"
+\include "../apps/tutorials/tuto9_Demo.cpp"
 
 
 <br>
