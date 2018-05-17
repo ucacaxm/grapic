@@ -2,7 +2,7 @@
 # should be run from the directory of grapic
 GRAPIC_HOME = .
 
-	
+
 ifeq ($(OS),Windows_NT)
 	OS = windows
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.exe
@@ -23,11 +23,11 @@ endif
 
 all: build/${OS}
 	mkdir -p build ; cd build/${OS} ; make
-	
+
 clean: build/${OS}
 	rm -f bin/*.exe ; mkdir -p build ; cd build/${OS} ; make clean
 
-build/${OS}: premake4.lua
+build/${OS}: premake4.lua premake
 
 doc: $(GRAPIC_HOME)/doc/* $(GRAPIC_HOME)/doc/images/* $(GRAPIC_HOME)/src/* FORCE
 	cd doc ; doxygen
@@ -49,7 +49,7 @@ web-force:
 #web-force:
 #	rsync -az --delete $(GRAPIC_HOME)/doc/ ameyer@liris.cnrs.fr:/home/ameyer/grapic/
 #scp -r $(GRAPIC_HOME)/doc ameyer@liris.cnrs.fr:/home/ameyer/grapic-new
-	
+
 bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp
 	g++ -Wall $(GRAPIC_HOME)/script/remove_correction.cpp -o $(GRAPIC_HOME)/bin/remove_correction.exe
 
@@ -73,8 +73,8 @@ premake-beta:
 	$(PREMAKE4) --target=beta --os=macosx gmake
 	$(PREMAKE4) --target=beta --os=macosx xcode4
 	$(PREMAKE5) --target=beta  vs2015
-	
-	
+
+
 define \n
 
 

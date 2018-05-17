@@ -23,7 +23,7 @@ void update(Data& d)
 void init(Data& d)
 {
     update(d);
-    d.im = image("data/mine.png");
+    d.im = image("data/mines/mine.png");
 }
 
 void draw(Data& d)

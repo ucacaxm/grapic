@@ -182,10 +182,16 @@ void draw(Data& d)
         rotateBlockLeft(d);
         d.speed = 500;
     }
+    static int n=0;
 	if (isKeyPressed(SDLK_RIGHT))
     {
-        if (blocksValid(d,d.pos_x+1,d.pos_y)) d.pos_x++;
-        d.speed = 500;
+        ++n;
+        if (n==1000)
+        {
+            if (blocksValid(d,d.pos_x+1,d.pos_y)) d.pos_x++;
+            d.speed = 500;
+            n=0;
+        }
     }
 	if (isKeyPressed(SDLK_DOWN))
     {
@@ -247,7 +253,7 @@ int main(int , char** )
 {
     Data dat;
 	winInit("Tetris", SIZE_X*SIZE_SPRITE_X, SIZE_Y*SIZE_SPRITE_Y);
-	setKeyRepeatMode(false);
+	setKeyRepeatMode(true);
 	init(dat);
 	while( !winHasFinished() )
     {

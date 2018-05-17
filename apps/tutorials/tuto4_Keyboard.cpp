@@ -24,6 +24,7 @@ void draw(Data& d)
 
     if (isKeyPressed('z')) { print(5,5,"z"); cout<<"z"<<endl; }
     if (isKeyPressed(SDLK_e)) { print(5,5,"e"); cout<<"e"<<endl; }
+    if ((isKeyPressed(SDLK_1) || (isKeyPressed(SDLK_KP_1)))) { print(50,50,"1"); cout<<"1"<<endl; }
 
     if (isKeyPressed('a'))     if (d.n < 20) d.n++;     // Increase the number of rectangle when the key UP is pressed
     if (isKeyPressed('w'))     if (d.n > 1) d.n--;      // Decrease the number of rectangle when the key DOWN is pressed

@@ -229,6 +229,7 @@ bool Grapic::manageEvent()
         case SDL_KEYDOWN:
             if (((size_t) event.key.keysym.scancode < m_keyStates.size()) && ((m_keyRepeatMode) || (event.key.repeat==0)))
             {
+                //cout<<event.key.keysym.scancode<<endl;
                 m_keyStates[event.key.keysym.scancode]++; // = 1;
                 //last_key= event.key;    // conserver le dernier evenement
             }

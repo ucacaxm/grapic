@@ -254,7 +254,7 @@ void circle(int xc, int yc, int radius);
 */
 void circleFill(int xc, int yc, int radius);
 
-/** \brief Draw an ellipse at (xc, yc), horizontal radius and vertical radius, rotation optional (Thanks to Annass LAHNIN)
+/** \brief Draw an ellipse at (xc, yc), horizontal radius and vertical radius, rotation optional (Thanks to Anass LAHNIN)
 */
 void ellipse(int xc, int yc, int horizontal, int vertical);
 
