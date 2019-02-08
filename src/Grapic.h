@@ -607,13 +607,13 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 \subsection linux Run on Linux
   - Install SDL2, SDL_Image for SDL2 and SDL_ttf for SDL2 ; for instance with
     \code
-    sudo apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev
+    sudo sudo apt install g++ premake4 premake5 zip doxygen libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev
     \endcode
 
   - Download the archive file, see section download.
 
   - Run with CodeBlocks
-     - Open the file Grapic/build/linux/grapic_workspace with Codeblocks.
+     - Open the file Grapic/build/linux/grapic.workspace with Codeblocks.
      - Select in the projects manager (on the left) the project you want with the right button "Activate project":
        \image html cb_activatePrj.jpg "Selection of the project in Codeblocks" width=400
      - And run the program !
@@ -643,6 +643,8 @@ You can create your own project.
  - Edit the file Grapic/premake4.lua and add at the end
 make_project( "MYPROJECT", 	"apps/MYPROJECT/main_MYPROJECT.cpp" )
  - Run the script 'premake.bat' on windows; or 'make premake' on Linux/MacOS
+
+If you are following the course LIFAMI, enter "make lifami" in the command line, it will create for you all the projects for the tutorials.
 
 
 
@@ -748,7 +750,7 @@ You can check and ask your question in the issues section of GitHub : [https://g
 
 - Even tutorials do not compile
    - check in directory 'extern' that you have the version for your computer: mingw for windows, macox for mac and nothing for
-        linux since you have to install them with the apt-get explained in the Section installtion
+        linux since you have to install them with the apt explained in the Section installtion
    - Try to rerun premake with premake.bat on windows or make premake on linux/macos
 
 */

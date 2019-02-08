@@ -13,7 +13,7 @@ The Grapic archive comes with the needed SDL part, you do not have to install SD
 
 
 ## Note for developpers and produce the webpages
-On Linux you need to install (sudo apt install g++ premake4 zip doxygen libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev )
+On Linux you need to install (sudo apt install g++ premake4 premake5 zip doxygen libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev)
 - g++
 - doxygen
 - zip

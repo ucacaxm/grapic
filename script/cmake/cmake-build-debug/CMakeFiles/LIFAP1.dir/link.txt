@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\LIFAP1.dir/objects.a
+C:\PROGRA~2\CODEBL~1\MinGW\bin\ar.exe cr CMakeFiles\LIFAP1.dir/objects.a @CMakeFiles\LIFAP1.dir\objects1.rsp
+C:\PROGRA~2\CODEBL~1\MinGW\bin\G__~1.EXE  -std=c++11 -W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing -g   -Wl,--whole-archive CMakeFiles\LIFAP1.dir/objects.a -Wl,--no-whole-archive  -o LIFAP1_d.exe -Wl,--out-implib,libLIFAP1_d.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\LIFAP1.dir\linklibs.rsp

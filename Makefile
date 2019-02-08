@@ -25,7 +25,7 @@ all: build/${OS}
 	mkdir -p build ; cd build/${OS} ; make
 
 clean: build/${OS}
-	rm -f bin/*.exe ; mkdir -p build ; cd build/${OS} ; make clean
+	rm -rf bin/*.exe apps/LIFAMI ; mkdir -p build ; cd build/${OS} ; make clean
 
 build/${OS}: premake4.lua premake
 
@@ -73,6 +73,17 @@ premake-beta:
 	$(PREMAKE4) --target=beta --os=macosx gmake
 	$(PREMAKE4) --target=beta --os=macosx xcode4
 	$(PREMAKE5) --target=beta  vs2015
+
+lifami:
+	rm -rf build ; script/make_lifami.sh ; chmod 755 script/premake*
+	$(PREMAKE4) --os=windows gmake script/lifami.lua
+	$(PREMAKE4) --os=windows codeblocks script/lifami.lua
+	$(PREMAKE4) --os=linux gmake script/lifami.lua
+	$(PREMAKE4) --os=linux codeblocks script/lifami.lua
+	$(PREMAKE4) --os=macosx gmake script/lifami.lua
+	$(PREMAKE4) --os=macosx xcode3 script/lifami.lua
+	$(PREMAKE5) vs2015 script/lifami.lua
+	$(PREMAKE5) xcode4 script/lifami.lua
 
 
 define \n

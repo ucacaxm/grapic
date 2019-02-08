@@ -1,0 +1,15 @@
+"C:\Program Files\CMake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" D:\alex\src\teaching\grapic.github\script\cmake
+-- Building app start
+-- Building app LIFAP1
+-- Building app tuto1_Simple
+-- Building app tuto2_FirstLoop
+-- Building app tuto3_Drawing
+-- Building app tuto4_Keyboard
+-- Building app tuto5_Mouse
+-- Building app tuto6_Menu
+-- Building app tuto7_Animation
+-- Building app tuto8_Plot
+-- Building app tuto9_demo
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/alex/src/teaching/grapic.github/script/cmake/cmake-build-debug
