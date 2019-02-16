@@ -607,7 +607,7 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 \subsection linux Run on Linux
   - Install SDL2, SDL_Image for SDL2 and SDL_ttf for SDL2 ; for instance with
     \code
-    sudo sudo apt install g++ premake4 premake5 zip doxygen libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev
+    sudo sudo apt install g++ premake4 zip doxygen libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev libsdl2-ttf-dev
     \endcode
 
   - Download the archive file, see section download.
@@ -644,7 +644,7 @@ You can create your own project.
 make_project( "MYPROJECT", 	"apps/MYPROJECT/main_MYPROJECT.cpp" )
  - Run the script 'premake.bat' on windows; or 'make premake' on Linux/MacOS
 
-If you are following the course LIFAMI, enter "make lifami" in the command line, it will create for you all the projects for the tutorials.
+If you are following the course LIFAMI, run lifami.bat on windows or enter "make lifami" on Linux in the command line, it will create for you all the projects for the tutorials.
 
 
 
