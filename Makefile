@@ -76,14 +76,14 @@ premake-beta:
 
 lifami:
 	rm -rf build ; script/make_lifami.sh ; chmod 755 script/premake*
-	$(PREMAKE4) --os=windows gmake script/lifami.lua
-	$(PREMAKE4) --os=windows codeblocks script/lifami.lua
-	$(PREMAKE4) --os=linux gmake script/lifami.lua
-	$(PREMAKE4) --os=linux codeblocks script/lifami.lua
-	$(PREMAKE4) --os=macosx gmake script/lifami.lua
-	$(PREMAKE4) --os=macosx xcode3 script/lifami.lua
-	$(PREMAKE5) vs2015 script/lifami.lua
-	$(PREMAKE5) xcode4 script/lifami.lua
+	$(PREMAKE4) --os=windows --file=script/lifami.lua gmake
+	$(PREMAKE4) --os=windows --file=script/lifami.lua codeblocks
+	$(PREMAKE4) --os=linux --file=script/lifami.lua gmake
+	$(PREMAKE4) --os=linux --file=script/lifami.lua codeblocks
+	$(PREMAKE4) --os=macosx --file=script/lifami.lua gmake
+	$(PREMAKE4) --os=macosx --file=script/lifami.lua xcode3
+	$(PREMAKE5) --file=script/lifami.lua vs2015
+	$(PREMAKE5) --file=script/lifami.lua xcode4
 
 
 define \n

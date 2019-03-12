@@ -1,14 +1,14 @@
 
 del /S /Q build
 
-.\script\premake4.exe --os=windows gmake lifami.lua
-.\script\premake4.exe --os=windows codeblocks lifami.lua
+.\script\premake4.exe --os=windows --file=script/lifami.lua gmake
+.\script\premake4.exe --os=windows --file=script/lifami.lua codeblocks
 
-.\script\premake4.exe --os=linux gmake lifami.lua
-.\script\premake4.exe --os=linux codeblocks lifami.lua
+.\script\premake4.exe --os=linux --file=script/lifami.lua gmake
+.\script\premake4.exe --os=linux --file=script/lifami.lua codeblocks
 
-.\script\premake4.exe --os=macosx gmake lifami.lua
-.\script\premake4.exe --os=macosx xcode4 lifami.lua
+.\script\premake4.exe --os=macosx --file=script/lifami.lua gmake
+.\script\premake4.exe --os=macosx --file=script/lifami.lua xcode4
 
 mkdir apps\LIFAMI
 
