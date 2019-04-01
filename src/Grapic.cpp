@@ -406,7 +406,7 @@ SDL_Color& Grapic::getBackgroundColor()
 }
 
 
-void Grapic::backgroundColor(unsigned char r, unsigned char g, unsigned b, unsigned char a)
+void Grapic::backgroundColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     m_backgroundColor.r = r;
     m_backgroundColor.g = g;
