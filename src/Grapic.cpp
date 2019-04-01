@@ -385,7 +385,7 @@ void Grapic::setKeyRepeatMode(bool kr)
     m_keyRepeatMode = kr;
 }
 
-void Grapic::color(unsigned char r, unsigned char g, unsigned b, unsigned char a)
+void Grapic::color(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     m_currentColor.r = r;
     m_currentColor.g = g;
