@@ -22,7 +22,7 @@ endif
 
 
 all: build/${OS}
-	mkdir -p build ; mkdir -p builb/${OS} ; cd build/${OS} ; make
+	mkdir -p build ; mkdir -p build/${OS} ; cd build/${OS} ; make
 
 clean: build/${OS}
 	rm -rf bin/*.exe apps/LIFAMI ; mkdir -p build ; cd build/${OS} ; make clean
