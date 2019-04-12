@@ -1248,6 +1248,11 @@ Image::Image(const char* filename, bool transparency,  unsigned char r, unsigned
         {
             nfn = std::string("../") + nfn;
             m_surface = IMG_Load(nfn.c_str());
+            if (m_surface == NULL)
+            {
+                nfn = std::string("../") + nfn;
+                m_surface = IMG_Load(nfn.c_str());
+            }
         }
     }
     if (m_surface == NULL)
