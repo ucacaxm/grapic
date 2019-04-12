@@ -79,7 +79,7 @@ public:
     void color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
     SDL_Color& getColor();
     SDL_Color& getBackgroundColor();
-    void backgroundColor(unsigned char r, unsigned char g, unsigned b, unsigned char a);
+    void backgroundColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
     int inverseY(int y);
     void setFont(int s, const char* ttf=NULL);
     const SDL_Window* window() const;
