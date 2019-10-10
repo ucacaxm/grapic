@@ -74,7 +74,7 @@ solution "grapic"
 		buildoptions { "-std=c++11" }
 		includedirs {	"extern/macosx/SDL2.framework/Versions/A/Headers/",
 						"extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
-						"extern/macosx/SDL2_image.framework/Versions/A/Headers",
+						"extern/macosx/SDL2_image.framework/Headers",
 						"extern/macosx/SDL2_ttf.framework/Versions/A/Headers" }
 		linkoptions {	"../../extern/macosx/SDL2.framework/Versions/A/SDL2",
 						"../../extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
