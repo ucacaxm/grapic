@@ -32,10 +32,11 @@ build/${OS}: premake4.lua premake
 doc: $(GRAPIC_HOME)/doc/* $(GRAPIC_HOME)/doc/images/* $(GRAPIC_HOME)/src/* FORCE
 	cd doc ; doxygen
 
-zip: clean version $(GRAPIC_HOME)/bin/remove_correction.exe premake
+zip: clean version $(GRAPIC_HOME)/bin/remove_correction.exe premakeall
 	$(GRAPIC_HOME)/script/make_zip.sh
 
 version: FORCE
+	#$(shell $(GRAPIC_HOME)/script/inc_version.sh))
 	sh $(GRAPIC_HOME)/script/inc_version.sh
 
 web-win: version zip doc
@@ -53,38 +54,64 @@ web-force:
 bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp
 	g++ -Wall $(GRAPIC_HOME)/script/remove_correction.cpp -o $(GRAPIC_HOME)/bin/remove_correction.exe
 
-premake:
+premakeall:
 	rm -rf build ; chmod 755 script/premake*
-	$(PREMAKE4) --os=windows gmake
+	@echo "Generate all premake files"
 	$(PREMAKE4) --os=windows codeblocks
+	$(PREMAKE4) --os=windows gmake
+	$(PREMAKE5) vs2015
 	$(PREMAKE4) --os=linux gmake
 	$(PREMAKE4) --os=linux codeblocks
 	$(PREMAKE4) --os=macosx gmake
 	$(PREMAKE4) --os=macosx xcode3
-	$(PREMAKE5) vs2015
 	$(PREMAKE5) xcode4
 
+premake:
+	rm -rf build ; chmod 755 script/premake*
+	@echo "OS=$(OS)"
+ifeq ($(OS),Windows_NT)
+	$(PREMAKE4) --os=windows codeblocks
+else ifeq ($(OS),linux)
+	$(PREMAKE4) --os=linux gmake
+	$(PREMAKE4) --os=linux codeblocks
+else ifeq ($(OS),macosx)
+	$(PREMAKE4) --os=macosx gmake
+	$(PREMAKE4) --os=macosx xcode3
+else
+	@echo "ERROR: Your OS is not detected in the makefile"
+endif
+
 premake-beta:
-	rm -rf build  ; chmod 755 script/premake*
-	$(PREMAKE4) --target=beta --os=windows gmake
+	rm -rf build ; chmod 755 script/premake*
+	@echo "OS=$(OS)"
+ifeq ($(OS),Windows_NT)
 	$(PREMAKE4) --target=beta --os=windows codeblocks
+else ifeq ($(OS),linux)
 	$(PREMAKE4) --target=beta --os=linux gmake
 	$(PREMAKE4) --target=beta --os=linux codeblocks
+else ifeq ($(OS),macosx)
 	$(PREMAKE4) --target=beta --os=macosx gmake
-	$(PREMAKE4) --target=beta --os=macosx xcode4
-	$(PREMAKE5) --target=beta  vs2015
+	$(PREMAKE4) --target=beta --os=macosx xcode3
+else
+	@echo "ERROR: Your OS is not detected in the makefile"
+endif
+
 
 lifami:
 	rm -rf build ; script/make_lifami.sh ; chmod 755 script/premake*
+	@echo "OS=$(OS)"
+ifeq ($(OS),Windows_NT)
 	$(PREMAKE4) --os=windows --file=lifami.lua gmake
 	$(PREMAKE4) --os=windows --file=lifami.lua codeblocks
+	#$(PREMAKE5) --file=lifami.lua vs2015
+else ifeq ($(OS),linux)
 	$(PREMAKE4) --os=linux --file=lifami.lua gmake
 	$(PREMAKE4) --os=linux --file=lifami.lua codeblocks
+else ifeq ($(OS),macosx)
 	$(PREMAKE4) --os=macosx --file=lifami.lua gmake
 	$(PREMAKE4) --os=macosx --file=lifami.lua xcode3
-	$(PREMAKE5) --file=lifami.lua vs2015
 	$(PREMAKE5) --file=lifami.lua xcode4
-
+endif
 
 define \n
 

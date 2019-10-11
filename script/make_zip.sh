@@ -6,6 +6,9 @@ pause()
 	printf "Continue ...\n"
 }
 
+echo "################ make_zip.sh"
+echo "pwd=`pwd`"
+mkdir -p doc/download
 
 APPS="apps"
 #GRAPIC="grapic.github"

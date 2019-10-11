@@ -5,6 +5,6 @@ else
     if [ -x script/premake5.exe.linux ]; then
         script/premake5.exe.linux $*
     else
-        echo "Installer premake4/premake5 svp avec la commande : sudo apt install g++ premake4 premake5 zip doxygen libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev"
+        echo "Installer premake4/premake5 svp"
     fi
 fi
