@@ -84,9 +84,36 @@ solution "grapic"
 
 
 
+function file_exists(name)
+   local f=io.open(name,"r")
+   if f~=nil then 
+      io.close(f) 
+      return true 
+   else 
+      print("File "..name.." does not exit => creation")
+      local f=io.open(name,"w")
+	  io.output(f)
+	  io.write("// "..name)
+	  if (string.find(name,".cpp")~=nil) then
+	     io.write("\n\n#include<Grapic.h>\n\nint main(int , char**)\n{\n\twinInit(\"vide\",500,500);\n\tpressSpace();\n\twinQuit();\n\treturn 0;\n}\n")
+      end
+	  io.close(f)
+      return false 
+   end
+end
 
 -- description des fichiers communs
-function make_project(name, filesToCompile)
+function make_project(name, _filesToCompile)
+	filesToCompile = _filesToCompile
+	--print("PROJECT="..name)
+	if type(_filesToCompile)~="table" then
+		filesToCompile = { _filesToCompile }
+	end
+	for i,name in ipairs(filesToCompile) do
+		--print("NAME="..name)
+		file_exists(name)
+	end
+
 	project(name)
 		language "C++"
 		kind "ConsoleApp"
@@ -96,7 +123,7 @@ function make_project(name, filesToCompile)
 end
 
 
--- quand ce premake4.lua est inclus par un autre premake qui definit no_project=true (donc quand gkit2light est utilisé comme une lib),
+-- quand ce premake4.lua est inclus par un autre premake qui definit no_project=true (donc quand grapic est utilisé comme une lib),
 -- ceci stoppe la creation des projects suivants (tuto, etc.)
 if grapic_run_only_config then
 	do return end

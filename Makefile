@@ -2,6 +2,7 @@
 # should be run from the directory of grapic
 GRAPIC_HOME = .
 
+apps_linux = ""
 
 ifeq ($(OS),Windows_NT)
 	OS = windows
@@ -13,17 +14,21 @@ ifeq ($(UNAME_S),Darwin)
 	OS = macosx
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.macosx
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.macosx
+	apps_linux = $(shell basename --suffix=.make build/linux/*.make  )
 else
 	OS = linux
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.linux
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.linux
+	apps_linux = $(shell basename --suffix=.make build/linux/*.make  )
 endif
 endif
+
+
 
 
 all: build/${OS}
 	mkdir -p build ; mkdir -p build/${OS} ; cd build/${OS} ; make
-
+	
 clean: build/${OS}
 	rm -rf bin/*.exe apps/LIFAMI ; mkdir -p build ; cd build/${OS} ; make clean
 
@@ -115,11 +120,18 @@ endif
 
 define \n
 
-
 endef
 
 run: all
 	@$(foreach dir,$(shell ls bin/*.exe),echo $(dir);)
 	$(foreach x,$(shell ls bin/*.exe),$(x)${\n})
 
+list:
+	@echo "apps_linux=$(apps_linux)"	
+
+${apps_linux} : %: 
+	cd build/${OS} ; make -f $@.make
+
+	
 FORCE:
+

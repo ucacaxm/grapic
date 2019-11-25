@@ -617,10 +617,14 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
      - Select in the projects manager (on the left) the project you want with the right button "Activate project":
        \image html cb_activatePrj.jpg "Selection of the project in Codeblocks" width=400
      - And run the program !
-  - Run in the Terminal:
+  - Recompile all and run in the Terminal:
      - cd ....grapic
      - make
      - bin/demo
+  - Recompile one and run in the Terminal:
+     - cd ....grapic
+     - make projectName    (replace projectName by the name of your project: 'make list' provides the list of all projects)
+     - bin/projectName
 
 
 \subsection mac Run on MacOS
