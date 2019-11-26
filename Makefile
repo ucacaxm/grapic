@@ -26,8 +26,13 @@ endif
 
 
 
-all: build/${OS}
+all: build/${OS} remove_quarantine
 	mkdir -p build ; mkdir -p build/${OS} ; cd build/${OS} ; make
+
+remove_quarantine:
+ifeq ($(UNAME_S),Darwin)
+	xattr -rd com.apple.quarantine ./
+endif
 	
 clean: build/${OS}
 	rm -rf bin/*.exe apps/LIFAMI ; mkdir -p build ; cd build/${OS} ; make clean
@@ -71,7 +76,7 @@ premakeall:
 	$(PREMAKE4) --os=macosx xcode3
 	$(PREMAKE5) xcode4
 
-premake:
+premake: 
 	rm -rf build ; chmod 755 script/premake*
 	@echo "OS=$(OS)"
 ifeq ($(OS),Windows_NT)
@@ -129,7 +134,7 @@ run: all
 list:
 	@echo "apps_linux=$(apps_linux)"	
 
-${apps_linux} : %: 
+${apps_linux} : %: remove_quarantine 
 	cd build/${OS} ; make -f $@.make
 
 	

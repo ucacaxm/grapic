@@ -1,0 +1,13 @@
+log*
+*~
+.vscode
+debug*
+vrac*
+debug
+default
+*.log
+bin/remove_correction.exe
+build*
+doc/download*
+doc/html*
+doc/xml*
