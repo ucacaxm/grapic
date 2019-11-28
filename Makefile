@@ -64,7 +64,7 @@ web-force:
 bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp
 	g++ -Wall $(GRAPIC_HOME)/script/remove_correction.cpp -o $(GRAPIC_HOME)/bin/remove_correction.exe
 
-premakeall:
+premakeall: remove_quarantine
 	rm -rf build ; chmod 755 script/premake*
 	@echo "Generate all premake files"
 	$(PREMAKE4) --os=windows codeblocks
@@ -76,7 +76,7 @@ premakeall:
 	$(PREMAKE4) --os=macosx xcode3
 	$(PREMAKE5) xcode4
 
-premake: 
+premake: remove_quarantine
 	rm -rf build ; chmod 755 script/premake*
 	@echo "OS=$(OS)"
 ifeq ($(OS),Windows_NT)
@@ -91,7 +91,7 @@ else
 	@echo "ERROR: Your OS is not detected in the makefile"
 endif
 
-premake-beta:
+premake-beta: remove_quarantine
 	rm -rf build ; chmod 755 script/premake*
 	@echo "OS=$(OS)"
 ifeq ($(OS),Windows_NT)
@@ -107,7 +107,7 @@ else
 endif
 
 
-lifami:
+lifami: remove_quarantine
 	rm -rf build ; script/make_lifami.sh ; chmod 755 script/premake*
 	@echo "OS=$(OS)"
 ifeq ($(OS),Windows_NT)
