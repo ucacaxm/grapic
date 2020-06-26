@@ -2,7 +2,7 @@
 # should be run from the directory of grapic
 GRAPIC_HOME = .
 
-apps_linux = ""
+apps_linux = "${MAKECMDGOALS}"
 
 ifeq ($(OS),Windows_NT)
 	OS = windows
@@ -23,6 +23,8 @@ else
 endif
 endif
 
+#a = $(shell echo OS=${OS} apps_linux=${apps_linux})
+#$(info $(a))
 
 
 
@@ -65,6 +67,7 @@ bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp
 	g++ -Wall $(GRAPIC_HOME)/script/remove_correction.cpp -o $(GRAPIC_HOME)/bin/remove_correction.exe
 
 premakeall: remove_quarantine
+	@echo "premakeall OS=$(OS)"
 	rm -rf build ; chmod 755 script/premake*
 	@echo "Generate all premake files"
 	$(PREMAKE4) --os=windows codeblocks
@@ -77,6 +80,7 @@ premakeall: remove_quarantine
 	$(PREMAKE5) xcode4
 
 premake: remove_quarantine
+	@echo "premake OS=$(OS)"
 	rm -rf build ; chmod 755 script/premake*
 	@echo "OS=$(OS)"
 ifeq ($(OS),Windows_NT)
@@ -134,7 +138,8 @@ run: all
 list:
 	@echo "apps_linux=$(apps_linux)"	
 
-${apps_linux} : %: remove_quarantine 
+${apps_linux}: %: remove_quarantine 
+	@echo "apps_linux app_linux=${apps_linux} OS=$(OS)"
 	cd build/${OS} ; make -f $@.make
 
 	

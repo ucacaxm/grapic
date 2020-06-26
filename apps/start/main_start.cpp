@@ -29,6 +29,7 @@ int main(int , char** )
     World dat;
     bool stop=false;
 	winInit("MyProg", DIMW, DIMW);
+	winSetPosition( DIMW, -1, 0, -1, false);
 	init(dat);
     backgroundColor( 100, 50, 200 );
 	while( !stop )

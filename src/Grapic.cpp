@@ -40,7 +40,8 @@ Grapic::Grapic() :
     m_fontSize(-1),
     m_quit(false),
     m_anim(false),
-    m_keyRepeatMode(false)
+    m_keyRepeatMode(false),
+    imagesSavedCount(0)
 {
     m_currentColor.r = 0;
     m_currentColor.g = 0;
@@ -53,7 +54,7 @@ Grapic::Grapic() :
 }
 
 
-void Grapic::init(const char* name, int w, int h)
+void Grapic::init(const char* name, int w, int h, int posx, int posy)
 {
     // Initialisation de la SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -87,7 +88,9 @@ void Grapic::init(const char* name, int w, int h)
 
     // Creation de la fenetre
     if (m_window) SDL_DestroyWindow(m_window);
-    m_window = SDL_CreateWindow(name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN ); //| SDL_WINDOW_RESIZABLE);
+    if (posx<0) posx = SDL_WINDOWPOS_CENTERED;
+    if (posy<0) posy = SDL_WINDOWPOS_CENTERED;
+    m_window = SDL_CreateWindow(name, posx, posy, w, h, SDL_WINDOW_SHOWN ); //| SDL_WINDOW_RESIZABLE);
     if (m_window == NULL)
     {
         std::cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << std::endl;
@@ -238,8 +241,11 @@ bool Grapic::manageEvent()
                 m_quit = true;
             else if (event.key.keysym.sym == SDLK_F12)
             {
-                saveScreenshotPNG( "grapic.png", m_window, m_renderer);
-                printf("Save grapic.png\n");
+                char filename[128];
+                sprintf(filename, "grapic_%d.png", imagesSavedCount);
+                imagesSavedCount++;
+                saveScreenshotPNG( filename, m_window, m_renderer);
+                printf("Save %s\n", filename);
             }
             else if (event.key.keysym.sym == SDLK_h)
             {
@@ -315,31 +321,30 @@ int Grapic::keyHasBeenPressed(unsigned int key)
 }
 
 
-bool Grapic::hasFinished()
-{
-    return m_quit;
-}
+//bool Grapic::hasFinished()
+//{
+//    return m_quit;
+//}
+//
+//bool Grapic::isInit()
+//{
+//    return m_window;
+//}
+//
+//const  SDL_Window* Grapic::window() const
+//{
+//    return m_window;
+//}
+//
+//SDL_Renderer * Grapic::renderer()
+//{
+//    return m_renderer;
+//}
 
-bool Grapic::isInit()
-{
-    return m_window;
-}
-
-
-const  SDL_Window* Grapic::window() const
-{
-    return m_window;
-}
-
-SDL_Renderer * Grapic::renderer()
-{
-    return m_renderer;
-}
-
-TTF_Font* Grapic::font()
-{
-    return m_font;
-}
+//TTF_Font* Grapic::font()
+//{
+//    return m_font;
+//}
 
 
 void Grapic::initKeyArray()
@@ -458,15 +463,34 @@ SDL_Renderer* renderer()
     return Grapic::singleton().renderer();
 }
 
-void winInit(const char* name, int w, int h)
+void winInit(const char* name, int w, int h, int posx, int posy)
 {
-    Grapic::singleton(false).init(name,w,h);
+    Grapic::singleton(false).init(name,w,h,posx,posy);
 }
 
 void winClear()
 {
     Grapic::singleton().clear();
 }
+
+void winSetPosition(int w, int h, int px, int py, bool fullscreen)
+{
+    if (fullscreen) SDL_SetWindowFullscreen( Grapic::singleton().window(), SDL_WINDOW_FULLSCREEN );
+    else SDL_SetWindowFullscreen( Grapic::singleton().window(), 0);
+
+    int x,y;
+    SDL_GetWindowSize( Grapic::singleton().window(), &x, &y);
+    if (w<0) w=x;
+    if (h<0) h=y;
+    SDL_SetWindowSize( Grapic::singleton().window(), w, h);
+
+
+    SDL_GetWindowPosition( Grapic::singleton().window(), &x, &y);
+    if (px<0) px=x;
+    if (py<0) py=y;
+    SDL_SetWindowPosition( Grapic::singleton().window(), px,py);
+}
+
 
 bool winHasFinished()
 {
@@ -494,19 +518,21 @@ void backgroundColor(unsigned char _r, unsigned char _g, unsigned char _b, unsig
     Grapic::singleton().backgroundColor( _r, _g, _b, _a);
 }
 
-void pressSpace()
+void pressSpace(bool isPrint)
 {
     winClearEvent();
     winDisplay();
-    print(10,10,"Press space");
+    if (isPrint) print(10,10,"Press space");
     winDisplay();
-    printf("Press space\n");
+    if (isPrint) printf("Press space\n");
 
     while(!winHasFinished() && !isKeyPressed(' '))
     {
         Grapic::singleton().manageEvent();
         delay(50);
     }
+    Grapic::singleton().manageEvent();
+    delay(50);
 }
 
 bool winManageEvent()

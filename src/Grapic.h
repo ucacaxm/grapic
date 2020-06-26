@@ -67,26 +67,30 @@ class Grapic
 {
 public:
     Grapic();
-    void init(const char* name, int w, int h);
+    void init(const char* name, int w, int h, int posx=-1, int posy=-1);
     bool manageEvent();
 
     void clear();
     void clearEvent();
     bool display();
-    bool hasFinished();
     void quit();
-    bool isInit();
     void color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
     SDL_Color& getColor();
     SDL_Color& getBackgroundColor();
     void backgroundColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
     int inverseY(int y);
     void setFont(int s, const char* ttf=NULL);
-    const SDL_Window* window() const;
-    SDL_Renderer * renderer();
-    TTF_Font* font();
     int keyHasBeenPressed(unsigned int sc);
     void setKeyRepeatMode(bool kr);
+
+    const SDL_Window* window() const { return m_window; }
+    SDL_Window* window() { return m_window; }
+    SDL_Renderer * renderer() { return m_renderer; }
+    const SDL_Renderer * renderer() const { return m_renderer; }
+    TTF_Font* font() { return m_font; }
+    const TTF_Font* font() const { return m_font; }
+    bool hasFinished() const { return m_quit; }
+    bool isInit() const { return m_window; }
 
     static Grapic& singleton(bool secure=true);
 
@@ -104,6 +108,7 @@ protected:
     SDL_Color m_backgroundColor;
     std::vector<int> m_keyStates;
     bool m_keyRepeatMode;
+    int imagesSavedCount;
 
     void initKeyArray();
     void help() const;
@@ -193,9 +198,10 @@ protected:
 
 
 
-/** \brief Initialize the window
+/** \brief Initialize the window with a size w,h and a position (posx,posy).
+    If posx<0 or posy<0, the position is centered.
 */
-void winInit(const char* name, int w, int h);
+void winInit(const char* name, int w, int h, int posx=-1, int posy=-1);
 
 /** \brief Clear the window with the default background color
     ~~~~~~~~~~~~~~~{.c}
@@ -217,6 +223,11 @@ bool winHasFinished();
 /** \brief Clear the event queue of the window
 */
 void winClearEvent();
+
+/** \brief Change the size (w,h), the position(ps,py) or the fullscreen on/off
+     Set a negative parameter to let him as it is.
+*/
+void winSetPosition(int w, int h, int ps, int py, bool fullscreen);
 
 
 /** \brief Display the window. All drawing is hidden until this function is not called.
@@ -373,7 +384,7 @@ void print(int x, int y, float nb);
 
 /** \brief Stop the program until key 'space'is pressed
 */
-void pressSpace();
+void pressSpace(bool isPrint=true);
 
 
 
@@ -536,11 +547,27 @@ bool isInTriangle(float px, float py, float ax, float ay, float bx, float by, fl
  * \warning Draw nothing if there are not enough vertices or if number is not even
  * \warning Undetermined draw if the polygon is not simple
  (Code provided by Bastien DOIGNIES, many thanks)
+    ~~~~~~~~~~~~~~~{.c}
+    int p[4][2];
+    p[0][0] = 20;       p[0][1] = 20;       // sommet 0, coord X et Y
+    p[1][0] = 200;      p[1][1] = 20;       // sommet 1, coord X et Y
+    p[2][0] = 200;      p[2][1] = 200;      // sommet 2, coord X et Y
+    p[3][0] = 20;       p[3][1] = 200;      // sommet 3, coord X et Y
+    polygonFill(p, 4);
+    ~~~~~~~~~~~~~~~
  */
 void polygonFill(int p[][2], unsigned int number);
 
 
 /** \brief Draw a polygon. (Code provided by Bastien DOIGNIES, many thanks)
+    ~~~~~~~~~~~~~~~{.c}
+    int p[4][2];
+    p[0][0] = 20;       p[0][1] = 20;       // sommet 0, coord X et Y
+    p[1][0] = 200;      p[1][1] = 20;       // sommet 1, coord X et Y
+    p[2][0] = 200;      p[2][1] = 200;      // sommet 2, coord X et Y
+    p[3][0] = 20;       p[3][1] = 200;      // sommet 3, coord X et Y
+    polygon(p, 4);
+    ~~~~~~~~~~~~~~~
  */
 void polygon(int p[][2], unsigned int number);
 
@@ -582,7 +609,7 @@ The Grapic archive comes with the needed SDL part, you do not have to install SD
 <br>
 
 \section download Download
-Download and install the last version:\htmlinclude "VERSION.html".
+Download and install the last version:\htmlinclude "VERSION.html"
 Previous versions may be downloaded from the [download](../download) directory.
 
 Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/grapic](https://github.com/ucacaxm/grapic)
@@ -593,8 +620,8 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 \section start How to start ?
 
 \subsection win Run on Windows
-  - Install Codeblocks from: [http://www.codeblocks.org/downloads](http://www.codeblocks.org/downloads)\n
-    Take the one with MinGW like codeblocks-16.01mingw-setup.exe
+  - Install Codeblocks 20.03 (IMPORTANT) from: [http://www.codeblocks.org/downloads](http://www.codeblocks.org/downloads)\n
+    Take the one with MinGW like codeblocks-20.03mingw-setup.exe
 
   - Download the archive file, see section download.
 

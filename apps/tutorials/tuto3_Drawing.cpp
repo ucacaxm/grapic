@@ -6,11 +6,13 @@ const int DIMW = 500;
 struct Data
 {
     int n;
+    Image im;
 };
 
 void init(Data& d)
 {
     d.n = 10;
+    d.im = image("data/grapic.jpg");
 }
 
 
@@ -46,6 +48,8 @@ void draw(Data& d)
     ellipse( 350, 450, 40, 20);
     color(200,123,100);
     ellipseFill( 400, 300, 20, 40);
+
+    image_draw( d.im, 335, 65, 100, 100);
 }
 
 

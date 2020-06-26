@@ -20,14 +20,16 @@ SAVE="${GRAPIC}/../${SAVE_SHORT}"
 TOCOPY="apps bin build data script extern src Makefile grapic.lua premake* README.md lifami.bat lifami.lua"
 
 TOZIP_SHORT="apps data src Makefile grapic.lua premake4.lua README.md lifami.lua"
-TOZIP_LINUX_SHORT="script/premake4.linux script/premake5.linux build/linux script/premake4.exe.linux script/premake5.exe.linux script/make_lifami.sh"
-TOZIP_MINGW_SHORT="extern/mingw bin/*.dll script/premake4.exe script/premake5.exe build/windows premake.bat lifami.bat"
+TOZIP_LINUX_SHORT="script/premake4.linux script/premake5.linux build/linux script/make_lifami.sh"
+TOZIP_MINGW20_SHORT="extern/mingw-cb20 bin/*.dll script/premake4.exe script/premake5.exe build/windows premake.bat lifami.bat"
+TOZIP_MINGW17_SHORT="extern/mingw-cb17 bin/*.dll script/premake4.exe script/premake5.exe build/windows premake.bat lifami.bat"
 TOZIP_VISUAL2015_SHORT="extern/visual2015 premake-visual.bat script/premake5.exe script/premake4.exe build/windows premake.bat lifami.bat"
 TOZIP_MAC_SHORT="extern/macosx script/premake4.macosx script/premake5.macosx build/macosx script/make_lifami.sh"
 
 TOZIP=`for i in ${TOZIP_SHORT};do printf "${SAVE_SHORT}/$i ";done`
 TOZIP_LINUX=`for i in ${TOZIP_LINUX_SHORT};do printf "${SAVE_SHORT}/$i ";done`
-TOZIP_MINGW=`for i in ${TOZIP_MINGW_SHORT};do printf "${SAVE_SHORT}/$i ";done`
+TOZIP_MINGW20=`for i in ${TOZIP_MINGW20_SHORT};do printf "${SAVE_SHORT}/$i ";done`
+TOZIP_MINGW17=`for i in ${TOZIP_MINGW17_SHORT};do printf "${SAVE_SHORT}/$i ";done`
 TOZIP_MAC=`for i in ${TOZIP_MAC_SHORT};do printf "${SAVE_SHORT}/$i ";done`
 TOZIP_VISUAL2015=`for i in ${TOZIP_VISUAL2015_SHORT};do printf "${SAVE_SHORT}/$i ";done`
 
@@ -37,7 +39,8 @@ echo "GRAPIC-ZIP=${SAVE}"
 echo "TOZIP_SHORT=${TOZIP_SHORT}"
 echo "TOZIP=${TOZIP}"
 echo "TOZIP_LINUX=${TOZIP_LINUX}"
-echo "TOZIP_MINGW=${TOZIP_MINGW}"
+echo "TOZIP_MINGW20=${TOZIP_MINGW20}"
+echo "TOZIP_MINGW17=${TOZIP_MINGW17}"
 echo "TOZIP_MAC=${TOZIP_MAC}"
 echo "TOZIP_VISUAL2015=${TOZIP_VISUAL2015}"
 
@@ -66,7 +69,8 @@ cp -rf ${TOCOPY} ${SAVE}
 check ${TOZIP}
 check ${TOZIP_MAC}
 check ${TOZIP_LINUX}
-check ${TOZIP_MINGW}
+check ${TOZIP_MINGW20}
+check ${TOZIP_MINGW17}
 check ${TOZIP_VISUAL2015}
 
 pause 
@@ -92,14 +96,17 @@ makezip ()
 	pause
 }
 
-echo "=============================> MINGW win"
-FILE="${GRAPIC}/doc/download/grapic-${VERSION}_win.zip"
-makezip "${FILE}" "${TOZIP}" "${TOZIP_MINGW}"
+echo "=============================> MINGW-CB20 win"
+FILE="${GRAPIC}/doc/download/grapic-${VERSION}_WinCodeblocks20.zip"
+makezip "${FILE}" "${TOZIP}" "${TOZIP_MINGW20}"
+echo "=============================> MINGW-CB17 win"
+FILE="${GRAPIC}/doc/download/grapic-${VERSION}_WinCodeblocks17.zip"
+makezip "${FILE}" "${TOZIP}" "${TOZIP_MINGW17}"
 echo "=============================> ZIP mac"
 FILE="${GRAPIC}/doc/download/grapic-${VERSION}_mac.zip"
 makezip "${FILE}" "${TOZIP}" "${TOZIP_MAC}"
 echo "=============================> ZIP VISUAL2015"
-FILE="${GRAPIC}/doc/download/grapic-${VERSION}_visual2015.zip"
+FILE="${GRAPIC}/doc/download/grapic-${VERSION}_WinVisual2015.zip"
 makezip "${FILE}" "${TOZIP}" "${TOZIP_VISUAL2015}"
 echo "=============================> LINUX TGZ"
 FILETGZ="${GRAPIC}/doc/download/grapic-${VERSION}.tgz"
