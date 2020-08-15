@@ -376,8 +376,8 @@ bool Grapic::display()
 void Grapic::quit()
 {
     TTF_CloseFont(m_font);
-    SDL_DestroyWindow(m_window);
     SDL_DestroyRenderer(m_renderer);
+    SDL_DestroyWindow(m_window);
     m_font = NULL;
     m_window = NULL;
     m_renderer = NULL;
