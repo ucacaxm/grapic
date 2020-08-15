@@ -37,9 +37,9 @@ along with Grapic.  If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 #include <algorithm>
 
-#include <SDL.h>
-#include <SDL_ttf.h>
-#include <SDL_image.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 
 /// \endcond
 
