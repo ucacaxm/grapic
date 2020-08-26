@@ -24,6 +24,7 @@ Compiling from the github (which is not the standard way)
 1. sudo apt install g++ premake4 zip doxygen libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev
 2. make premake
 3. make
+(4. make zip or make web): to create the zip files in doc/download or to sync everything to the webpage (need passwd).
 
 
 
