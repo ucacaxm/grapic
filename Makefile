@@ -4,6 +4,7 @@ GRAPIC_HOME = .
 
 apps_linux = "${MAKECMDGOALS}"
 
+
 ifeq ($(OS),Windows_NT)
 	OS = windows
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.exe
@@ -17,19 +18,25 @@ ifeq ($(UNAME_S),Darwin)
 	apps_linux = $(shell basename --suffix=.make build/linux/*.make  )
 else
 	OS = linux
-	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.linux
+	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.linux.sh
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.linux
 	apps_linux = $(shell basename --suffix=.make build/linux/*.make  )
 endif
 endif
 
-#a = $(shell echo OS=${OS} apps_linux=${apps_linux})
-#$(info $(a))
+
+#$(info $(apps_linux))
+#ifeq ($(wildcard build/*),)		# if the premake was never runned, apps_linux contains "*" => remove it
+ifeq ($(apps_linux),*)		# if the premake was never runned, apps_linux contains "*" => remove it
+	apps_linux = ""
+endif
+$(info $(apps_linux))
+
 
 
 
 all: build/${OS} remove_quarantine
-	mkdir -p build ; mkdir -p build/${OS} ; cd build/${OS} ; make
+	cd build/${OS} ; make
 
 remove_quarantine:
 ifeq ($(UNAME_S),Darwin)
@@ -37,14 +44,20 @@ ifeq ($(UNAME_S),Darwin)
 endif
 	
 clean: build/${OS}
-	rm -rf bin/*.exe apps/LIFAMI ; mkdir -p build ; cd build/${OS} ; make clean
+	rm -rf bin/*.exe apps/LIFAMI ; cd build/${OS} ; make clean
+
+veryclean: clean
+	rm -rf build doc/html doc/images doc/xml doc/index.html
 
 build/${OS}: premake4.lua premake
 
 doc: $(GRAPIC_HOME)/doc/* $(GRAPIC_HOME)/doc/images/* $(GRAPIC_HOME)/src/* FORCE
 	cd doc ; doxygen
 
-zip: clean version $(GRAPIC_HOME)/bin/remove_correction.exe premakeall
+dos2unix:
+	dos2unix script/*.sh doc/VERSION ; chmod 755 script/*.sh
+
+zip: dos2unix clean version $(GRAPIC_HOME)/bin/remove_correction.exe premakeall
 	$(GRAPIC_HOME)/script/make_zip.sh
 
 version: FORCE
@@ -139,7 +152,7 @@ list:
 	@echo "apps_linux=$(apps_linux)"	
 
 ${apps_linux}: %: remove_quarantine 
-	@echo "apps_linux app_linux=${apps_linux} OS=$(OS)"
+	@echo "Build app: app_linux=${apps_linux} OS=$(OS)"
 	cd build/${OS} ; make -f $@.make
 
 	

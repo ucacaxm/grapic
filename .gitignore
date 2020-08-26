@@ -11,6 +11,7 @@ build*
 doc/download*
 doc/html*
 doc/xml*
+doc/images*
 
 apps/LIFAMI/
 
