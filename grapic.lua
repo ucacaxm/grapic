@@ -1,30 +1,73 @@
 
+newoption {
+   trigger     = "cb-version",
+   value       = "version",
+   description = "Choose a particular version of CB",
+   allowed = {
+      { "cb20",	"Codeblocks 20" },
+      { "cb17",	"Codeblocks 17" },
+   }
+}
+
+
+newoption {
+   trigger     = "lifami",
+   description = "activate creation of projects for LIFAMI",
+}
+
+newoption {
+   trigger     = "lifami-beta",
+   description = "activate creation of projects for LIFAMI-BETA",
+}
+
+
 solution "grapic"
-
-	--  ugly hack to use clang
-	-- premake.gcc.cc  = 'clang'
-	-- premake.gcc.cxx = 'clang++'
-
-	configurations { "debug", "release" }
-	-- platforms { "native", "x32", "x64"  }
-	-- platforms { "x64", "x32"  }
-	-- platforms { "native" }
-
-	--~ location ("build/" .. os.get() .. "/" .. _ACTION)
 
 	if grapic_run_only_config then
 		grapic_dir = path.getabsolute(".")
 	else
 		grapic_dir = "."
 	end
-
-	
-	location (grapic_dir .. "/build/" .. os.get())
-
 	objdir = grapic_dir.."/obj"
 	includedirs { grapic_dir.."/.", grapic_dir .. "/src" }
 
+	configurations { "Grapic" }
 
+	if not _OPTIONS["cb-version"] then
+		location (grapic_dir .. "/build/" .. os.get())
+	end
+
+	configuration { "windows" }
+		defines { "WIN32", "NVWIDGETS_EXPORTS", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS" }
+		defines { "NOMINMAX" } -- allow std::min() and std::max() in vc++
+		buildoptions { "-std=c++11" }
+		buildoptions { "-g"}
+		linkoptions { "-g"}
+		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
+
+		
+	-- ##################### CB17
+	if _OPTIONS["cb-version"]=="cb17" then
+		location (grapic_dir .. "/build/" .. os.get().."-cb17")
+		configuration { "windows", "codeblocks" }	
+			includedirs { "extern/mingw-cb17/include", "extern/mingw-cb17/include/SDL2" }
+			libdirs { grapic_dir .. "/extern/mingw-cb17/lib", grapic_dir .. "/extern/mingw-cb17/bin" }
+			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
+	--		platforms { "x32"  }
+	end
+
+	-- ##################### CB20
+	if _OPTIONS["cb-version"]=="cb20" then
+		location (grapic_dir .. "/build/" .. os.get().."-cb20")
+		configuration { "windows", "codeblocks"}	
+			includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
+			libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
+			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
+	--		platforms { "x64"  }
+	end
+
+		
+	-- ##################### Linux
 	configuration { "linux" }
 		includedirs { "/usr/include/SDL2" }
 		buildoptions { "-std=c++11" }
@@ -32,31 +75,9 @@ solution "grapic"
 		linkoptions { "-ggdb"}
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
 		links { "SDL2", "SDL2_image", "SDL2_ttf" }
+	
 
-	configuration { "windows" }
-		defines { "WIN32", "NVWIDGETS_EXPORTS", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS" }
-		defines { "NOMINMAX" } -- allow std::min() and std::max() in vc++ :(((
-
-	configuration { "windows", "gmake" }
-		buildoptions { "-std=c++11" }
-		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
-		buildoptions { "-g"}
-		linkoptions { "-g"}
-		includedirs { grapic_dir .. "/extern/mingw-cb20/include", grapic_dir .. "/extern/mingw-cb20/include/SDL2" }
-		libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
-		links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
-		platforms { "x64"  }
-
-	configuration { "windows", "codeblocks" }
-		buildoptions { "-std=c++11" }
-		buildoptions { "-g"}
-		linkoptions { "-g"}
-		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
-		includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2", "extern/mingw-cb17/include", "extern/mingw-cb17/include/SDL2" }
-		libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin", grapic_dir .. "/extern/mingw-cb17/bin", grapic_dir .. "/extern/mingw-cb17/lib" }
-		links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
-		platforms { "x64", "x32"  }
-
+	-- ##################### VS2015
 	configuration { "windows", "vs2015"}
 		if _PREMAKE_VERSION >="5.0" then
 			system "Windows"
@@ -67,8 +88,8 @@ solution "grapic"
 		libdirs { grapic_dir .. "/extern/visual2015/lib" }
 		links { "SDL2", "SDL2main", "SDL2_image", "SDL2_ttf"}
 
-		
-		
+
+	-- ##################### MACOS
 	configuration "macosx"
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing" }
 		buildoptions { "-std=c++11" }
@@ -157,24 +178,22 @@ make_project( "demo_Pacman", 	{ "apps/demo_pacman/Jeu.cpp",     "apps/demo_pacma
 
 
 
-newoption {
-   trigger     = "target",
-   value       = "TGT",
-   description = "Choose a particular sub-list of projects",
-   allowed = {
-      { "standard",	"All project except beta" },
-      { "beta",  	"Future project" },
-   }
-}
 
 
 
-if not _OPTIONS["target"] then
-   _OPTIONS["target"] = "standard"
+if _OPTIONS["lifami"] then
+	make_project( "LIFAMI_1_Complex", "apps/LIFAMI/TPComplex.cpp" )
+	make_project( "LIFAMI_2_Interpolation", "apps/LIFAMI/TPInterpolation.cpp" )
+	make_project( "LIFAMI_3_Particle", "apps/LIFAMI/TPParticle.cpp" )
+	make_project( "LIFAMI_4_ParticleSpring", "apps/LIFAMI/TPParticleSpring.cpp" )
+	make_project( "LIFAMI_5_GameOfLife", "apps/LIFAMI/TPGameOfLife.cpp" )
+	make_project( "LIFAMI_6_WolfRabbit", "apps/LIFAMI/TPWolfRabbit.cpp" )
+	make_project( "LIFAMI_7_ColorInsects", "apps/LIFAMI/TPColorInsects.cpp" )
+	make_project( "LIFAMI_8_IceScream", "apps/LIFAMI/TPIceScream.cpp" )
 end
 
--- zzz (future projects)
-if _OPTIONS["target"] == "beta" then
+
+if _OPTIONS["lifami-beta"] then
 	make_project( "zzz_Fluid", 								"apps/zzz_fluid/main_fluid.cpp" )
 	make_project( "zzz_particles", 							"apps/zzz_particles/main_particles.cpp" )
 	make_project( "zzz_lifami_TD1_Complex",					"apps/zzz_lifami/T1_TD1-TP-TP_Complex.cpp" )
