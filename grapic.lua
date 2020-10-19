@@ -9,7 +9,6 @@ newoption {
    }
 }
 
-
 newoption {
    trigger     = "lifami",
    description = "activate creation of projects for LIFAMI",

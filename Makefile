@@ -128,15 +128,15 @@ lifami: remove_quarantine
 	rm -rf build ; script/make_lifami.sh ; chmod 755 script/premake*
 	@echo "OS=$(OS)"
 ifeq ($(OS),Windows_NT)
-	$(PREMAKE4) --os=windows --file=lifami.lua gmake
-	$(PREMAKE4) --os=windows --file=lifami.lua codeblocks
+	$(PREMAKE4) --os=windows --file=premake4.lua --lifami gmake
+	$(PREMAKE4) --os=windows --file=premake4.lua --lifami codeblocks
 	#$(PREMAKE5) --file=lifami.lua vs2015
 else ifeq ($(OS),linux)
-	$(PREMAKE4) --os=linux --file=lifami.lua gmake
-	$(PREMAKE4) --os=linux --file=lifami.lua codeblocks
+	$(PREMAKE4) --os=linux --file=premake4.lua --lifami gmake
+	$(PREMAKE4) --os=linux --file=premake4.lua --lifami codeblocks
 else ifeq ($(OS),macosx)
-	$(PREMAKE4) --os=macosx --file=lifami.lua gmake
-	$(PREMAKE4) --os=macosx --file=lifami.lua xcode3
+	$(PREMAKE4) --os=macosx --file=premake4.lua --lifami gmake
+	$(PREMAKE4) --os=macosx --file=premake4.lua --lifami xcode3
 	$(PREMAKE5) --file=lifami.lua xcode4
 endif
 

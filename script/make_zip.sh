@@ -19,11 +19,11 @@ SAVE_SHORT="grapic-${VERSION}"
 SAVE="${GRAPIC}/../${SAVE_SHORT}"
 TOCOPY="apps bin build data script extern src Makefile grapic.lua premake* README.md lifami.bat lifami.lua"
 
-TOZIP_SHORT="apps data src Makefile grapic.lua premake4.lua README.md lifami.lua"
+TOZIP_SHORT="apps data src Makefile grapic.lua premake4.lua README.md"
 TOZIP_LINUX_SHORT="script/premake4.linux.sh script/premake5.linux.sh script/premake5.linux build/linux script/make_lifami.sh"
-TOZIP_MINGW20_SHORT="extern/mingw-cb20 bin/*.dll script/premake4.exe script/premake5.exe build/windows premake.bat lifami.bat"
-TOZIP_MINGW17_SHORT="extern/mingw-cb17 bin/*.dll script/premake4.exe script/premake5.exe build/windows premake.bat lifami.bat"
-TOZIP_VISUAL2015_SHORT="extern/visual2015 premake-visual.bat script/premake5.exe script/premake4.exe build/windows premake.bat lifami.bat"
+TOZIP_MINGW20_SHORT="extern/mingw* bin/*.dll script/premake4.exe script/premake5.exe build/windows premake-cb*.bat lifami-cb*.bat"
+TOZIP_MINGW17_SHORT="extern/mingw* bin/*.dll script/premake4.exe script/premake5.exe build/windows premake-cb*.bat lifami-cb*.bat"
+TOZIP_VISUAL2015_SHORT="extern/visual2015 premake-visual.bat script/premake5.exe script/premake4.exe build/windows premake-visual.bat"
 TOZIP_MAC_SHORT="extern/macosx script/premake4.macosx script/premake5.macosx build/macosx script/make_lifami.sh"
 
 TOZIP=`for i in ${TOZIP_SHORT};do printf "${SAVE_SHORT}/$i ";done`
