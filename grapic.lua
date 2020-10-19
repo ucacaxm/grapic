@@ -33,8 +33,6 @@ solution "grapic"
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
 		links { "SDL2", "SDL2_image", "SDL2_ttf" }
 
-		
-
 	configuration { "windows" }
 		defines { "WIN32", "NVWIDGETS_EXPORTS", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS" }
 		defines { "NOMINMAX" } -- allow std::min() and std::max() in vc++ :(((
@@ -54,10 +52,10 @@ solution "grapic"
 		buildoptions { "-g"}
 		linkoptions { "-g"}
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
-		includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
-		libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
+		includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2", "extern/mingw-cb17/include", "extern/mingw-cb17/include/SDL2" }
+		libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin", grapic_dir .. "/extern/mingw-cb17/bin", grapic_dir .. "/extern/mingw-cb17/lib" }
 		links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
-		platforms { "x64"  }
+		platforms { "x64", "x32"  }
 
 	configuration { "windows", "vs2015"}
 		if _PREMAKE_VERSION >="5.0" then
