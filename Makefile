@@ -97,12 +97,12 @@ premake-WinVS2015: remove_quarantine cleanpremake
 	cp extern/visual2015/bin/*.dll bin
 	$(PREMAKE5)  --os=windows vs2015
 		
-premake-linux: remove_quarantine cleanpremake
+premake-Linux: remove_quarantine cleanpremake
 	@echo "premake linux OS=$(OS)"
 	$(PREMAKE4) --os=linux gmake
 	$(PREMAKE4) --os=linux codeblocks
 
-premake-macos: cleanpremake
+premake-MacOS: cleanpremake
 	@echo "premake macos OS=$(OS)"
 	$(PREMAKE4) --os=macosx gmake
 	$(PREMAKE5) xcode4

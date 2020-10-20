@@ -154,9 +154,9 @@ makezip WinCB17 zip "$ZIP_COMMAND" "${TOZIP_MINGW17}"
 
 makezip WinVS2015 zip "$ZIP_COMMAND" "${TOZIP_VISUAL2015}"
 
-makezip macos zip "$ZIP_COMMAND" "${TOZIP_MACOS}"
+makezip MacOS zip "$ZIP_COMMAND" "${TOZIP_MACOS}"
 
-makezip linux tgz "$TGZ_COMMAND" "${TOZIP_LINUX}"
+makezip Linux tgz "$TGZ_COMMAND" "${TOZIP_LINUX}"
 
 #pause
 
