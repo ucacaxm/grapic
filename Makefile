@@ -47,14 +47,14 @@ clean: build/${OS}
 	rm -rf bin/*.exe ; cd build/${OS} ; make clean
 
 cleandoc:
-	rm -rf doc/html doc/images doc/xml doc/index.html
+	rm -rf doc/html doc/xml doc/index.html
 
 cleanpremake: cleandoc
 	rm -rf build ; rm -rf bin/* ; rm -rf obj ; rm -rf apps/LIFAMI ; chmod 755 script/premake*
 
 build/${OS}: premake4.lua premake
 
-doc: $(GRAPIC_HOME)/doc/* $(GRAPIC_HOME)/doc/images/* $(GRAPIC_HOME)/src/* FORCE
+docgen: $(GRAPIC_HOME)/doc $(GRAPIC_HOME)/doc/images $(GRAPIC_HOME)/src FORCE
 	cd doc ; doxygen
 
 dos2unix:
@@ -67,10 +67,10 @@ version: FORCE
 	#$(shell $(GRAPIC_HOME)/script/inc_version.sh))
 	sh $(GRAPIC_HOME)/script/inc_version.sh
 
-web-win: version zip doc
+web-win: version zip docgen
 	/c/Program\ Files\ \(x86\)/WinSCP/winscp.com -script=$(GRAPIC_HOME)/script/scp_script_toWeb.txt
 
-web: zip doc web-force
+web: zip docgen web-force
 
 web-force:
 	rsync -ravuz --delete $(GRAPIC_HOME)/doc/ ameyer@connect.liris.cnrs.fr:/home-membres/ameyer/grapic/
