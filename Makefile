@@ -44,10 +44,13 @@ ifeq ($(UNAME_S),Darwin)
 endif
 	
 clean: build/${OS}
-	rm -rf bin/*.exe apps/LIFAMI ; cd build/${OS} ; make clean
+	rm -rf bin/*.exe ; cd build/${OS} ; make clean
 
-veryclean: clean
-	rm -rf build doc/html doc/images doc/xml doc/index.html
+cleandoc:
+	rm -rf doc/html doc/images doc/xml doc/index.html
+
+cleanpremake: cleandoc
+	rm -rf build ; rm -rf bin/* ; rm -rf obj ; chmod 755 script/premake*
 
 build/${OS}: premake4.lua premake
 
@@ -57,7 +60,7 @@ doc: $(GRAPIC_HOME)/doc/* $(GRAPIC_HOME)/doc/images/* $(GRAPIC_HOME)/src/* FORCE
 dos2unix:
 	dos2unix script/*.sh doc/VERSION ; chmod 755 script/*.sh
 
-zip: dos2unix clean version $(GRAPIC_HOME)/bin/remove_correction.exe premakeall
+zip: dos2unix version $(GRAPIC_HOME)/bin/remove_correction.exe
 	$(GRAPIC_HOME)/script/make_zip.sh
 
 version: FORCE
@@ -78,32 +81,42 @@ web-force:
 
 bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp
 	g++ -Wall $(GRAPIC_HOME)/script/remove_correction.cpp -o $(GRAPIC_HOME)/bin/remove_correction.exe
+	
+premake-WinCB17: remove_quarantine cleanpremake
+	@echo "premake CB17 OS=$(OS)"
+	cp extern/mingw-cb17/bin/*.dll bin
+	$(PREMAKE4) --os=windows --cb-version=cb17 codeblocks
 
-premakeall: remove_quarantine
-	@echo "premakeall OS=$(OS)"
-	rm -rf build ; chmod 755 script/premake*
-	@echo "Generate all premake files"
-	$(PREMAKE4) --os=windows codeblocks
-	$(PREMAKE4) --os=windows gmake
-	$(PREMAKE5) vs2015
+premake-WinCB20: remove_quarantine cleanpremake
+	@echo "premake CB20 OS=$(OS)"
+	cp extern/mingw-cb20/bin/*.dll bin
+	$(PREMAKE4) --os=windows --cb-version=cb20 codeblocks
+
+premake-WinVS2015: remove_quarantine cleanpremake
+	@echo "premake vs2015 OS=$(OS)"
+	cp extern/visual2015/bin/*.dll bin
+	$(PREMAKE5)  --os=windows vs2015
+		
+premake-linux: remove_quarantine cleanpremake
+	@echo "premake linux OS=$(OS)"
 	$(PREMAKE4) --os=linux gmake
 	$(PREMAKE4) --os=linux codeblocks
+
+premake-macos: cleanpremake
+	@echo "premake macos OS=$(OS)"
 	$(PREMAKE4) --os=macosx gmake
-	$(PREMAKE4) --os=macosx xcode3
 	$(PREMAKE5) xcode4
 
-premake: remove_quarantine
-	@echo "premake OS=$(OS)"
-	rm -rf build ; chmod 755 script/premake*
-	@echo "OS=$(OS)"
+	
 ifeq ($(OS),Windows_NT)
-	$(PREMAKE4) --os=windows codeblocks
+premake: remove_quarantine premake-cb20
+	@echo "premake Win OS=$(OS)"
 else ifeq ($(OS),linux)
-	$(PREMAKE4) --os=linux gmake
-	$(PREMAKE4) --os=linux codeblocks
+premake: remove_quarantine premake-linux
+	@echo "premake linux OS=$(OS)"
 else ifeq ($(OS),macosx)
-	$(PREMAKE4) --os=macosx gmake
-	$(PREMAKE4) --os=macosx xcode3
+premake: remove_quarantine premake-macos
+	@echo "premake macos OS=$(OS)"
 else
 	@echo "ERROR: Your OS is not detected in the makefile"
 endif
@@ -128,9 +141,7 @@ lifami: remove_quarantine
 	rm -rf build ; script/make_lifami.sh ; chmod 755 script/premake*
 	@echo "OS=$(OS)"
 ifeq ($(OS),Windows_NT)
-	$(PREMAKE4) --os=windows --file=premake4.lua --lifami gmake
 	$(PREMAKE4) --os=windows --file=premake4.lua --lifami codeblocks
-	#$(PREMAKE5) --file=lifami.lua vs2015
 else ifeq ($(OS),linux)
 	$(PREMAKE4) --os=linux --file=premake4.lua --lifami gmake
 	$(PREMAKE4) --os=linux --file=premake4.lua --lifami codeblocks
