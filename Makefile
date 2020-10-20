@@ -50,7 +50,7 @@ cleandoc:
 	rm -rf doc/html doc/images doc/xml doc/index.html
 
 cleanpremake: cleandoc
-	rm -rf build ; rm -rf bin/* ; rm -rf obj ; chmod 755 script/premake*
+	rm -rf build ; rm -rf bin/* ; rm -rf obj ; rm -rf apps/LIFAMI ; chmod 755 script/premake*
 
 build/${OS}: premake4.lua premake
 
@@ -70,7 +70,7 @@ version: FORCE
 web-win: version zip doc
 	/c/Program\ Files\ \(x86\)/WinSCP/winscp.com -script=$(GRAPIC_HOME)/script/scp_script_toWeb.txt
 
-web: version zip doc web-force
+web: zip doc web-force
 
 web-force:
 	rsync -ravuz --delete $(GRAPIC_HOME)/doc/ ameyer@connect.liris.cnrs.fr:/home-membres/ameyer/grapic/
@@ -138,7 +138,7 @@ endif
 
 
 lifami: remove_quarantine
-	rm -rf build ; script/make_lifami.sh ; chmod 755 script/premake*
+	rm -rf build ; chmod 755 script/premake*
 	@echo "OS=$(OS)"
 ifeq ($(OS),Windows_NT)
 	$(PREMAKE4) --os=windows --file=premake4.lua --lifami codeblocks
