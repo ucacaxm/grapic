@@ -112,7 +112,7 @@ ifeq ($(OS),Windows_NT)
 premake: remove_quarantine premake-cb20
 	@echo "premake Win OS=$(OS)"
 else ifeq ($(OS),linux)
-premake: remove_quarantine premake-linux
+premake: remove_quarantine premake-Linux
 	@echo "premake linux OS=$(OS)"
 else ifeq ($(OS),macosx)
 premake: remove_quarantine premake-macos

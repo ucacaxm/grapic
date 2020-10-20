@@ -15,9 +15,9 @@ echo "" > ../doc/VERSION.html
 echo "<UL>" >> ../doc/VERSION.html
 echo "<LI> <a href=\"../download/grapic-$A.$B.${C}-WinCB20.zip\"> grapic-${A}.${B}.${C}-WinCB20.zip (WINDOWS/Codeblocks-20.03/Mingw) </a>"  >> ../doc/VERSION.html
 echo "<LI> <a href=\"../download/grapic-$A.$B.${C}-MacOS.zip\"> grapic-${A}.${B}.${C}_MacOS.zip (MACOS)</a>"  >> ../doc/VERSION.html
-echo "<LI> <a href=\"../download/grapic-$A.$B.$C-Linux.tgz\"> grapic-${A}.${B}.${C}-Linux.tgz (LINUX) </a>"  >> ../doc/VERSION.html
-echo "<LI> <a href=\"../download/grapic-$A.$B.${C}-WinVS2015.zip\"> grapic-${A}.${B}.${C}_WinVS2015.zip (WINDOWS/VisualStudio2015) </a>"  >> ../doc/VERSION.html
-echo "<LI> <a href=\"../download/grapic-$A.$B.${C}-WinCB17.zip\"> grapic-${A}.${B}.${C}-WinCB17.zip (WINDOWS/Codeblocks-17.12/Mingw) </a>"  >> ../doc/VERSION.html
+echo "<LI> <a href=\"../download/grapic-$A.$B.$C-Linux.tgz\"> grapic-${A}.${B}.${C}-Linux.tgz (LINUX) </a>. You need to install librairies, see 'Run on Linux'"  >> ../doc/VERSION.html
+echo "<LI> <a href=\"../download/grapic-$A.$B.${C}-WinVS2015.zip\"> grapic-${A}.${B}.${C}_WinVS2015.zip (WINDOWS/VisualStudio2015) </a>. Also for new version like VS2019 "  >> ../doc/VERSION.html
+echo "<LI> <a href=\"../download/grapic-$A.$B.${C}-WinCB17.zip\"> grapic-${A}.${B}.${C}-WinCB17.zip (WINDOWS/Codeblocks-17.12/Mingw) </a>.  For the previous version of Codeblocks." >> ../doc/VERSION.html
 echo "</UL>" >> ../doc/VERSION.html
 
 echo "########### inc_version.sh: done"

@@ -13,7 +13,7 @@ The Grapic archive comes with the needed SDL part, you do not have to install SD
 
 
 ## Note for developpers and to produce the webpages
-Compiling from the github (which is not the standard way)
+Compiling from the github (which is not the standard way).
 
 * On Linux you need to install:
 - g++
@@ -29,7 +29,6 @@ Compiling from the github (which is not the standard way)
 
 
 * On windows
-1. Copy extern/mingw-cb20/bin/*.dll on bin/*
-2. run premake.bat
-3. open build/windows/grapic.workspace
-
+0. Install CB 20
+1. run premake-cb20.bat to generate th projects files    or     run premake-lifami.bat to generate lifami projects 
+2. open build/windows-cb20/grapic.workspace
