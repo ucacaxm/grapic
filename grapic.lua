@@ -115,7 +115,18 @@ function file_exists(name)
 	  io.output(f)
 	  io.write("// "..name)
 	  if (string.find(name,".cpp")~=nil) then
-	     io.write("\n\n#include<Grapic.h>\nusing namespace grapic;\n\nint main(int , char**)\n{\n\twinInit(\"vide\",500,500);\n\tpressSpace();\n\twinQuit();\n\treturn 0;\n}\n")
+	     io.write("	\n\n#include<Grapic.h>\
+					\nusing namespace grapic;\
+					\n\nint main(int , char**)\
+					\n{\n\twinInit(\"vide\",500,500);\
+					\n\tbackgroundColor(120,70,200);\
+					\n\tcolor(220,70,100);\
+					\n\twinClear();\
+					\n\trectangle_fill(100,100, 200, 200);\
+					\n\tpressSpace();\n\twinQuit();\
+					\n\treturn 0;\
+					\n}\n"
+					)
       end
 	  io.close(f)
       return false 
