@@ -17,7 +17,7 @@ const int SIZE_BLOCK = 3;
 struct Data
 {
 	int level[SIZE_X][SIZE_Y];
-	int block[SIZE_BLOCK ][SIZE_BLOCK ];
+	int block[SIZE_BLOCK][SIZE_BLOCK];
 	int pos_x, pos_y;
 	float temps;
 	float speed;
@@ -27,17 +27,36 @@ struct Data
 
 void createBlock(Data& d)
 {
-    int i,j;
+    int i,j,lg,dir,k;
+
     for(i=0;i<SIZE_BLOCK ;++i)
         for(j=0;j<SIZE_BLOCK ;++j)
         {
-            d.block[i][j] = irand(0,1);
-            //if (i==0) d.block[i][j]=1;
+            d.block[i][j] = 0;
         }
+
+    i = irand(0,2);
+    j = irand(0,2);
+    lg = 1+irand(0,4);
+    for(k=0;k<lg;k++)
+    {
+        d.block[i][j] = 1;
+        dir = irand(0,3);
+        switch(dir)
+        {
+            case 0: if (i<2) ++i; break;
+            case 1: if (i>0) --i; break;
+            case 2: if (j<2) ++j; break;
+            case 3: if (j>0) --j; break;
+        }
+    }
+    //cout<<"ici "<<l<<endl;
+
+
+
     d.pos_x = SIZE_X/2;
     d.pos_y = SIZE_Y-3;
     d.speed = 0.f;
-    //cout<<"create blocks\n";
 }
 
 void rotateBlockLeft(Data& d)
@@ -182,16 +201,10 @@ void draw(Data& d)
         rotateBlockLeft(d);
         d.speed = 500;
     }
-    static int n=0;
 	if (isKeyPressed(SDLK_RIGHT))
     {
-        ++n;
-        if (n==1000)
-        {
-            if (blocksValid(d,d.pos_x+1,d.pos_y)) d.pos_x++;
-            d.speed = 500;
-            n=0;
-        }
+        if (blocksValid(d,d.pos_x+1,d.pos_y)) d.pos_x++;
+        d.speed = 500;
     }
 	if (isKeyPressed(SDLK_DOWN))
     {
@@ -253,7 +266,7 @@ int main(int , char** )
 {
     Data dat;
 	winInit("Tetris", SIZE_X*SIZE_SPRITE_X, SIZE_Y*SIZE_SPRITE_Y);
-	setKeyRepeatMode(true);
+	setKeyRepeatMode(false);
 	init(dat);
 	while( !winHasFinished() )
     {
