@@ -23,11 +23,11 @@ VERSION=`cat doc/VERSION`
 
 # files which will be included in each zip file
 TOZIP_SHORT="apps bin data src Makefile grapic.lua premake4.lua README.md"
-TOZIP_LINUX="${TOZIP_SHORT} script/premake4.linux.sh script/premake5.linux.sh script/make_lifami.sh"
-TOZIP_MINGW20="${TOZIP_SHORT} extern/mingw-cb20 script premake-cb20.bat lifami-cb20.bat"
-TOZIP_MINGW17="${TOZIP_SHORT} extern/mingw-cb17 script premake-cb17.bat lifami-cb17.bat"
-TOZIP_VISUAL2015="${TOZIP_SHORT} extern/visual2015 premake-vs2015.bat script premake-vs2015.bat"
-TOZIP_MACOS="${TOZIP_SHORT} extern/macosx script/premake4.macosx script/premake5.macosx script/make_lifami.sh"
+TOZIP_MINGW20="${TOZIP_SHORT}    extern/mingw-cb20 script premake-cb20.bat lifami-cb20.bat"
+TOZIP_MINGW17="${TOZIP_SHORT}    extern/mingw-cb17 script premake-cb17.bat lifami-cb17.bat"
+TOZIP_VISUAL2015="${TOZIP_SHORT} extern/visual2015 script premake-vs2015.bat"
+TOZIP_LINUX="${TOZIP_SHORT}               script/premake4.linux.sh script/premake5.linux.sh"
+TOZIP_MACOS="${TOZIP_SHORT} extern/macosx script/premake4.macosx   script/premake5.macosx"
 
 # add $SAVE_SHORT path to the filename of the zip files list
 # TOZIP=`for i in ${TOZIP_SHORT};do printf "${SAVE_SHORT}/$i ";done`
@@ -129,7 +129,7 @@ makezip ()
 	
 	#pause 
 	
-	check ${SAVE_DIR}
+	check ${SAVE_DIR} "$4"
 	remove_correction ${SAVE_DIR}
 	
 	
