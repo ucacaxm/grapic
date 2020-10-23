@@ -38,6 +38,9 @@ $(info $(apps_linux))
 all: build/${OS} remove_quarantine
 	cd build/${OS} ; make
 
+dir: bin
+	mkdir -p bin
+	
 remove_quarantine:
 ifeq ($(UNAME_S),Darwin)
 	xattr -rd com.apple.quarantine ./
@@ -79,7 +82,7 @@ web-force:
 #	rsync -az --delete $(GRAPIC_HOME)/doc/ ameyer@liris.cnrs.fr:/home/ameyer/grapic/
 #scp -r $(GRAPIC_HOME)/doc ameyer@liris.cnrs.fr:/home/ameyer/grapic-new
 
-bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp
+bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp dir
 	g++ -Wall $(GRAPIC_HOME)/script/remove_correction.cpp -o $(GRAPIC_HOME)/bin/remove_correction.exe
 	
 premake-WinCB17: remove_quarantine cleanpremake
@@ -109,13 +112,13 @@ premake-MacOS: cleanpremake
 
 	
 ifeq ($(OS),Windows_NT)
-premake: remove_quarantine premake-cb20
+premake: remove_quarantine premake-cb20 dir
 	@echo "premake Win OS=$(OS)"
 else ifeq ($(OS),linux)
-premake: remove_quarantine premake-Linux
+premake: remove_quarantine premake-Linux dir
 	@echo "premake linux OS=$(OS)"
 else ifeq ($(OS),macosx)
-premake: remove_quarantine premake-MacOS
+premake: remove_quarantine premake-MacOS dir
 	@echo "premake macos OS=$(OS)"
 else
 	@echo "ERROR: Your OS is not detected in the makefile"
