@@ -115,7 +115,7 @@ else ifeq ($(OS),linux)
 premake: remove_quarantine premake-Linux
 	@echo "premake linux OS=$(OS)"
 else ifeq ($(OS),macosx)
-premake: remove_quarantine premake-macos
+premake: remove_quarantine premake-MacOS
 	@echo "premake macos OS=$(OS)"
 else
 	@echo "ERROR: Your OS is not detected in the makefile"
