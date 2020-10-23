@@ -15,7 +15,7 @@ ifeq ($(UNAME_S),Darwin)
 	OS = macosx
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.macosx
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.macosx
-	apps_linux = $(shell basename --suffix=.make build/linux/*.make  )
+	apps_linux = $(shell basename --suffix=.make build/macosx/*.make  )				# ls build/macosx/*.make | cut -d '/' -f 3 | cut -d . -f 1
 else
 	OS = linux
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.linux.sh
