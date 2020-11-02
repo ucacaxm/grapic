@@ -634,7 +634,7 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
   - Compile and run with Visual Studio Code
      - Install MinGW as described here: [https://code.visualstudio.com/docs/cpp/config-mingw](Using GCC with MinGW for Visual Studio Code on Windows) \n
      - Open Visual Studio Code, then menu File+Open Folder and select the grapic folder. You can save a grapic.code-workspace.\n
-     - Open a terminal (Ctrl+ù or menu Termnal/new terminal)\n
+     - Open a terminal (Ctrl+ù or menu Terminal/new terminal)\n
      - Test if the installation of MinGW and the path setting are OK: run g++ and mingw32-make (or just make)\n
      - cd build\\windows-cb20 \n
      - mingw32-make for building all projects\n
