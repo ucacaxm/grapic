@@ -635,11 +635,11 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
      - Install MinGW as described here: [https://code.visualstudio.com/docs/cpp/config-mingw](Using GCC with MinGW for Visual Studio Code on Windows) \n
      - Open Visual Studio Code, then menu File+Open Folder and select the grapic folder. You can save a grapic.code-workspace.\n
      - Open a terminal (Ctrl+ù or menu Termnal/new terminal)\n
-     - Test g++ and mingw32-make (or just make)\n
-     - cd build/windows-cb20/\n
+     - Test if the installation of MinGW and the path setting are OK: run g++ and mingw32-make (or just make)\n
+     - cd build\\windows-cb20 \n
      - mingw32-make for building all projects\n
      - mingw32-make -f Start.make\n
-     - run with  ..\..\bin\Start.exe
+     - run with  ..\\..\\bin\\Start.exe
 
 \subsection linux Run on Linux
   - Install SDL2, SDL_Image for SDL2 and SDL_ttf for SDL2 ; for instance with
