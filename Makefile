@@ -84,6 +84,8 @@ web-force:
 
 bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp dir
 	g++ -Wall $(GRAPIC_HOME)/script/remove_correction.cpp -o $(GRAPIC_HOME)/bin/remove_correction.exe
+
+premake-all: premake-WinCB20 premake-Linux premake-MacOS
 	
 premake-WinCB17: remove_quarantine cleanpremake
 	@echo "premake CB17 OS=$(OS)"
@@ -94,6 +96,7 @@ premake-WinCB20: remove_quarantine cleanpremake
 	@echo "premake CB20 OS=$(OS)"
 	cp extern/mingw-cb20/bin/*.dll bin
 	$(PREMAKE4) --os=windows --cb-version=cb20 codeblocks
+	$(PREMAKE4) --os=windows --cb-version=cb20 gmake
 
 premake-WinVS2015: remove_quarantine cleanpremake
 	@echo "premake vs2015 OS=$(OS)"

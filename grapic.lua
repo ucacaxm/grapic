@@ -62,6 +62,10 @@ solution "grapic"
 			includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
 			libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
 			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
+		configuration { "windows", "gmake"}	
+			includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
+			libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
+			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
 	--		platforms { "x64"  }
 	end
 

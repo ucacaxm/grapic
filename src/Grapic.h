@@ -631,6 +631,16 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
        \image html cb_activatePrj.jpg "Selection of the project in Codeblocks" width=400
      - And run the program !
 
+  - Compile and run with Visual Studio Code
+     - Install MinGW as described here: [https://code.visualstudio.com/docs/cpp/config-mingw](Using GCC with MinGW for Visual Studio Code on Windows) \n
+     - Open Visual Studio Code, then menu File+Open Folder and select the grapic folder. You can save a grapic.code-workspace.\n
+     - Open a terminal (Ctrl+ù or menu Termnal/new terminal)\n
+     - Test g++ and mingw32-make (or just make)\n
+     - cd build/windows-cb20/\n
+     - mingw32-make for building all projects\n
+     - mingw32-make -f Start.make\n
+     - run with  ..\..\bin\Start.exe
+
 \subsection linux Run on Linux
   - Install SDL2, SDL_Image for SDL2 and SDL_ttf for SDL2 ; for instance with
     \code
@@ -644,11 +654,11 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
      - Select in the projects manager (on the left) the project you want with the right button "Activate project":
        \image html cb_activatePrj.jpg "Selection of the project in Codeblocks" width=400
      - And run the program !
-  - Recompile all and run in the Terminal:
+  - Compile all and run in the Terminal:
      - cd ....grapic
      - make
      - bin/demo
-  - Recompile one and run in the Terminal:
+  - Compile one program and run in the Terminal:
      - cd ....grapic
      - make projectName    (replace projectName by the name of your project: 'make list' provides the list of all projects)
      - bin/projectName
