@@ -26,8 +26,8 @@ TOZIP_SHORT="apps bin data src Makefile grapic.lua premake4.lua README.md"
 TOZIP_MINGW20="${TOZIP_SHORT}    extern/mingw-cb20 script premake-cb20.bat lifami-cb20.bat"
 TOZIP_MINGW17="${TOZIP_SHORT}    extern/mingw-cb17 script premake-cb17.bat lifami-cb17.bat"
 TOZIP_VISUAL2015="${TOZIP_SHORT} extern/visual2015 script premake-vs2015.bat"
-TOZIP_LINUX="${TOZIP_SHORT}               script/premake4.linux.sh script/premake5.linux.sh"
-TOZIP_MACOS="${TOZIP_SHORT} extern/macosx script/premake4.macosx   script/premake5.macosx"
+TOZIP_LINUX="${TOZIP_SHORT}               script/premake4.linux.sh script/premake5.linux.sh script/premake5.linux"
+TOZIP_MACOS="${TOZIP_SHORT} extern/macosx script/premake4.macosx   script/premake5.macosx script/premake4.linux.sh script/premake5.linux.sh script/premake5.linux"
 
 # add $SAVE_SHORT path to the filename of the zip files list
 # TOZIP=`for i in ${TOZIP_SHORT};do printf "${SAVE_SHORT}/$i ";done`
@@ -87,6 +87,7 @@ copy()
 	#echo "dest=$2"
 	mkdir -p $2/script
 	mkdir -p $2/extern
+	#mkdir -p $2/build
 	for file in $1
 	do
 		#echo "cp -rf $file $2/$file"
@@ -139,6 +140,8 @@ makezip ()
 	echo $RUN
 	eval ${RUN}
 	cd ${GRAPIC}
+	
+	# to debug
 	rm -rf ${SAVE_DIR}
 	#pause
 }

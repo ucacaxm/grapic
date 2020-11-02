@@ -50,7 +50,7 @@ clean: build/${OS}
 	rm -rf bin/*.exe ; cd build/${OS} ; make clean
 
 cleandoc:
-	rm -rf doc/html doc/xml doc/index.html
+	rm -rf doc/html doc/xml
 
 cleanpremake: cleandoc
 	rm -rf build ; rm -rf bin/* ; rm -rf obj ; rm -rf apps/LIFAMI ; chmod 755 script/premake*
