@@ -39,16 +39,16 @@ solution "grapic"
 	configuration { "windows" }
 		defines { "WIN32", "NVWIDGETS_EXPORTS", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS" }
 		defines { "NOMINMAX" } -- allow std::min() and std::max() in vc++
-		buildoptions { "-std=c++11" }
-		buildoptions { "-g"}
-		linkoptions { "-g"}
-		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
 
 		
 	-- ##################### CB17
 	if _OPTIONS["cb-version"]=="cb17" then
 		location (grapic_dir .. "/build/" .. os.get().."-cb17")
 		configuration { "windows", "codeblocks" }	
+			buildoptions { "-std=c++11" }
+			buildoptions { "-g"}
+			linkoptions { "-g"}
+			buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
 			includedirs { "extern/mingw-cb17/include", "extern/mingw-cb17/include/SDL2" }
 			libdirs { grapic_dir .. "/extern/mingw-cb17/lib", grapic_dir .. "/extern/mingw-cb17/bin" }
 			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
@@ -59,10 +59,18 @@ solution "grapic"
 	if _OPTIONS["cb-version"]=="cb20" then
 		location (grapic_dir .. "/build/" .. os.get().."-cb20")
 		configuration { "windows", "codeblocks"}	
+			buildoptions { "-std=c++11" }
+			buildoptions { "-g"}
+			linkoptions { "-g"}
+			buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
 			includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
 			libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
 			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
 		configuration { "windows", "gmake"}	
+			buildoptions { "-std=c++11" }
+			buildoptions { "-g"}
+			linkoptions { "-g"}
+			buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
 			includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
 			libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
 			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
@@ -86,7 +94,6 @@ solution "grapic"
 			system "Windows"
 			architecture "x64"
 		end
-		buildoptions { "-g"}
 		includedirs { "extern/visual2015/include", "extern/visual2015/include/SDL2" }
 		libdirs { grapic_dir .. "/extern/visual2015/lib" }
 		links { "SDL2", "SDL2main", "SDL2_image", "SDL2_ttf"}

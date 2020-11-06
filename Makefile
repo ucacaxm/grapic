@@ -15,12 +15,13 @@ ifeq ($(UNAME_S),Darwin)
 	OS = macosx
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.macosx
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.macosx
-	apps_linux = $(shell basename --suffix=.make build/macosx/*.make  )				# ls build/macosx/*.make | cut -d '/' -f 3 | cut -d . -f 1
+	Filename="${Filename##*/}"
+	apps_linux = $(shell ls build/macosx/*.make | cut -d '/' -f 3 | cut -d . -f 1  )				# ls build/macosx/*.make | cut -d '/' -f 3 | cut -d . -f 1   OR basename
 else
 	OS = linux
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.linux.sh
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.linux
-	apps_linux = $(shell basename --suffix=.make build/linux/*.make  )
+	apps_linux = $(shell ls build/macosx/*.make | cut -d '/' -f 3 | cut -d . -f 1 ) 				# basename --suffix=.make build/linux/*.make  )
 endif
 endif
 
@@ -30,7 +31,8 @@ endif
 ifeq ($(apps_linux),*)		# if the premake was never runned, apps_linux contains "*" => remove it
 	apps_linux = ""
 endif
-$(info $(apps_linux))
+# TO DEBUG apps_linux
+#$(info (DEBUG) apps_linux=$(apps_linux))
 
 
 
@@ -85,7 +87,7 @@ web-force:
 bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp dir
 	g++ -Wall $(GRAPIC_HOME)/script/remove_correction.cpp -o $(GRAPIC_HOME)/bin/remove_correction.exe
 
-premake-all: premake-WinCB20 premake-Linux premake-MacOS
+premake-all: premake-WinCB20 premake-Linux premake-MacOS premake-WinVS2015
 	
 premake-WinCB17: remove_quarantine cleanpremake
 	@echo "premake CB17 OS=$(OS)"
@@ -169,7 +171,7 @@ list:
 	@echo "apps_linux=$(apps_linux)"	
 
 ${apps_linux}: %: remove_quarantine 
-	@echo "Build app: app_linux=${apps_linux} OS=$(OS)"
+	@echo "Build app:\n   app_linux=${apps_linux}\n   OS=$(OS)"
 	cd build/${OS} ; make -f $@.make
 
 	

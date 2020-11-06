@@ -670,8 +670,13 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
   - Run in the Terminal:
      - cd grapic
      - make
-     - bin/demo
+     - bin/Start
 
+   - Run with XCode
+     - Open XCode and open a project in grapic/build/macos/*.xproj
+	 - Compile and run
+
+	 
 \subsection edit Edit my first program
 The kernel source code of grapic is in grapic/src. The source codes of the programs/demos/tutorials are in grapic/apps.
 You can edit your first program by editing the file grapic/apps/start/main_start.cpp

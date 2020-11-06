@@ -1898,7 +1898,7 @@ void polygonFill(int p[][2], unsigned int number)
 
 void polygon(int p[][2], unsigned int number)
 {
-    for(int i = 0; i < number; i++)
+    for(unsigned int i = 0; i < number; i++)
     {
         grapic::line(p[i % number][0], p[i % number][1], p[(i + 1) % number][0], p[(i + 1)% number][1]);
     }
