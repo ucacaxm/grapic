@@ -16,12 +16,12 @@ ifeq ($(UNAME_S),Darwin)
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.macosx
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.macosx
 	Filename="${Filename##*/}"
-	apps_linux = $(shell ls build/macosx/*.make | cut -d '/' -f 3 | cut -d . -f 1  )				# ls build/macosx/*.make | cut -d '/' -f 3 | cut -d . -f 1   OR basename
+	apps_linux = $(shell ls build/macosx/*.make 2>/dev/null | cut -d '/' -f 3 | cut -d . -f 1  )				# ls build/macosx/*.make | cut -d '/' -f 3 | cut -d . -f 1   OR basename
 else
 	OS = linux
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.linux.sh
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.linux
-	apps_linux = $(shell ls build/macosx/*.make | cut -d '/' -f 3 | cut -d . -f 1 ) 				# basename --suffix=.make build/linux/*.make  )
+	apps_linux = $(shell ls build/linux/*.make 2>/dev/null | cut -d '/' -f 3 | cut -d . -f 1 ) 				# basename --suffix=.make build/linux/*.make  )
 endif
 endif
 
