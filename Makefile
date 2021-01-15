@@ -40,7 +40,7 @@ endif
 all: build/${OS} remove_quarantine
 	cd build/${OS} ; make
 
-dir: bin
+dir:
 	mkdir -p bin
 	
 remove_quarantine:
