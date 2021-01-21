@@ -30,5 +30,5 @@ Compiling from the github (which is not the standard way).
 
 * On windows
 0. Install CB 20
-1. run premake-cb20.bat to generate th projects files    or     run premake-lifami.bat to generate lifami projects 
+1. run premake-cb20.bat to generate the projects files    or     run premake-lifami.bat to generate lifami projects 
 2. open build/windows-cb20/grapic.workspace

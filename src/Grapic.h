@@ -665,16 +665,45 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 
 
 \subsection mac Run on MacOS
-  - Download the archive file, see section download.
 
-  - Run in the Terminal:
-     - cd grapic
-     - make
-     - bin/Start
+  - Mettre à jour son mac à la dernière version
+    * Cliquer sur le menu pomme en haut à gauche quand vous êtes sur le bureau
+    * Cliquer sur Préférence Système
+    * Cliquer sur Mise à jour du logiciel
+    * Mettre à jour si nécessaire
 
-   - Run with XCode
-     - Open XCode and open a project in grapic/build/macos/*.xproj
-	 - Compile and run
+  - Installer la dernière maj de XCode
+    * Ouvrez l'application App Store
+    * Cliquez sur Mise à jour
+    * Mettre à jour si nécessaire
+
+  - Installer grapic (https://licence-infi.univ-lyon1.fr/grapic)
+    * Télécharger le fichier d'installation (.zip) pour Mac
+    * Exécutez le pour extraire le fichier grapic-V.V.VV-MacOS (les V représnte le numéro de version)
+
+  - Lancer dans le terminal la commande
+    \code
+    xcode-select --install
+    \endcode
+    * Et télécharger le fichier de mise à jour
+
+  - Lancer dans le terminal les commandes
+    \code
+    cd .../grapic-V.V.VV-MacOS          # trouver le chemin vers l'endroit où vous avez décompressé le .zip
+    make
+    bin/Start
+    \endcode
+    Une fenêtre terminal va s'ouvrir avec des carrés de couleurs.
+
+  - Avec XCode
+    *Ouvrir XCode 
+    *Open a project or file
+    *Suivre et ouvrir le chemin suivant ....../grapic-V.V.VV-MacOS/build/macosx/Start.xcodeproj
+    *Compiler
+
+
+
+
 
 	 
 \subsection edit Edit my first program
