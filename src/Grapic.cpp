@@ -56,6 +56,15 @@ Grapic::Grapic() :
 
 void Grapic::init(const char* name, int w, int h, int posx, int posy)
 {
+    SDL_version compiled;
+    SDL_version linked;
+
+    SDL_VERSION(&compiled);
+    SDL_GetVersion(&linked);
+    printf("SDL version (compiled) %d.%d.%d ...\n", compiled.major, compiled.minor, compiled.patch);
+    printf("SDL version (linked) %d.%d.%d.\n", linked.major, linked.minor, linked.patch);
+
+
     // Initialisation de la SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -102,6 +111,30 @@ void Grapic::init(const char* name, int w, int h, int posx, int posy)
     SDL_SetWindowTitle(m_window, name);
 
     m_renderer = SDL_CreateRenderer( m_window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_GetRendererInfo( m_renderer, &m_renderInfo);
+    cout<<"renderer:"<<endl;
+    cout<<"  name: "<<m_renderInfo.name<<endl;
+    cout<<"  flag: "<<m_renderInfo.flags<<" ";
+    if (m_renderInfo.flags & SDL_RENDERER_SOFTWARE) { cout << "  SDL_RENDERER_SOFTWARE "; }
+    if (m_renderInfo.flags & SDL_RENDERER_ACCELERATED) { cout << "  SDL_RENDERER_ACCELERATED "; }
+    if (m_renderInfo.flags & SDL_RENDERER_PRESENTVSYNC) { cout << "  SDL_RENDERER_PRESENTVSYNC "; }
+    if (m_renderInfo.flags & SDL_RENDERER_TARGETTEXTURE) { cout << "  SDL_RENDERER_TARGETTEXTURE "; }
+    cout<<endl;
+
+    cout << "   Texture Formats: nb="<<m_renderInfo.num_texture_formats<<"  ";
+    for(size_t i = 0; i < m_renderInfo.num_texture_formats; ++i)
+    {
+      cout << "  " << SDL_GetPixelFormatName(m_renderInfo.texture_formats[i]) << " ";
+    }
+    assert( m_renderInfo.num_texture_formats>=1 );
+    m_textureFormat = m_renderInfo.texture_formats[0];
+    cout<<endl;
+    cout<<"   texture format default: "<<SDL_GetPixelFormatName(m_textureFormat)<<"("<<m_textureFormat<<")"<<endl;
+
+    cout << "   Max Texture Width: " << m_renderInfo.max_texture_width << std::endl;
+    cout << "   Max Texture Height: " << m_renderInfo.max_texture_height << std::endl;
+    cout<<"----------"<<endl;
+
 
     m_width = w;
     m_height = h;
@@ -321,32 +354,6 @@ int Grapic::keyHasBeenPressed(unsigned int key)
 }
 
 
-//bool Grapic::hasFinished()
-//{
-//    return m_quit;
-//}
-//
-//bool Grapic::isInit()
-//{
-//    return m_window;
-//}
-//
-//const  SDL_Window* Grapic::window() const
-//{
-//    return m_window;
-//}
-//
-//SDL_Renderer * Grapic::renderer()
-//{
-//    return m_renderer;
-//}
-
-//TTF_Font* Grapic::font()
-//{
-//    return m_font;
-//}
-
-
 void Grapic::initKeyArray()
 {
     int keys;
@@ -362,7 +369,6 @@ void Grapic::clear()
     SDL_RenderClear(m_renderer);
     SDL_SetRenderDrawColor(m_renderer, m_currentColor.r, m_currentColor.g, m_currentColor.b, m_currentColor.a);
 }
-
 
 
 bool Grapic::display()
@@ -1194,12 +1200,12 @@ void Image::set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsi
 
     if ((x<0) || (y<0) || (x>=m_surface->w) || (y>=m_surface->h)) return;
     SDL_LockSurface(m_surface);
-    //pixel = SDL_MapRGBA(fmt, r,g,b,a);
+    pixel = SDL_MapRGBA(fmt, r,g,b,a);
     //pixel = SDL_MapRGBA(fmt, a,r,g,b);
-    p[0] = b;
-    p[1] = g;
-    p[2] = r;
-    p[3] = a;
+//    p[0] = b;
+//    p[1] = g;
+//    p[2] = r;
+//    p[3] = a;
     image_set(m_surface, x, y, pixel);
     SDL_UnlockSurface(m_surface);
 
@@ -1216,33 +1222,18 @@ void image_set(Image& im, int x, int y, unsigned char r, unsigned char g, unsign
 Image::Image(int w, int h)
 {
     Grapic& g = Grapic::singleton();
+
     Uint32 rmask, gmask, bmask, amask;
 
-    /* SDL interprets each pixel as a 32-bit number, so our masks must depend
-       on the endianness (byte order) of the machine */
-#if 0 //SDL_BYTEORDER == SDL_BIG_ENDIAN
-    rmask = 0xff000000;
-    gmask = 0x00ff0000;
-    bmask = 0x0000ff00;
-    amask = 0x000000ff;
-#else
-    rmask = 0x000000ff;
-    gmask = 0x0000ff00;
-    bmask = 0x00ff0000;
-    amask = 0xff000000;
-#endif
-
-    //rmask = gmask = bmask = amask = 0x00000000;
-
+    int bpp;//=32;
+    SDL_PixelFormatEnumToMasks(g.textureFormat(), &bpp, &rmask, &gmask, &bmask, &amask);
     m_surface = SDL_CreateRGBSurface(0, w, h, 32, rmask, gmask, bmask, amask); // 0, 0, 0, 0);
-    //printf("image surface format=%d %d %d\n", res.surface->format, SDL_PIXELFORMAT_RGBA8888, SDL_PIXELFORMAT_BGRA8888);
     if (m_surface == NULL)
     {
         printf("error: Can not create this surface: %dx%d\n", w, h);
         return ;
     }
 
-    //res.texture = SDL_CreateTexture( g.renderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, res.surface->w, res.surface->h);
     m_texture = SDL_CreateTextureFromSurface( g.renderer(), m_surface);
     if (m_texture == NULL)
     {
@@ -1286,7 +1277,7 @@ Image::Image(const char* filename, bool transparency,  unsigned char r, unsigned
         std::cout<<"error: Can not load "<< filename<<std::endl;
         return ;
     }
-    SDL_Surface * surfaceCorrectPixelFormat = SDL_ConvertSurfaceFormat(m_surface,SDL_PIXELFORMAT_ARGB8888,0);
+    SDL_Surface * surfaceCorrectPixelFormat = SDL_ConvertSurfaceFormat(m_surface, gp.textureFormat(), 0); //SDL_PIXELFORMAT_RGBA8888,0);
     SDL_FreeSurface(m_surface);
     m_surface = surfaceCorrectPixelFormat;
     if (transparency)
@@ -1297,10 +1288,9 @@ Image::Image(const char* filename, bool transparency,  unsigned char r, unsigned
         c.b=b;
         c.a=a;
         Uint32 cc = *((Uint32*)(&c));
-        SDL_SetColorKey(m_surface, SDL_TRUE, cc);
+        Uint32 pixel = SDL_MapRGBA( m_surface->format, r,g,b,a);
+        SDL_SetColorKey(m_surface, SDL_TRUE, pixel);
     }
-
-    //res.texture = SDL_CreateTexture(g.renderer(), SDL_PIXELFORMAT_ARGB8888, 	SDL_TEXTUREACCESS_STREAMING,	res.surface->w, res.surface->h);
     m_texture = SDL_CreateTextureFromSurface( gp.renderer(), m_surface);
 
     if (m_texture == NULL)
@@ -1381,8 +1371,16 @@ void Image::draw(int x, int y, int w, int h, float angle, int flip)
 
 void Image::savePNG(const char* filename) const
 {
-    int r = IMG_SavePNG( m_surface, filename);
+    Grapic& g = Grapic::singleton();
+    SDL_Surface * surfaceCorrectPixelFormat = SDL_ConvertSurfaceFormat( m_surface,g.textureFormat(),0);
+    int r = IMG_SavePNG( surfaceCorrectPixelFormat, filename);
     if (r!=0) printf("image: error saving %s\n", filename);
+    else printf("Image saved: %s   %dx%d format=%d %s pitch=%d\n", filename, surfaceCorrectPixelFormat->w,
+                                                                surfaceCorrectPixelFormat->h,
+                                                                surfaceCorrectPixelFormat->format->format,
+                                                                SDL_GetPixelFormatName(surfaceCorrectPixelFormat->format->format),
+                                                                surfaceCorrectPixelFormat->pitch);
+    SDL_FreeSurface(surfaceCorrectPixelFormat);
 }
 
 
@@ -1393,7 +1391,13 @@ void Image::printInfo() const
         printf("image not initialized\n");
         return;
     }
-    printf("image: %dx%d format=%d pitch=%d\n", m_surface->w, m_surface->h, m_surface->format->format, m_surface->pitch);
+    printf("Image: %dx%d format=%d %s pitch=%d\n",
+                                                                m_surface->w,
+                                                                m_surface->h,
+                                                                m_surface->format->format,
+                                                                SDL_GetPixelFormatName(m_surface->format->format),
+                                                                m_surface->pitch);
+
 }
 
 

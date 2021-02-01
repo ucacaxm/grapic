@@ -91,6 +91,7 @@ public:
     const TTF_Font* font() const { return m_font; }
     bool hasFinished() const { return m_quit; }
     bool isInit() const { return m_window; }
+    Uint32 textureFormat() const { return m_textureFormat; }
 
     static Grapic& singleton(bool secure=true);
 
@@ -99,6 +100,8 @@ protected:
     int m_height;
     SDL_Window* m_window;
     SDL_Renderer *m_renderer;
+    SDL_RendererInfo m_renderInfo;
+    Uint32 m_textureFormat;
     TTF_Font *m_font;
     std::string m_fontFile;
     int m_fontSize;
@@ -696,7 +699,7 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
     Une fenêtre terminal va s'ouvrir avec des carrés de couleurs.
 
   - Avec XCode
-    *Ouvrir XCode 
+    *Ouvrir XCode
     *Open a project or file
     *Suivre et ouvrir le chemin suivant ....../grapic-V.V.VV-MacOS/build/macosx/Start.xcodeproj
     *Compiler
@@ -705,7 +708,7 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 
 
 
-	 
+
 \subsection edit Edit my first program
 The kernel source code of grapic is in grapic/src. The source codes of the programs/demos/tutorials are in grapic/apps.
 You can edit your first program by editing the file grapic/apps/start/main_start.cpp

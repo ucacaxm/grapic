@@ -193,6 +193,21 @@ int main(int , char** )
     winInit("Demo", WIN_DIM_X, WIN_DIM_Y);
     setKeyRepeatMode(true);
     init(dat);
+
+    Image im = image(600,200);
+    for(int i=0; i<200; i++) {
+        for(int j=9; j<200; j++) {
+            image_set(im, i, j, 255, 0, 0, 255);
+            image_set(im, i+200, j, 0, 255, 0, 255);
+            image_set(im, i+400, j, 0, 0, 255, 255);
+        }
+    }
+    image_draw(im, 0, 0);
+    image_savePNG(im, "test.png");
+    image_draw(dat.im, 0, 190);
+    pressSpace();
+
+
     while( !stop )                              // The application is running in a loop and call the draw function all the time.
     {
         backgroundColor( 100, 80, 200, 255 );
