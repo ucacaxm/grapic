@@ -40,11 +40,11 @@ solution "grapic"
 		defines { "WIN32", "NVWIDGETS_EXPORTS", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS" }
 		defines { "NOMINMAX" } -- allow std::min() and std::max() in vc++
 
-		
+
 	-- ##################### CB17
 	if _OPTIONS["cb-version"]=="cb17" then
 		location (grapic_dir .. "/build/" .. os.get().."-cb17")
-		configuration { "windows", "codeblocks" }	
+		configuration { "windows", "codeblocks" }
 			buildoptions { "-std=c++11" }
 			buildoptions { "-g"}
 			linkoptions { "-g"}
@@ -58,7 +58,7 @@ solution "grapic"
 	-- ##################### CB20
 	if _OPTIONS["cb-version"]=="cb20" then
 		location (grapic_dir .. "/build/" .. os.get().."-cb20")
-		configuration { "windows", "codeblocks"}	
+		configuration { "windows", "codeblocks"}
 			buildoptions { "-std=c++11" }
 			buildoptions { "-g"}
 			linkoptions { "-g"}
@@ -66,7 +66,7 @@ solution "grapic"
 			includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
 			libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
 			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
-		configuration { "windows", "gmake"}	
+		configuration { "windows", "gmake"}
 			buildoptions { "-std=c++11" }
 			buildoptions { "-g"}
 			linkoptions { "-g"}
@@ -77,7 +77,7 @@ solution "grapic"
 	--		platforms { "x64"  }
 	end
 
-		
+
 	-- ##################### Linux
 	configuration { "linux" }
 		includedirs { "/usr/include/SDL2" }
@@ -86,7 +86,7 @@ solution "grapic"
 		linkoptions { "-ggdb"}
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
 		links { "SDL2", "SDL2_image", "SDL2_ttf" }
-	
+
 
 	-- ##################### VS2015
 	configuration { "windows", "vs2015"}
@@ -117,10 +117,10 @@ solution "grapic"
 
 function file_exists(name)
    local f=io.open(name,"r")
-   if f~=nil then 
-      io.close(f) 
-      return true 
-   else 
+   if f~=nil then
+      io.close(f)
+      return true
+   else
       print("File "..name.." does not exit => creation")
       local f=io.open(name,"w")
 	  io.output(f)
@@ -145,7 +145,7 @@ int main(int , char**)\
 ")
       end
 	  io.close(f)
-      return false 
+      return false
    end
 end
 
@@ -190,7 +190,8 @@ make_project( "tuto5_Mouse", 		"apps/tutorials/tuto5_Mouse.cpp" )
 make_project( "tuto6_Menu", 		"apps/tutorials/tuto6_Menu.cpp" )
 make_project( "tuto7_Animation", 	"apps/tutorials/tuto7_Animation.cpp" )
 make_project( "tuto8_Plot",			"apps/tutorials/tuto8_Plot.cpp" )
-make_project( "tuto9_Demo",			"apps/tutorials/tuto9_Demo.cpp" )
+make_project( "tuto9_Image",		"apps/tutorials/tuto9_Image.cpp" )
+make_project( "tuto10_Demo",		"apps/tutorials/tuto10_Demo.cpp" )
 
 -- demo
 make_project( "demo_Minesweeper", 	"apps/demo_minesweeper/main_minesweeper.cpp" )

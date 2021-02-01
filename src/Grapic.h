@@ -120,12 +120,18 @@ protected:
 };
 
 
+
+
 class Image
 {
 public:
     Image();
     Image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a);
     Image(int w, int h);
+    ~Image();
+
+    Image& operator=(const Image& im);
+
     void savePNG(const char* filename) const;
     bool isInit() const;
     unsigned char get(int x, int y, int c) const;
@@ -141,7 +147,11 @@ protected:
     SDL_Surface* m_surface;
     SDL_Texture* m_texture;
     bool m_has_changed;
+
+    void init(int w, int h);
 };
+
+
 
 
 

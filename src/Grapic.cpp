@@ -336,10 +336,6 @@ void Grapic::help() const
 }
 
 
-Image::Image() : m_surface(NULL), m_texture(NULL), m_has_changed(false)
-{}
-
-
 int Grapic::keyHasBeenPressed(unsigned int key)
 {
     SDL_Scancode code= SDL_GetScancodeFromKey(key);
@@ -1122,6 +1118,129 @@ Uint32 image_get(SDL_Surface *surface, int x, int y)
 }
 
 
+
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
+
+
+Image::Image() : m_surface(NULL), m_texture(NULL), m_has_changed(false)
+{}
+
+
+Image::Image(int w, int h)
+{
+    init(w,h);
+}
+
+
+void Image::init(int w, int h)
+{
+    Grapic& g = Grapic::singleton();
+    Uint32 rmask, gmask, bmask, amask;
+
+    int bpp=32;
+    SDL_PixelFormatEnumToMasks(g.textureFormat(), &bpp, &rmask, &gmask, &bmask, &amask);
+    m_surface = SDL_CreateRGBSurface(0, w, h, 32, rmask, gmask, bmask, amask); // 0, 0, 0, 0);
+    if (m_surface == NULL)
+    {
+        printf("error: Can not create this surface: %dx%d\n", w, h);
+        return ;
+    }
+
+    m_texture = SDL_CreateTextureFromSurface( g.renderer(), m_surface);
+    if (m_texture == NULL)
+    {
+        printf("error: problem to create the texture\n");
+        return ;
+    }
+
+    m_has_changed = false;
+
+    SDL_SetTextureBlendMode( m_texture, SDL_BLENDMODE_BLEND);
+
+    return ;
+}
+
+
+Image::Image(const char* filename, bool transparency,  unsigned char r, unsigned char g, unsigned b, unsigned char a)
+{
+    Grapic& gp = Grapic::singleton();
+
+    //res.surface = SDL_LoadBMP(filename);
+    m_surface = IMG_Load(filename);
+    if (m_surface == NULL)
+    {
+        std::string nfn = std::string("../") + filename;
+        m_surface = IMG_Load(nfn.c_str());
+        if (m_surface == NULL)
+        {
+            nfn = std::string("../") + nfn;
+            m_surface = IMG_Load(nfn.c_str());
+            if (m_surface == NULL)
+            {
+                nfn = std::string("../") + nfn;
+                m_surface = IMG_Load(nfn.c_str());
+            }
+        }
+    }
+    if (m_surface == NULL)
+    {
+        std::cout<<"error: Can not load "<< filename<<std::endl;
+        return ;
+    }
+    SDL_Surface * surfaceCorrectPixelFormat = SDL_ConvertSurfaceFormat(m_surface, gp.textureFormat(), 0); //SDL_PIXELFORMAT_RGBA8888,0);
+    SDL_FreeSurface(m_surface);
+    m_surface = surfaceCorrectPixelFormat;
+    if (transparency)
+    {
+        SDL_Color c;
+        c.r=r;
+        c.g=g;
+        c.b=b;
+        c.a=a;
+        Uint32 cc = *((Uint32*)(&c));
+        Uint32 pixel = SDL_MapRGBA( m_surface->format, r,g,b,a);
+        SDL_SetColorKey(m_surface, SDL_TRUE, pixel);
+    }
+    m_texture = SDL_CreateTextureFromSurface( gp.renderer(), m_surface);
+
+    if (m_texture == NULL)
+    {
+        printf("error: problem to create the texture of %s\n", filename);
+        return ;
+    }
+    printf("Image loaded: %s\t", filename);
+    printInfo();
+
+}
+
+
+Image::~Image()
+{
+    if (m_surface)
+        SDL_FreeSurface(m_surface);
+    if (m_texture)
+        SDL_DestroyTexture(m_texture);
+}
+
+
+Image& Image::operator=(const Image& im)
+{
+    if (m_surface)
+        SDL_FreeSurface(m_surface);
+    if (m_texture)
+        SDL_DestroyTexture(m_texture);
+
+    init(im.m_surface->w, im.m_surface->h);
+    SDL_BlitSurface( im.m_surface,NULL,m_surface,NULL);
+    m_has_changed = true;
+    return *this;
+}
+
+
 unsigned char Image::get(int x, int y, int c) const
 {
     assert(surface());
@@ -1191,6 +1310,7 @@ void image_set(SDL_Surface *surface, int x, int y, Uint32 pixel)
     }
 }
 
+
 void Image::set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a)
 {
     assert(m_surface);
@@ -1201,110 +1321,16 @@ void Image::set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsi
     if ((x<0) || (y<0) || (x>=m_surface->w) || (y>=m_surface->h)) return;
     SDL_LockSurface(m_surface);
     pixel = SDL_MapRGBA(fmt, r,g,b,a);
-    //pixel = SDL_MapRGBA(fmt, a,r,g,b);
-//    p[0] = b;
-//    p[1] = g;
-//    p[2] = r;
-//    p[3] = a;
     image_set(m_surface, x, y, pixel);
     SDL_UnlockSurface(m_surface);
 
     m_has_changed = true;
 }
 
+
 void image_set(Image& im, int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a)
 {
     im.set(x,y,r,g,b,a);
-}
-
-
-
-Image::Image(int w, int h)
-{
-    Grapic& g = Grapic::singleton();
-
-    Uint32 rmask, gmask, bmask, amask;
-
-    int bpp;//=32;
-    SDL_PixelFormatEnumToMasks(g.textureFormat(), &bpp, &rmask, &gmask, &bmask, &amask);
-    m_surface = SDL_CreateRGBSurface(0, w, h, 32, rmask, gmask, bmask, amask); // 0, 0, 0, 0);
-    if (m_surface == NULL)
-    {
-        printf("error: Can not create this surface: %dx%d\n", w, h);
-        return ;
-    }
-
-    m_texture = SDL_CreateTextureFromSurface( g.renderer(), m_surface);
-    if (m_texture == NULL)
-    {
-        printf("error: problem to create the texture\n");
-        return ;
-    }
-
-    m_has_changed = false;
-
-    SDL_SetTextureBlendMode( m_texture, SDL_BLENDMODE_BLEND);
-
-    return ;
-}
-
-
-
-
-Image::Image(const char* filename, bool transparency,  unsigned char r, unsigned char g, unsigned b, unsigned char a)
-{
-    Grapic& gp = Grapic::singleton();
-
-    //res.surface = SDL_LoadBMP(filename);
-    m_surface = IMG_Load(filename);
-    if (m_surface == NULL)
-    {
-        std::string nfn = std::string("../") + filename;
-        m_surface = IMG_Load(nfn.c_str());
-        if (m_surface == NULL)
-        {
-            nfn = std::string("../") + nfn;
-            m_surface = IMG_Load(nfn.c_str());
-            if (m_surface == NULL)
-            {
-                nfn = std::string("../") + nfn;
-                m_surface = IMG_Load(nfn.c_str());
-            }
-        }
-    }
-    if (m_surface == NULL)
-    {
-        std::cout<<"error: Can not load "<< filename<<std::endl;
-        return ;
-    }
-    SDL_Surface * surfaceCorrectPixelFormat = SDL_ConvertSurfaceFormat(m_surface, gp.textureFormat(), 0); //SDL_PIXELFORMAT_RGBA8888,0);
-    SDL_FreeSurface(m_surface);
-    m_surface = surfaceCorrectPixelFormat;
-    if (transparency)
-    {
-        SDL_Color c;
-        c.r=r;
-        c.g=g;
-        c.b=b;
-        c.a=a;
-        Uint32 cc = *((Uint32*)(&c));
-        Uint32 pixel = SDL_MapRGBA( m_surface->format, r,g,b,a);
-        SDL_SetColorKey(m_surface, SDL_TRUE, pixel);
-    }
-    m_texture = SDL_CreateTextureFromSurface( gp.renderer(), m_surface);
-
-    if (m_texture == NULL)
-    {
-        printf("error: problem to create the texture of %s\n", filename);
-        return ;
-    }
-
-    //int ok = SDL_UpdateTexture(res.texture, NULL, res.surface->pixels, res.surface->pitch);
-    //assert(ok==0);
-
-    printf("Image loaded: %s\t", filename);
-    printInfo();
-
 }
 
 
@@ -1401,6 +1427,14 @@ void Image::printInfo() const
 }
 
 
+
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
+
+
 void Menu::draw(int xmin, int ymin, int xmax, int ymax)
 {
     if (m_txt.size()==0) return;
@@ -1452,6 +1486,13 @@ void Menu::draw(int xmin, int ymin, int xmax, int ymax)
     }
 }
 
+
+
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
 
 struct sort_pred
 {
@@ -1581,6 +1622,11 @@ void Plot::draw(int xmin, int ymin, int xmax, int ymax, bool clearOrNot) const
 
 
 
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
+//=========================================================================================================================
 
 void triangle(int x1, int y1,  int x2, int y2, int x3, int y3)
 {
@@ -1589,7 +1635,6 @@ void triangle(int x1, int y1,  int x2, int y2, int x3, int y3)
     line(x3, y3, x1, y1);
 
 }
-
 
 
 void regular_polygone(int x, int y, unsigned int apotheme, unsigned int line_number)
@@ -1899,7 +1944,6 @@ void polygonFill(int p[][2], unsigned int number)
 
 }
 
-
 void polygon(int p[][2], unsigned int number)
 {
     for(unsigned int i = 0; i < number; i++)
@@ -1915,10 +1959,8 @@ void winClearEvent()
 
 void delay(int d)
 {
-    //std::this_thread::sleep_for(std::chrono::milliseconds(d));
     SDL_Delay(d);
 }
-
 
 Image image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a)
 {
@@ -1999,18 +2041,15 @@ int caseToPixel(const Menu& m, int c, int ymin, int ymax)
     return m.caseToPixel(c,ymin,ymax);
 }
 
-
 void plot_clear(Plot& p )
 {
     p.clear();
 }
 
-
 void plot_setSize(Plot& p, const int n)
 {
     p.setSize(n);
 }
-
 
 void plot_add(Plot& p, float x, float y, int curve_n)
 {
