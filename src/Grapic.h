@@ -127,11 +127,13 @@ class Image
 public:
     Image();
     Image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a);
+    Image(const Image& im);
     Image(int w, int h);
     ~Image();
 
     Image& operator=(const Image& im);
 
+    void copy(const Image& im);
     void savePNG(const char* filename) const;
     bool isInit() const;
     unsigned char get(int x, int y, int c) const;
@@ -146,9 +148,11 @@ public:
 protected:
     SDL_Surface* m_surface;
     SDL_Texture* m_texture;
-    bool m_has_changed;
+    bool* m_has_changed;
+    int* nb_instance;
 
     void init(int w, int h);
+    void destroy();
 };
 
 
@@ -423,6 +427,10 @@ Image image(const char* filename, bool transparency=false, unsigned char r=255, 
 /** \brief Return an image of width=w and height=h
 */
 Image image(int w, int h);
+
+/** \brief Return a copy of the image. It duplicates the image. It is useful since an affectation shares the same image.
+*/
+Image image_copy(const Image& im);
 
 /** \brief Save the image into the file: format is PNG
 */

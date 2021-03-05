@@ -33,9 +33,9 @@ Grapic Grapic::currentGrapic;
 Grapic::Grapic() :
     m_width(-1),
     m_height(-1),
-    m_window(NULL),
-    m_renderer(NULL),
-    m_font(NULL),
+    m_window(nullptr),
+    m_renderer(nullptr),
+    m_font(nullptr),
     m_fontFile(""),
     m_fontSize(-1),
     m_quit(false),
@@ -100,7 +100,7 @@ void Grapic::init(const char* name, int w, int h, int posx, int posy)
     if (posx<0) posx = SDL_WINDOWPOS_CENTERED;
     if (posy<0) posy = SDL_WINDOWPOS_CENTERED;
     m_window = SDL_CreateWindow(name, posx, posy, w, h, SDL_WINDOW_SHOWN ); //| SDL_WINDOW_RESIZABLE);
-    if (m_window == NULL)
+    if (m_window == nullptr)
     {
         std::cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << std::endl;
         SDL_Quit();
@@ -205,10 +205,10 @@ void Menu::add(const std::string& str)
 
 bool saveScreenshotPNG(std::string filepath, SDL_Window* SDLWindow, SDL_Renderer* SDLRenderer)
 {
-    SDL_Surface* saveSurface = NULL;
-    SDL_Surface* infoSurface = NULL;
+    SDL_Surface* saveSurface = nullptr;
+    SDL_Surface* infoSurface = nullptr;
     infoSurface = SDL_GetWindowSurface(SDLWindow);
-    if (infoSurface == NULL)
+    if (infoSurface == nullptr)
     {
         std::cerr << "Failed to create info surface from window in saveScreenshotBMP(string), SDL_GetError() - " << SDL_GetError() << "\n";
     }
@@ -225,7 +225,7 @@ bool saveScreenshotPNG(std::string filepath, SDL_Window* SDLWindow, SDL_Renderer
             if (SDL_RenderReadPixels(SDLRenderer, &infoSurface->clip_rect, infoSurface->format->format, pixels, infoSurface->w * infoSurface->format->BytesPerPixel) != 0)
             {
                 std::cerr << "Failed to read pixel data from SDL_Renderer object. SDL_GetError() - " << SDL_GetError() << "\n";
-                pixels = NULL;
+                pixels = nullptr;
                 return false;
             }
             else
@@ -239,12 +239,12 @@ bool saveScreenshotPNG(std::string filepath, SDL_Window* SDLWindow, SDL_Renderer
                 //SDL_SaveBMP(saveSurface, filepath.c_str());
                 IMG_SavePNG(saveSurface, filepath.c_str());
                 SDL_FreeSurface(saveSurface);
-                saveSurface = NULL;
+                saveSurface = nullptr;
             }
             delete[] pixels;
         }
         SDL_FreeSurface(infoSurface);
-        infoSurface = NULL;
+        infoSurface = nullptr;
     }
     return true;
 }
@@ -380,9 +380,9 @@ void Grapic::quit()
     TTF_CloseFont(m_font);
     SDL_DestroyWindow(m_window);
     SDL_DestroyRenderer(m_renderer);
-    m_font = NULL;
-    m_window = NULL;
-    m_renderer = NULL;
+    m_font = nullptr;
+    m_window = nullptr;
+    m_renderer = nullptr;
     SDL_Quit();
 }
 
@@ -1047,8 +1047,7 @@ void setKeyRepeatMode(bool repeat)
 
 bool isMousePressed(int button)
 {
-    //SDL_PumpEvents();
-    return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(button);
+    return SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button);
 }
 
 void mousePos(int& x, int& y)
@@ -1089,7 +1088,7 @@ void print(int x, int y, const char* txt)
     int text_height = textSurface->h;
     SDL_FreeSurface(textSurface);
     SDL_Rect renderQuad = { x, g.inverseY(y+text_height), text_width, text_height };
-    SDL_RenderCopy( g.renderer(), text, NULL, &renderQuad);
+    SDL_RenderCopy( g.renderer(), text, nullptr, &renderQuad);
     SDL_DestroyTexture(text);
 }
 
@@ -1126,11 +1125,13 @@ Uint32 image_get(SDL_Surface *surface, int x, int y)
 //=========================================================================================================================
 
 
-Image::Image() : m_surface(NULL), m_texture(NULL), m_has_changed(false)
-{}
+Image::Image() : m_surface(nullptr), m_texture(nullptr), m_has_changed(nullptr), nb_instance(nullptr)
+{
+    cout<<"Image: empty"<<endl;
+}
 
 
-Image::Image(int w, int h)
+Image::Image(int w, int h) : m_surface(nullptr), m_texture(nullptr), m_has_changed(nullptr), nb_instance(nullptr)
 {
     init(w,h);
 }
@@ -1138,55 +1139,64 @@ Image::Image(int w, int h)
 
 void Image::init(int w, int h)
 {
+    cout<<"Image: init "<<w<<" "<<h<<endl;
     Grapic& g = Grapic::singleton();
     Uint32 rmask, gmask, bmask, amask;
+
+    destroy();
 
     int bpp=32;
     SDL_PixelFormatEnumToMasks(g.textureFormat(), &bpp, &rmask, &gmask, &bmask, &amask);
     m_surface = SDL_CreateRGBSurface(0, w, h, 32, rmask, gmask, bmask, amask); // 0, 0, 0, 0);
-    if (m_surface == NULL)
+    if (m_surface == nullptr)
     {
         printf("error: Can not create this surface: %dx%d\n", w, h);
         return ;
     }
 
     m_texture = SDL_CreateTextureFromSurface( g.renderer(), m_surface);
-    if (m_texture == NULL)
+    if (m_texture == nullptr)
     {
         printf("error: problem to create the texture\n");
         return ;
     }
 
-    m_has_changed = false;
+    nb_instance = new int;
+    *nb_instance = 1;
+    m_has_changed = new bool;
+    *m_has_changed = false;
+
+    *m_has_changed = false;
 
     SDL_SetTextureBlendMode( m_texture, SDL_BLENDMODE_BLEND);
 
-    return ;
+    //printInfo();
+    //cout<<"Image: init "<<w<<" "<<h<<"  ...ok"<<endl;
 }
 
 
 Image::Image(const char* filename, bool transparency,  unsigned char r, unsigned char g, unsigned b, unsigned char a)
+        : m_surface(nullptr), m_texture(nullptr), m_has_changed(nullptr), nb_instance(nullptr)
 {
     Grapic& gp = Grapic::singleton();
 
-    //res.surface = SDL_LoadBMP(filename);
     m_surface = IMG_Load(filename);
-    if (m_surface == NULL)
+    if (m_surface == nullptr)
     {
         std::string nfn = std::string("../") + filename;
         m_surface = IMG_Load(nfn.c_str());
-        if (m_surface == NULL)
+        if (m_surface == nullptr)
         {
             nfn = std::string("../") + nfn;
             m_surface = IMG_Load(nfn.c_str());
-            if (m_surface == NULL)
+            if (m_surface == nullptr)
             {
                 nfn = std::string("../") + nfn;
                 m_surface = IMG_Load(nfn.c_str());
             }
         }
     }
-    if (m_surface == NULL)
+    if (m_surface == nullptr)
     {
         std::cout<<"error: Can not load "<< filename<<std::endl;
         return ;
@@ -1207,36 +1217,100 @@ Image::Image(const char* filename, bool transparency,  unsigned char r, unsigned
     }
     m_texture = SDL_CreateTextureFromSurface( gp.renderer(), m_surface);
 
-    if (m_texture == NULL)
+    if (m_texture == nullptr)
     {
         printf("error: problem to create the texture of %s\n", filename);
+        SDL_FreeSurface(m_surface);
         return ;
     }
+    nb_instance = new int;
+    *nb_instance = 1;
+    m_has_changed = new bool;
+    *m_has_changed = false;
     printf("Image loaded: %s\t", filename);
     printInfo();
 
 }
 
 
+Image::Image(const Image& im) : m_surface(nullptr), m_texture(nullptr), m_has_changed(nullptr), nb_instance(nullptr)
+{
+    this->operator=(im);
+}
+
+
+void Image::copy(const Image& im)
+{
+    destroy();
+    cout<<"Image: create from a copy"<<endl;
+    init(im.m_surface->w, im.m_surface->h);
+    SDL_BlitSurface( im.m_surface, nullptr, m_surface, nullptr);
+    *m_has_changed = true;
+}
+
+
 Image::~Image()
 {
-    if (m_surface)
+    destroy();
+}
+
+
+void Image::destroy()
+{
+    if (nb_instance==nullptr)
+    {
+        assert(m_surface==nullptr);
+        assert(m_texture==nullptr);
+        assert(m_has_changed==nullptr);
+        return ;
+    }
+
+    if (*nb_instance==1)
+    {
         SDL_FreeSurface(m_surface);
-    if (m_texture)
         SDL_DestroyTexture(m_texture);
+        delete nb_instance;
+        delete m_has_changed;
+        nb_instance = nullptr;
+        m_has_changed = nullptr;
+        m_surface = nullptr;
+        m_texture = nullptr;
+//        cout<<"Image::FREE   ";
+//        printInfo();
+    }
+    else
+    {
+        (*nb_instance)--;
+//        cout<<"Image::DETACH   ";
+//        printInfo();
+        nb_instance = nullptr;
+        m_has_changed = nullptr;
+        m_surface = nullptr;
+        m_texture = nullptr;
+    }
 }
 
 
 Image& Image::operator=(const Image& im)
 {
-    if (m_surface)
-        SDL_FreeSurface(m_surface);
-    if (m_texture)
-        SDL_DestroyTexture(m_texture);
+    destroy();
 
-    init(im.m_surface->w, im.m_surface->h);
-    SDL_BlitSurface( im.m_surface,NULL,m_surface,NULL);
-    m_has_changed = true;
+    m_surface = im.m_surface;
+    m_texture = im.m_texture;
+    m_has_changed = im.m_has_changed;
+    nb_instance = im.nb_instance;
+    (*nb_instance)++;
+
+//    cout<<"Image::operator= "<<*nb_instance<<" ";
+//    printInfo();
+//    if (m_surface)
+//        SDL_FreeSurface(m_surface);
+//    if (m_texture)
+//        SDL_DestroyTexture(m_texture);
+//
+//    init(im.m_surface->w, im.m_surface->h);
+//    SDL_BlitSurface( im.m_surface,NULL,m_surface,nullptr);
+//    m_has_changed = true;
     return *this;
 }
 
@@ -1324,7 +1398,7 @@ void Image::set(int x, int y, unsigned char r, unsigned char g, unsigned b, unsi
     image_set(m_surface, x, y, pixel);
     SDL_UnlockSurface(m_surface);
 
-    m_has_changed = true;
+    *m_has_changed = true;
 }
 
 
@@ -1345,14 +1419,14 @@ void Image::draw(int x, int y, int w, int h)
     r.h = (h<0)?surface()->h:h;
     r.y = g.inverseY( r.y+r.h);
 
-    if (m_has_changed)
+    if (*m_has_changed)
     {
-        ok = SDL_UpdateTexture(m_texture, NULL, m_surface->pixels, m_surface->pitch);
+        ok = SDL_UpdateTexture(m_texture, nullptr, m_surface->pixels, m_surface->pitch);
         assert(ok == 0);
-        m_has_changed = false;
+        *m_has_changed = false;
     }
 
-    ok = SDL_RenderCopy(g.renderer(), m_texture, NULL, &r);
+    ok = SDL_RenderCopy(g.renderer(), m_texture, nullptr, &r);
     assert(ok == 0);
 }
 
@@ -1368,14 +1442,14 @@ void Image::draw(int x, int y, int w, int h, float angle, int flip)
     r.h = (h<0)?m_surface->h:h;
     r.y = g.inverseY( r.y+r.h);
 
-    if (m_has_changed)
+    if (*m_has_changed)
     {
         ok = SDL_UpdateTexture(m_texture, NULL, m_surface->pixels, m_surface->pitch);
         assert(ok == 0);
-        m_has_changed = false;
+        *m_has_changed = false;
     }
 
-    //ok = SDL_RenderCopy(g.renderer(), im.texture, NULL, &r);
+    //ok = SDL_RenderCopy(g.renderer(), im.texture, nullptr, &r);
     //SDL_Point point = {x,y};
     SDL_RendererFlip fl;
     switch (flip)
@@ -1390,13 +1464,18 @@ void Image::draw(int x, int y, int w, int h, float angle, int flip)
         fl = SDL_FLIP_VERTICAL;
         break;
     };
-    ok = SDL_RenderCopyEx( g.renderer(), m_texture, NULL, &r, angle, NULL, fl );
+    ok = SDL_RenderCopyEx( g.renderer(), m_texture, nullptr, &r, angle, nullptr, fl );
     assert(ok == 0);
 }
 
 
 void Image::savePNG(const char* filename) const
 {
+    if (!isInit())
+    {
+        cout<<"Image save: can not save an empty image!"<<endl;
+        return;
+    }
     Grapic& g = Grapic::singleton();
     SDL_Surface * surfaceCorrectPixelFormat = SDL_ConvertSurfaceFormat( m_surface,g.textureFormat(),0);
     int r = IMG_SavePNG( surfaceCorrectPixelFormat, filename);
@@ -1414,16 +1493,18 @@ void Image::printInfo() const
 {
     if (!isInit())
     {
-        printf("image not initialized\n");
+        printf("imageInfo: not initialized\n");
         return;
     }
-    printf("Image: %dx%d format=%d %s pitch=%d\n",
+    printf("imageInfo: %dx%d format=%d %s pitch=%d",
                                                                 m_surface->w,
                                                                 m_surface->h,
                                                                 m_surface->format->format,
                                                                 SDL_GetPixelFormatName(m_surface->format->format),
                                                                 m_surface->pitch);
-
+    printf(" surface=%p  texture=%p has_changed=%p  nb_instance=%p", m_surface, m_texture, m_has_changed, nb_instance);
+    if (nb_instance) printf(" *nb_instance=%d ", *nb_instance);
+    printf("\n");
 }
 
 

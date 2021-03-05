@@ -29,19 +29,29 @@ void fillImage(Image& im)
 }
 
 
+void draw(Image im)
+{
+    image_draw(im, 20, 20, WIN_DIM_X-40, WIN_DIM_Y-40);
+    color(255,0,0);
+    print(WIN_DIM_X/2 -150, 0, "Image is filled by image_set");
+}
+
+
 int main(int , char** )
 {
     bool stop=false;
     winInit("Demo", WIN_DIM_X, WIN_DIM_Y);
     Image im;
     image_printInfo(im);
+
     fillImage(im);
     image_printInfo(im);
+
     while( !stop )                              // The application is running in a loop and call the draw function all the time.
     {
         backgroundColor( 100, 80, 200, 255 );
         winClear();
-        image_draw(im, 0, 0);
+        draw(im);
         stop = winDisplay();
     }
     winQuit();
