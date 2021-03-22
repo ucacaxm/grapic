@@ -1299,7 +1299,8 @@ Image& Image::operator=(const Image& im)
     m_texture = im.m_texture;
     m_has_changed = im.m_has_changed;
     nb_instance = im.nb_instance;
-    (*nb_instance)++;
+    if (nb_instance)
+        (*nb_instance)++;
 
 //    cout<<"Image::operator= "<<*nb_instance<<" ";
 //    printInfo();
@@ -1410,6 +1411,7 @@ void image_set(Image& im, int x, int y, unsigned char r, unsigned char g, unsign
 
 void Image::draw(int x, int y, int w, int h)
 {
+    assert(m_surface);
     int ok;
     Grapic& g = Grapic::singleton();
     SDL_Rect r;
@@ -1433,6 +1435,7 @@ void Image::draw(int x, int y, int w, int h)
 
 void Image::draw(int x, int y, int w, int h, float angle, int flip)
 {
+    assert(m_surface);
     int ok;
     Grapic& g = Grapic::singleton();
     SDL_Rect r;
@@ -1449,8 +1452,6 @@ void Image::draw(int x, int y, int w, int h, float angle, int flip)
         *m_has_changed = false;
     }
 
-    //ok = SDL_RenderCopy(g.renderer(), im.texture, nullptr, &r);
-    //SDL_Point point = {x,y};
     SDL_RendererFlip fl;
     switch (flip)
     {

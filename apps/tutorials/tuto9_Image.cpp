@@ -42,6 +42,10 @@ int main(int , char** )
     bool stop=false;
     winInit("Demo", WIN_DIM_X, WIN_DIM_Y);
     Image im;
+
+    Image im2;
+    im = im2;               // just to make a test
+
     image_printInfo(im);
 
     fillImage(im);
