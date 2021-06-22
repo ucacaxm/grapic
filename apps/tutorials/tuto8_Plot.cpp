@@ -35,13 +35,12 @@ int main(int , char** )
         plot_add(p2, x, y2,1);					// add a dot in the graph p2, curve1;  if 1000 values are already stored in p2, the lowest is removed
 
 
-        backgroundColor( 255, 255, 255);
+        backgroundColor( 55, 0, 0);
         winClear();
 
-        backgroundColor( 255, 200, 200);
         color( 255, 0,0);
         plot_draw( p1, 20, 20, WIN_DIM_X-20, WIN_DIM_Y/2-20 );						// draw the graph p1
-        plot_draw( p2, 20, WIN_DIM_Y/2+20, WIN_DIM_X-20, WIN_DIM_Y-20 );			// draw the graph p2 on the top of the window
+        plot_draw( p2, 20, WIN_DIM_Y/2+20, WIN_DIM_X-20, WIN_DIM_Y-20, false );			// draw the graph p2 on the top of the window
 
         stop = winDisplay();
     }

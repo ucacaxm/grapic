@@ -55,7 +55,7 @@ cleandoc:
 	rm -rf doc/html doc/xml
 
 cleanpremake: cleandoc
-	rm -rf build ; rm -rf bin/* ; rm -rf obj ; rm -rf apps/LIFAMI ; chmod 755 script/premake*
+	rm -rf build ; rm -rf bin/* ; rm -rf obj ; chmod 755 script/premake*
 
 build/${OS}: premake4.lua premake
 

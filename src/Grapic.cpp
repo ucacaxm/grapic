@@ -1667,25 +1667,26 @@ void Plot::draw(int xmin, int ymin, int xmax, int ymax, bool clearOrNot) const
 
         backgroundColor( bg.r, bg.g, bg.b);
         color(col.r, col.g, col.b);
-
-        xmin+=25;
-        ymin+=20;
-        rectangle(xmin,ymin,xmax,ymax);
-
-        //fxmin = cu[0].first;
-        //fxmax = cu[ cu.size()-1 ].first;
-        int maxsize;
-        minMax( fxmin, fymin, fxmax, fymax, maxsize);
-        if (m_nb_plot_max>0)
-            fxmax = fxmin + ((fxmax-fxmin) * ((float)(m_nb_plot_max))) / maxsize;
-
-        fontSize(11);
-        print( xmin-25, ymin-5, fymin);
-        print( xmin-25, ymax-15, fymax);
-
-        print( xmin-5, ymin-20, fxmin);
-        print( xmax-30, ymin-20, fxmax);
     }
+
+    // Draw axis
+    xmin+=25;
+    ymin+=20;
+    rectangle(xmin,ymin,xmax,ymax);
+
+    //fxmin = cu[0].first;
+    //fxmax = cu[ cu.size()-1 ].first;
+    int maxsize;
+    minMax( fxmin, fymin, fxmax, fymax, maxsize);
+    if (m_nb_plot_max>0)
+        fxmax = fxmin + ((fxmax-fxmin) * ((float)(m_nb_plot_max))) / maxsize;
+
+    fontSize(11);
+    print( xmin-25, ymin-5, fymin);
+    print( xmin-25, ymax-15, fymax);
+
+    print( xmin-5, ymin-20, fxmin);
+    print( xmax-30, ymin-20, fxmax);
 
     Grapic& gr = Grapic::singleton();
     SDL_Color save = gr.getColor();
