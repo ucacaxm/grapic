@@ -45,7 +45,7 @@ solution "grapic"
 	if _OPTIONS["cb-version"]=="cb17" then
 		location (grapic_dir .. "/build/" .. os.get().."-cb17")
 		configuration { "windows", "codeblocks" }
-			buildoptions { "-std=c++11" }
+			buildoptions { "-std=c++17" }
 			buildoptions { "-g"}
 			linkoptions { "-g"}
 			buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
@@ -59,7 +59,7 @@ solution "grapic"
 	if _OPTIONS["cb-version"]=="cb20" then
 		location (grapic_dir .. "/build/" .. os.get().."-cb20")
 		configuration { "windows", "codeblocks"}
-			buildoptions { "-std=c++11" }
+			buildoptions { "-std=c++17" }
 			buildoptions { "-g"}
 			linkoptions { "-g"}
 			buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
@@ -81,7 +81,7 @@ solution "grapic"
 	-- ##################### Linux
 	configuration { "linux" }
 		includedirs { "/usr/include/SDL2" }
-		buildoptions { "-std=c++11" }
+		buildoptions { "-std=c++17" }
 		buildoptions { "-ggdb"}
 		linkoptions { "-ggdb"}
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
@@ -102,7 +102,7 @@ solution "grapic"
 	-- ##################### MACOS
 	configuration "macosx"
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing" }
-		buildoptions { "-std=c++11" }
+		buildoptions { "-std=c++17" }
 		includedirs {	"extern/macosx/SDL2.framework/Versions/A/Headers/",
 						"extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
 						"extern/macosx/SDL2_image.framework/Headers",
