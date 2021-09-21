@@ -27,7 +27,7 @@ namespace grapic
 using namespace std;
 
 
-Grapic Grapic::currentGrapic;
+Grapic* Grapic::currentGrapic = nullptr;
 
 
 Grapic::Grapic() :
@@ -51,10 +51,14 @@ Grapic::Grapic() :
     m_backgroundColor.g = 255;
     m_backgroundColor.b = 255;
     m_backgroundColor.a = 255;
+
+    if (Grapic::currentGrapic)
+        delete Grapic::currentGrapic;
+    Grapic::currentGrapic = this;
 }
 
 
-void Grapic::init(const char* name, int w, int h, int posx, int posy)
+void Grapic::init(const char* name, int w, int h, int posx, int posy, SDL_WindowFlags flag)
 {
     SDL_version compiled;
     SDL_version linked;
@@ -73,6 +77,7 @@ void Grapic::init(const char* name, int w, int h, int posx, int posy)
         assert(0);
         exit(1);
     }
+    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 
     if (TTF_Init() != 0)
     {
@@ -99,7 +104,7 @@ void Grapic::init(const char* name, int w, int h, int posx, int posy)
     if (m_window) SDL_DestroyWindow(m_window);
     if (posx<0) posx = SDL_WINDOWPOS_CENTERED;
     if (posy<0) posy = SDL_WINDOWPOS_CENTERED;
-    m_window = SDL_CreateWindow(name, posx, posy, w, h, SDL_WINDOW_SHOWN ); //| SDL_WINDOW_RESIZABLE);
+    m_window = SDL_CreateWindow(name, posx, posy, w, h, SDL_WINDOW_SHOWN | flag ); //| SDL_WINDOW_RESIZABLE);
     if (m_window == nullptr)
     {
         std::cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << std::endl;
@@ -249,54 +254,58 @@ bool saveScreenshotPNG(std::string filepath, SDL_Window* SDLWindow, SDL_Renderer
     return true;
 }
 
-
-
 bool Grapic::manageEvent()
 {
     SDL_Event event;
     SDL_PumpEvents();
     while (SDL_PollEvent(&event))
     {
-        switch (event.type)
-        {
-        case SDL_QUIT:
-            m_quit = true;
-            break;
-        case SDL_KEYDOWN:
-            if (((size_t) event.key.keysym.scancode < m_keyStates.size()) && ((m_keyRepeatMode) || (event.key.repeat==0)))
-            {
-                //cout<<event.key.keysym.scancode<<endl;
-                m_keyStates[event.key.keysym.scancode]++; // = 1;
-                //last_key= event.key;    // conserver le dernier evenement
-            }
-
-            if ((event.key.keysym.sym == SDLK_ESCAPE) || (event.key.keysym.sym == SDLK_q))
-                m_quit = true;
-            else if (event.key.keysym.sym == SDLK_F12)
-            {
-                char filename[128];
-                sprintf(filename, "grapic_%d.png", imagesSavedCount);
-                imagesSavedCount++;
-                saveScreenshotPNG( filename, m_window, m_renderer);
-                printf("Save %s\n", filename);
-            }
-            else if (event.key.keysym.sym == SDLK_h)
-            {
-                help();
-            }
-            break;
-        case SDL_KEYUP:
-            // modifier l'etat du clavier
-            if((size_t) event.key.keysym.scancode < m_keyStates.size())
-            {
-                m_keyStates[event.key.keysym.scancode]= 0;
-                //last_key= event.key;    // conserver le dernier evenement
-            }
-            break;
-        default:
-            break;
-        }
+        manageOneEvent(event);
     }
+    return m_quit;
+}
+
+bool Grapic::manageOneEvent(SDL_Event event)
+{
+    switch (event.type)
+    {
+    case SDL_QUIT:
+        m_quit = true;
+        break;
+    case SDL_KEYDOWN:
+        if (((size_t)event.key.keysym.scancode < m_keyStates.size()) && ((m_keyRepeatMode) || (event.key.repeat == 0)))
+        {
+            //cout<<event.key.keysym.scancode<<endl;
+            m_keyStates[event.key.keysym.scancode]++; // = 1;
+            //last_key= event.key;    // conserver le dernier evenement
+        }
+
+        if ((event.key.keysym.sym == SDLK_ESCAPE) || (event.key.keysym.sym == SDLK_q))
+            m_quit = true;
+        else if (event.key.keysym.sym == SDLK_F12)
+        {
+            char filename[128];
+            sprintf(filename, "grapic_%d.png", imagesSavedCount);
+            imagesSavedCount++;
+            saveScreenshotPNG(filename, m_window, m_renderer);
+            printf("Save %s\n", filename);
+        }
+        else if (event.key.keysym.sym == SDLK_h)
+        {
+            help();
+        }
+        break;
+    case SDL_KEYUP:
+        // modifier l'etat du clavier
+        if ((size_t)event.key.keysym.scancode < m_keyStates.size())
+        {
+            m_keyStates[event.key.keysym.scancode] = 0;
+            //last_key= event.key;    // conserver le dernier evenement
+        }
+        break;
+    default:
+        break;
+        }
     return m_quit;
 }
 
@@ -316,13 +325,13 @@ Grapic& Grapic::singleton(bool secure)
 {
     if (secure)
     {
-        if (!currentGrapic.isInit())
+        if (!currentGrapic->isInit())
         {
             std::cout<<"You have to call winInit before any call to Grapic functions !"<<std::endl;
             exit(1);
         }
     }
-    return currentGrapic;
+    return *currentGrapic;
 }
 
 
@@ -401,6 +410,14 @@ void Grapic::color(unsigned char r, unsigned char g, unsigned char b, unsigned c
     SDL_SetRenderDrawColor(m_renderer, m_currentColor.r, m_currentColor.g, m_currentColor.b, m_currentColor.a);
 }
 
+void Grapic::colorf(float r, float  g, float  b, float  a)
+{
+    m_currentColor.r = (unsigned char)(255*r);
+    m_currentColor.g = (unsigned char)(255*g);
+    m_currentColor.b = (unsigned char)(255*b);
+    m_currentColor.a = (unsigned char)(255*a);
+    SDL_SetRenderDrawColor(m_renderer, m_currentColor.r, m_currentColor.g, m_currentColor.b, m_currentColor.a);
+}
 
 SDL_Color& Grapic::getColor()
 {
@@ -412,7 +429,6 @@ SDL_Color& Grapic::getBackgroundColor()
     return m_backgroundColor;
 }
 
-
 void Grapic::backgroundColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     m_backgroundColor.r = r;
@@ -421,6 +437,13 @@ void Grapic::backgroundColor(unsigned char r, unsigned char g, unsigned char b, 
     m_backgroundColor.a = a;
 }
 
+void Grapic::backgroundColorf(float r, float g, float b, float a)
+{
+    m_backgroundColor.r = r;
+    m_backgroundColor.g = g;
+    m_backgroundColor.b = b;
+    m_backgroundColor.a = a;
+}
 
 int Grapic::inverseY(int y)
 {
@@ -467,6 +490,7 @@ SDL_Renderer* renderer()
 
 void winInit(const char* name, int w, int h, int posx, int posy)
 {
+    Grapic::currentGrapic = new Grapic();
     Grapic::singleton(false).init(name,w,h,posx,posy);
 }
 
@@ -507,6 +531,11 @@ bool winDisplay()
 void winQuit()
 {
     Grapic::singleton().quit();
+    if (Grapic::currentGrapic)
+    {
+        delete Grapic::currentGrapic;
+        Grapic::currentGrapic = nullptr;
+    }
 }
 
 void color(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a)
@@ -514,10 +543,19 @@ void color(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _
     Grapic::singleton().color( _r, _g, _b, _a );
 }
 
+void colorf(float _r, float _g, float _b, float _a)
+{
+    Grapic::singleton().colorf( _r, _g, _b, _a );
+}
 
 void backgroundColor(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a)
 {
     Grapic::singleton().backgroundColor( _r, _g, _b, _a);
+}
+
+void backgroundColorf(float _r, float _g, float _b, float _a)
+{
+    Grapic::singleton().backgroundColorf( _r, _g, _b, _a);
 }
 
 void pressSpace(bool isPrint)

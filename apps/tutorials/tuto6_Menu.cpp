@@ -36,6 +36,7 @@ int main(int , char** )
     menu_add( m, "Question 2");
     menu_add( m, "Question 3");
     menu_add( m, "Question 4");
+    //menu_add_toggle( m, "Choix ")
 
 	while( !stop )
     {

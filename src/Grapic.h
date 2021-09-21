@@ -67,17 +67,19 @@ class Grapic
 {
 public:
     Grapic();
-    void init(const char* name, int w, int h, int posx=-1, int posy=-1);
+    void init(const char* name, int w, int h, int posx=-1, int posy=-1, SDL_WindowFlags flag = SDL_WindowFlags(0) );
     bool manageEvent();
 
     void clear();
     void clearEvent();
     bool display();
     void quit();
-    void color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+    void color(unsigned char r, unsigned char g, unsigned char b, unsigned char a=255);
+    void colorf(float r, float g, float b, float a=1.f);
     SDL_Color& getColor();
     SDL_Color& getBackgroundColor();
-    void backgroundColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+    void backgroundColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a=255);
+    void backgroundColorf(float r, float g, float b, float a=1.f);
     int inverseY(int y);
     void setFont(int s, const char* ttf=NULL);
     int keyHasBeenPressed(unsigned int sc);
@@ -92,6 +94,8 @@ public:
     bool hasFinished() const { return m_quit; }
     bool isInit() const { return m_window; }
     Uint32 textureFormat() const { return m_textureFormat; }
+    int winDimX() const { return m_width; }
+    int winDimY() const { return m_height; }
 
     static Grapic& singleton(bool secure=true);
 
@@ -115,8 +119,11 @@ protected:
 
     void initKeyArray();
     void help() const;
+    bool manageOneEvent(SDL_Event event);
 
-    static Grapic currentGrapic;
+    static Grapic* currentGrapic;
+    friend void winInit(const char* name, int w, int h, int posx, int posy);
+    friend void winQuit();
 };
 
 
@@ -266,13 +273,21 @@ bool winDisplay();
 */
 void winQuit();
 
-/** \brief Change the default color
+/** \brief Change the default color (unsigned char values between 0 and 255)
 */
 void color(unsigned char _r = 255, unsigned char _g = 255, unsigned char _b = 255, unsigned char _a = 255);
+
+/** \brief Change the default color (float values between 0.f and 1.f)
+*/
+void colorf(float _r = 1.f, float _g = 1.f, float _b = 1.f, float _a = 1.f);
 
 /** \brief Change the default background color (the color used to clear the screen)
 */
 void backgroundColor(unsigned char _r = 255, unsigned char _g = 255, unsigned char _b = 255, unsigned char _a = 255);
+
+/** \brief Change the default background color (the color used to clear the screen)
+*/
+void backgroundColorf(float _r = 1.f, float _g = 1.f, float _b = 1.f, float _a = 1.f);
 
 /** \brief Draw a circle from (xmin,ymin) to (xmax,ymax)
 */
