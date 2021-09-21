@@ -412,10 +412,10 @@ void Grapic::color(unsigned char r, unsigned char g, unsigned char b, unsigned c
 
 void Grapic::colorf(float r, float  g, float  b, float  a)
 {
-    m_currentColor.r = (unsigned char)(255*r);
-    m_currentColor.g = (unsigned char)(255*g);
-    m_currentColor.b = (unsigned char)(255*b);
-    m_currentColor.a = (unsigned char)(255*a);
+    m_currentColor.r = (unsigned char)( std::clamp(255*r,0.f,255.f) );
+    m_currentColor.g = (unsigned char)( std::clamp(255*g,0.f,255.f) );
+    m_currentColor.b = (unsigned char)( std::clamp(255*b,0.f,255.f) );
+    m_currentColor.a = (unsigned char)( std::clamp(255*a,0.f,255.f) );
     SDL_SetRenderDrawColor(m_renderer, m_currentColor.r, m_currentColor.g, m_currentColor.b, m_currentColor.a);
 }
 
@@ -439,10 +439,10 @@ void Grapic::backgroundColor(unsigned char r, unsigned char g, unsigned char b, 
 
 void Grapic::backgroundColorf(float r, float g, float b, float a)
 {
-    m_backgroundColor.r = r;
-    m_backgroundColor.g = g;
-    m_backgroundColor.b = b;
-    m_backgroundColor.a = a;
+    m_backgroundColor.r = (unsigned char)( std::clamp(255*r,0.f,255.f) );
+    m_backgroundColor.g = (unsigned char)( std::clamp(255*g,0.f,255.f) );
+    m_backgroundColor.b = (unsigned char)( std::clamp(255*b,0.f,255.f) );
+    m_backgroundColor.a = (unsigned char)( std::clamp(255*a,0.f,255.f) );
 }
 
 int Grapic::inverseY(int y)
