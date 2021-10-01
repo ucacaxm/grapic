@@ -225,7 +225,11 @@ protected:
 /** \brief Initialize the window with a size w,h and a position (posx,posy).
     If posx<0 or posy<0, the position is centered.
 */
-void winInit(const char* name, int w, int h, int posx=-1, int posy=-1);
+inline void winInit(const char* name, int w, int h, int posx=-1, int posy=-1)
+{
+    Grapic::currentGrapic = new Grapic();
+    Grapic::singleton(false).init(name,w,h,posx,posy);
+}
 
 /** \brief Clear the window with the default background color
     ~~~~~~~~~~~~~~~{.c}
@@ -238,15 +242,24 @@ void winInit(const char* name, int w, int h, int posx=-1, int posy=-1);
 	winQuit();
     ~~~~~~~~~~~~~~~
 */
-void winClear();
+inline void winClear()
+{
+    grapic::Grapic::singleton().clear();
+}
 
 /** \brief return true if the application should be closed (because of 'ESC' or 'q' key pressed for instance)
 */
-bool winHasFinished();
+inline bool winHasFinished()
+{
+    return Grapic::singleton().hasFinished();
+}
 
 /** \brief Clear the event queue of the window
 */
-void winClearEvent();
+inline void winClearEvent()
+{
+    grapic::Grapic::singleton().clearEvent();
+}
 
 /** \brief Change the size (w,h), the position(ps,py) or the fullscreen on/off
      Set a negative parameter to let him as it is.
@@ -267,27 +280,50 @@ void winSetPosition(int w, int h, int ps, int py, bool fullscreen);
 	winQuit();
     ~~~~~~~~~~~~~~~
 */
-bool winDisplay();
+inline bool winDisplay()
+{
+    return Grapic::singleton().display();
+}
 
 /** \brief Quit and close all things
 */
-void winQuit();
+inline void winQuit()
+{
+    Grapic::singleton().quit();
+    if (Grapic::currentGrapic)
+    {
+        delete Grapic::currentGrapic;
+        Grapic::currentGrapic = nullptr;
+    }
+}
 
 /** \brief Change the default color (unsigned char values between 0 and 255)
 */
-void color(unsigned char _r = 255, unsigned char _g = 255, unsigned char _b = 255, unsigned char _a = 255);
+inline void color(unsigned char _r = 255, unsigned char _g = 255, unsigned char _b = 255, unsigned char _a = 255)
+{
+    Grapic::singleton().color( _r, _g, _b, _a );
+}
 
 /** \brief Change the default color (float values between 0.f and 1.f)
 */
-void colorf(float _r = 1.f, float _g = 1.f, float _b = 1.f, float _a = 1.f);
+inline void colorf(float _r = 1.f, float _g = 1.f, float _b = 1.f, float _a = 1.f)
+{
+    Grapic::singleton().colorf( _r, _g, _b, _a );
+}
 
 /** \brief Change the default background color (the color used to clear the screen)
 */
-void backgroundColor(unsigned char _r = 255, unsigned char _g = 255, unsigned char _b = 255, unsigned char _a = 255);
+inline void backgroundColor(unsigned char _r = 255, unsigned char _g = 255, unsigned char _b = 255, unsigned char _a = 255)
+{
+    Grapic::singleton().backgroundColor( _r, _g, _b, _a);
+}
 
 /** \brief Change the default background color (the color used to clear the screen)
 */
-void backgroundColorf(float _r = 1.f, float _g = 1.f, float _b = 1.f, float _a = 1.f);
+inline void backgroundColorf(float _r = 1.f, float _g = 1.f, float _b = 1.f, float _a = 1.f)
+{
+    Grapic::singleton().backgroundColorf( _r, _g, _b, _a);
+}
 
 /** \brief Draw a circle from (xmin,ymin) to (xmax,ymax)
 */
@@ -315,7 +351,11 @@ void rectangleFill(int xmin, int ymin, int xmax, int ymax);
 
 /** \brief Draw a line from (x1,y1) to (x2,y2)
 */
-void line(int x1, int y1, int x2, int y2);
+inline void line(int x1, int y1, int x2, int y2)
+{
+    Grapic& g = Grapic::singleton();
+    SDL_RenderDrawLine( g.renderer(), x1, g.inverseY(y1), x2, g.inverseY(y2));
+}
 
 /** \brief Draw a pixel on (x,y) with color (r,g,b,a)
 */
@@ -323,11 +363,19 @@ void put_pixel(int x, int y, unsigned char r, unsigned char g, unsigned char b, 
 
 /** \brief Draw a point at (x,y)
 */
-void point(int x, int y);
+inline void point(int x, int y)
+{
+    Grapic& g = Grapic::singleton();
+    SDL_RenderDrawPoint( g.renderer(), x, g.inverseY(y));
+}
 
 /** \brief Draw an array of n points
 */
-void points(int p[][2], int n);
+inline void points(int p[][2], int n)
+{
+    Grapic& g = Grapic::singleton();
+    SDL_RenderDrawPoints( g.renderer(), ((const SDL_Point*)(p)), n);
+}
 
 /** \brief Draw a grid from (xmin,ymin) to (xmax,ymax) with nx columns and ny rows
 */
@@ -335,15 +383,25 @@ void grid(int xmin, int ymin, int xmax, int ymax, int nx, int ny);
 
 /** \brief return a random number (integer) between rmin to rmax included
 */
-int irand(int rmin=0, int rmax=100);
+inline int irand(int rmin=0, int rmax=100)
+{
+    return rmin + rand() % (rmax - rmin + 1);
+}
 
 /** \brief return a random number (float) between rmin to rmax included
 */
-float frand(float rmin = 0.f, float rmax = 1.f);
+inline float frand(float rmin = 0.f, float rmax = 1.f)
+{
+    float r = static_cast<float>(rand()) / RAND_MAX;
+    return rmin + r * (rmax - rmin);
+}
 
 /** \brief return the time elapsed since the beginning of the process in second
 */
-float elapsedTime();
+inline float elapsedTime()
+{
+    return 0.001f * SDL_GetTicks();
+}
 
 /** \brief return the number of time the key 'key' has been pressed since the last call to this function.
     ~~~~~~~~~~~~~~~{.c}
@@ -353,11 +411,21 @@ float elapsedTime();
 	if (isKeyPressed('a')) { ... }          // if the key 'a' is pressed then do ...
     ~~~~~~~~~~~~~~~
 */
-int isKeyPressed(int key);
+inline int isKeyPressed(int key)
+{
+    Grapic& g = Grapic::singleton();
+    return (g.keyHasBeenPressed(key)); // || (state[key]>0) );
+}
+
 
 /** \brief (de)Activate the repeat mode: when the user presses continuously on the key touch is repeated. It has to be set at the beguinning of the program.
 */
-void setKeyRepeatMode(bool repeat);
+inline void setKeyRepeatMode(bool repeat)
+{
+    Grapic& g = Grapic::singleton();
+    g.setKeyRepeatMode(repeat);
+}
+
 
 /** \brief Stop the program during d milliseconds
     ~~~~~~~~~~~~~~~{.c}
@@ -366,14 +434,20 @@ void setKeyRepeatMode(bool repeat);
 	if (isKeyPressed('a')) { ... }          // if the key 'a' is pressed then do ...
     ~~~~~~~~~~~~~~~
 */
-void delay(int d);
+inline void delay(int d)
+{
+    SDL_Delay(d);
+}
 
 /** \brief return true if the mouse button 'button' is pressed
     ~~~~~~~~~~~~~~~{.c}
     if (isMousePressed(SDL_BUTTON_LEFT)) { ... }    // test if the left button of the mouse is pressed
     ~~~~~~~~~~~~~~~
 */
-bool isMousePressed(int button);
+inline bool isMousePressed(int button)
+{
+    return SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button);
+}
 
 /** \brief After this function (x,y) store the mouse position
     ~~~~~~~~~~~~~~~{.c}
@@ -386,11 +460,18 @@ void mousePos(int& x, int& y);
 
 /** \brief Manage standard event like key 'ESC', quit, etc.
 */
-bool winManageEvent();
+inline bool winManageEvent()
+{
+    return Grapic::singleton().manageEvent();
+}
 
 /** \brief Change the default size of the font
 */
-void fontSize(int s);
+inline void fontSize(int s)
+{
+    Grapic::singleton().setFont(s);
+}
+
 
 /** \brief Print the text txt , up left corner is (x,y)
     ~~~~~~~~~~~~~~~{.c}
@@ -405,14 +486,25 @@ void print(int x, int y, const char* txt);
     print( 10, 20, 128);                      // Print the number "128" with the left corner (10,20)
     ~~~~~~~~~~~~~~~
 */
-void print(int x, int y, int nb);
+inline void print(int x, int y, int nb)
+{
+    char txt[64];
+    sprintf(txt,"%d", nb);
+    print(x,y,txt);
+}
+
 
 /** \brief Print the float nb, up left corner is (x,y)
     ~~~~~~~~~~~~~~~{.c}
     print( 10, 20, 3.1415);                      // Print the number "3.1415" with the left corner (10,20)
     ~~~~~~~~~~~~~~~
 */
-void print(int x, int y, float nb);
+inline void print(int x, int y, float nb)
+{
+    char txt[64];
+    sprintf(txt,"%.2f", nb);
+    print(x,y,txt);
+}
 
 /** \brief Stop the program until key 'space'is pressed
 */
@@ -437,11 +529,18 @@ void pressSpace(bool isPrint=true);
     }
     ~~~~~~~~~~~~~~~
 */
-Image image(const char* filename, bool transparency=false, unsigned char r=255, unsigned char g=255, unsigned b=255, unsigned char a=255);
+inline Image image(const char* filename, bool transparency=false, unsigned char r=255, unsigned char g=255, unsigned b=255, unsigned char a=255)
+{
+    return Image(filename, transparency, r, g, b, a);
+}
+
 
 /** \brief Return an image of width=w and height=h
 */
-Image image(int w, int h);
+inline Image image(int w, int h)
+{
+    return Image(w,h);
+}
 
 /** \brief Return a copy of the image. It duplicates the image. It is useful since an affectation shares the same image.
 */
@@ -449,32 +548,52 @@ Image image_copy(const Image& im);
 
 /** \brief Save the image into the file: format is PNG
 */
-void image_savePNG(const Image& im, const char* filename);
+inline void image_savePNG(const Image& im, const char* filename)
+{
+    im.savePNG(filename);
+}
 
 /** \brief Draw the image at position (x,y) with width=w and height=h (if w<0 or h<0 the original size of the image is used)
 */
-void image_draw(Image& im, int x, int y, int w=-1, int h=-1);
+inline void image_draw(Image& im, int x, int y, int w=-1, int h=-1)
+{
+    im.draw(x,y,w,h);
+}
 
 /** \brief Draw the image at position (x,y) with width=w and height=h (if w<0 or h<0 the original size of the image is used); angle indicate the angle of rotation and flip: 0=no flip, 1=horizontal flip, 2=vertical flip
 */
-void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip=SDL_FLIP_NONE);
+inline void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip=SDL_FLIP_NONE)
+{
+    im.draw(x,y,w,h,angle,flip);
+}
 
 /** \brief return the color component c of the pixel (x,y) of the image im.
     c must be 0 for the red component, 1 for the green component, 2 for the blue component or 3 for the alpha/opacity component.
 */
-unsigned char image_get(const Image& im, int x, int y, int c=0);
+inline unsigned char image_get(const Image& im, int x, int y, int c=0)
+{
+    return im.get(x,y,c);
+}
 
 /** \brief Set the pixel (x,y) of the image im with the color c
 */
 void image_set(Image& im, int x, int y, unsigned char r, unsigned char g, unsigned b, unsigned char a);
 
+
 /** \brief return the width of the image
 */
-int image_width(const Image& im);
+inline int image_width(const Image& im)
+{
+    return im.surface()->w;
+}
+
 
 /** \brief return the height of the image
 */
-int image_height(const Image& im);
+inline int image_height(const Image& im)
+{
+    return im.surface()->h;
+}
 
 /** \brief return true if the image is initialized
     ~~~~~~~~~~~~~~~{.c}
@@ -483,11 +602,17 @@ int image_height(const Image& im);
         d.im = image("../data/grapic.bmp", true, 255,255,255,255 );
     ~~~~~~~~~~~~~~~
 */
-bool image_isInit(const Image& im);
+inline bool image_isInit(const Image& im)
+{
+    return im.isInit();
+}
 
 /** \brief Print the informations of the image im
 */
-void image_printInfo(const Image& im);
+inline void image_printInfo(const Image& im)
+{
+    im.printInfo();
+}
 
 
 /** \brief Add a line to the menu m with the text str
@@ -511,37 +636,68 @@ void image_printInfo(const Image& im);
 	winQuit();
     ~~~~~~~~~~~~~~~
 */
-void menu_add(Menu& m, const std::string& str);
+inline void menu_add(Menu& m, const std::string& str)
+{
+    m.add(str);
+}
+
 
 //! \brief Change the text of a line in the menu
-void menu_change(Menu& m, int i, const std::string& str);
+inline void menu_change(Menu& m, int i, const std::string& str)
+{
+    m.change(i,str);
+}
 
 //! \brief Draw the menu on the screen. See menu_add for an example of usage.
-void menu_draw(Menu& m, int xmin=5, int ymin=5, int xmax=-1, int ymax=-1);
+inline void menu_draw(Menu& m, int xmin=5, int ymin=5, int xmax=-1, int ymax=-1)
+{
+    m.draw(xmin,ymin,xmax,ymax);
+}
 
 //! \brief return the line selected in the menu. See menu_add for an example of usage.
-int menu_select(const Menu& m);
+inline int menu_select(const Menu& m)
+{
+    return m.select();
+}
 
 //! \brief return the line selected in the menu. See menu_add for an example of usage.
-void menu_setSelect(Menu& m, int s);
+inline void menu_setSelect(Menu& m, int s)
+{
+    m.setSelect(s);
+}
 
 //! \brief return the pixel from a line of the menu
-int caseToPixel(const Menu& m, int c, int ymin, int ymax);
-
+inline int caseToPixel(const Menu& m, int c, int ymin, int ymax)
+{
+    return m.caseToPixel(c,ymin,ymax);
+}
 
 //! @todo: plot: setColor for each curves
 //! @todo: setRangeXMinMax for each curves
+
 //! \brief Clear the data stored
-void plot_clear(Plot& p );
+inline void plot_clear(Plot& p )
+{
+    p.clear();
+}
 
 //! \brief Define the size of the stored value of the funtion (<0 means infinity)
-void plot_setSize(Plot& p, const int n);
+inline void plot_setSize(Plot& p, const int n)
+{
+    p.setSize(n);
+}
 
 //! \brief Add a point (x,y=f(x)) to the curve number curve_n
-void plot_add(Plot& p, float x, float y, int curve_n=0);
+inline void plot_add(Plot& p, float x, float y, int curve_n=0)
+{
+    p.add(x,y,curve_n);
+}
 
 //! \brief Draw the curve in the rectangle (xmin,ymin,xmax,ymax); clear the rectangle if clearOrNot is true
-void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clearOrNot=true);
+inline void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clearOrNot=true)
+{
+    p.draw(xmin,ymin,xmax,ymax,clearOrNot);
+}
 
 
 

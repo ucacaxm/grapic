@@ -483,20 +483,9 @@ void Grapic::setFont(int s, const char* ttf)
 //==================================================================================================
 
 
-SDL_Renderer* renderer()
+inline SDL_Renderer* renderer()
 {
     return Grapic::singleton().renderer();
-}
-
-void winInit(const char* name, int w, int h, int posx, int posy)
-{
-    Grapic::currentGrapic = new Grapic();
-    Grapic::singleton(false).init(name,w,h,posx,posy);
-}
-
-void winClear()
-{
-    Grapic::singleton().clear();
 }
 
 void winSetPosition(int w, int h, int px, int py, bool fullscreen)
@@ -517,47 +506,6 @@ void winSetPosition(int w, int h, int px, int py, bool fullscreen)
     SDL_SetWindowPosition( Grapic::singleton().window(), px,py);
 }
 
-
-bool winHasFinished()
-{
-    return Grapic::singleton().hasFinished();
-}
-
-bool winDisplay()
-{
-    return Grapic::singleton().display();
-}
-
-void winQuit()
-{
-    Grapic::singleton().quit();
-    if (Grapic::currentGrapic)
-    {
-        delete Grapic::currentGrapic;
-        Grapic::currentGrapic = nullptr;
-    }
-}
-
-void color(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a)
-{
-    Grapic::singleton().color( _r, _g, _b, _a );
-}
-
-void colorf(float _r, float _g, float _b, float _a)
-{
-    Grapic::singleton().colorf( _r, _g, _b, _a );
-}
-
-void backgroundColor(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a)
-{
-    Grapic::singleton().backgroundColor( _r, _g, _b, _a);
-}
-
-void backgroundColorf(float _r, float _g, float _b, float _a)
-{
-    Grapic::singleton().backgroundColorf( _r, _g, _b, _a);
-}
-
 void pressSpace(bool isPrint)
 {
     winClearEvent();
@@ -574,12 +522,6 @@ void pressSpace(bool isPrint)
     Grapic::singleton().manageEvent();
     delay(50);
 }
-
-bool winManageEvent()
-{
-    return Grapic::singleton().manageEvent();
-}
-
 
 void rectangle(int xmin, int ymin, int xmax, int ymax)
 {
@@ -756,8 +698,6 @@ int filledEllipseRGBA(SDL_Renderer* m_renderer, Sint16 x, Sint16 y, Sint16 rx, S
     return (result);
 }
 
-
-
 int pixelRGBA(SDL_Renderer * renderer, Sint16 x, Sint16 y, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
     int result = 0;
@@ -766,7 +706,6 @@ int pixelRGBA(SDL_Renderer * renderer, Sint16 x, Sint16 y, Uint8 r, Uint8 g, Uin
     result |= SDL_RenderDrawPoint(renderer, x, y);
     return result;
 }
-
 
 int pixelRGBAWeight(SDL_Renderer * renderer, Sint16 x, Sint16 y, Uint8 r, Uint8 g, Uint8 b, Uint8 a, Uint32 weight)
 {
@@ -786,7 +725,6 @@ int pixelRGBAWeight(SDL_Renderer * renderer, Sint16 x, Sint16 y, Uint8 r, Uint8 
 
     return pixelRGBA(renderer, x, y, r, g, b, a);
 }
-
 
 int aaellipseRGBA(SDL_Renderer * renderer, Sint16 x, Sint16 y, Sint16 rx, Sint16 ry, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
@@ -988,8 +926,6 @@ int aaellipseRGBA(SDL_Renderer * renderer, Sint16 x, Sint16 y, Sint16 rx, Sint16
     return (result);
 }
 
-
-
 void circle(int xc, int yc, int circleR)
 {
     Grapic& g = Grapic::singleton();
@@ -1006,14 +942,6 @@ void circleFill(int xc, int yc, int circleR)
     filledEllipseRGBA(g.renderer(), xc, g.inverseY(yc), circleR, circleR, c[0], c[1], c[2], c[3]);
 }
 
-
-
-void line(int xmin, int ymin, int xmax, int ymax)
-{
-    Grapic& g = Grapic::singleton();
-    SDL_RenderDrawLine(renderer(), xmin, g.inverseY(ymin), xmax, g.inverseY(ymax));
-}
-
 void put_pixel(int x, int y, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     Grapic& gr = Grapic::singleton();
@@ -1021,18 +949,6 @@ void put_pixel(int x, int y, unsigned char r, unsigned char g, unsigned char b, 
     color(r,g,b,a);
     SDL_RenderDrawPoint(renderer(), x, gr.inverseY(y));
     color(save.r,save.g,save.b,save.a);
-}
-
-void point(int x, int y)
-{
-    Grapic& g = Grapic::singleton();
-    SDL_RenderDrawPoint(renderer(), x, g.inverseY(y));
-}
-
-void points(int p[][2], int n)
-{
-    //Grapic& g = Grapic::singleton();
-    SDL_RenderDrawPoints(renderer(), ((const SDL_Point*)(p)), n);
 }
 
 void grid(int xmin, int ymin, int xmax, int ymax, int nx, int ny)
@@ -1047,74 +963,12 @@ void grid(int xmin, int ymin, int xmax, int ymax, int nx, int ny)
         line(xmin, ymin + stepy*i, xmax, ymin + stepy*i);
 }
 
-int irand(int rmin, int rmax)
-{
-    return rmin + rand() % (rmax - rmin + 1);
-}
-
-float frand(float rmin, float rmax)
-{
-    float r = static_cast<float>(rand()) / RAND_MAX;
-    return rmin + r * (rmax - rmin);
-}
-
-float elapsedTime()
-{
-    //return float(clock()) / CLOCKS_PER_SEC;
-    return 0.001f * SDL_GetTicks();
-}
-
-
-
-int isKeyPressed(int key)
-{
-    Grapic& g = Grapic::singleton();
-    //SDL_PumpEvents();
-    //int siz;
-    //const Uint8 *state = SDL_GetKeyboardState(&siz);
-    //if (state[key]>0) SDL_Delay(10);
-    return (g.keyHasBeenPressed(key)); // || (state[key]>0) );
-}
-
-void setKeyRepeatMode(bool repeat)
-{
-    Grapic& g = Grapic::singleton();
-    g.setKeyRepeatMode(repeat);
-}
-
-
-bool isMousePressed(int button)
-{
-    return SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button);
-}
-
 void mousePos(int& x, int& y)
 {
     SDL_PumpEvents();
     SDL_GetMouseState(&x, &y);
     Grapic& g = Grapic::singleton();
     y = g.inverseY(y);
-}
-
-
-
-void fontSize(int s)
-{
-    Grapic::singleton().setFont(s);
-}
-
-void print(int x, int y, int nb)
-{
-    char txt[64];
-    sprintf(txt,"%d", nb);
-    print(x,y,txt);
-}
-
-void print(int x, int y, float nb)
-{
-    char txt[64];
-    sprintf(txt,"%.2f", nb);
-    print(x,y,txt);
 }
 
 void print(int x, int y, const char* txt)
@@ -1129,7 +983,6 @@ void print(int x, int y, const char* txt)
     SDL_RenderCopy( g.renderer(), text, nullptr, &renderQuad);
     SDL_DestroyTexture(text);
 }
-
 
 Uint32 image_get(SDL_Surface *surface, int x, int y)
 {
@@ -1158,7 +1011,7 @@ Uint32 image_get(SDL_Surface *surface, int x, int y)
 
 //=========================================================================================================================
 //=========================================================================================================================
-//=========================================================================================================================
+//========================================================================================================================= Image
 //=========================================================================================================================
 //=========================================================================================================================
 
@@ -1550,7 +1403,7 @@ void Image::printInfo() const
 
 //=========================================================================================================================
 //=========================================================================================================================
-//=========================================================================================================================
+//========================================================================================================================= MENU
 //=========================================================================================================================
 //=========================================================================================================================
 
@@ -1610,7 +1463,7 @@ void Menu::draw(int xmin, int ymin, int xmax, int ymax)
 
 //=========================================================================================================================
 //=========================================================================================================================
-//=========================================================================================================================
+//========================================================================================================================= PLOT
 //=========================================================================================================================
 //=========================================================================================================================
 
@@ -1745,7 +1598,7 @@ void Plot::draw(int xmin, int ymin, int xmax, int ymax, bool clearOrNot) const
 
 //=========================================================================================================================
 //=========================================================================================================================
-//=========================================================================================================================
+//========================================================================================================================= triangle polygon
 //=========================================================================================================================
 //=========================================================================================================================
 
@@ -2073,114 +1926,24 @@ void polygon(int p[][2], unsigned int number)
     }
 }
 
-void winClearEvent()
-{
-    grapic::Grapic::singleton().clearEvent();
-}
 
-void delay(int d)
-{
-    SDL_Delay(d);
-}
 
-Image image(const char* filename, bool transparency, unsigned char r, unsigned char g, unsigned b, unsigned char a)
-{
-    return Image(filename, transparency, r, g, b, a);
-}
 
-Image image(int w, int h)
-{
-    return Image(w,h);
-}
-void image_savePNG(const Image& im, const char* filename)
-{
-    im.savePNG(filename);
-}
 
-void image_draw(Image& im, int x, int y, int w, int h)
-{
-    im.draw(x,y,w,h);
-}
 
-void image_draw(Image& im, int x, int y, int w, int h, float angle, float flip)
-{
-    im.draw(x,y,w,h,angle,flip);
-}
 
-unsigned char image_get(const Image& im, int x, int y, int c)
-{
-    return im.get(x,y,c);
-}
 
-int image_width(const Image& im)
-{
-    return im.surface()->w;
-}
 
-int image_height(const Image& im)
-{
-    return im.surface()->h;
-}
 
-bool image_isInit(const Image& im)
-{
-    return im.isInit();
-}
 
-void image_printInfo(const Image& im)
-{
-    im.printInfo();
-}
 
-void menu_add(Menu& m, const std::string& str)
-{
-    m.add(str);
-}
 
-void menu_change(Menu& m, int i, const std::string& str)
-{
-    m.change(i,str);
-}
 
-void menu_draw(Menu& m, int xmin, int ymin, int xmax, int ymax)
-{
-    m.draw(xmin,ymin,xmax,ymax);
-}
 
-int menu_select(const Menu& m)
-{
-    return m.select();
-}
 
-void menu_setSelect(Menu& m, int s)
-{
-    m.setSelect(s);
-}
 
-int caseToPixel(const Menu& m, int c, int ymin, int ymax)
-{
-    return m.caseToPixel(c,ymin,ymax);
-}
 
-void plot_clear(Plot& p )
-{
-    p.clear();
-}
 
-void plot_setSize(Plot& p, const int n)
-{
-    p.setSize(n);
-}
-
-void plot_add(Plot& p, float x, float y, int curve_n)
-{
-    p.add(x,y,curve_n);
-}
-
-void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clearOrNot)
-{
-    p.draw(xmin,ymin,xmax,ymax,clearOrNot);
-}
 
 
 } // namespace
