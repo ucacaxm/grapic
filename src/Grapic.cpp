@@ -58,7 +58,7 @@ Grapic::Grapic() :
 }
 
 
-void Grapic::init(const char* name, int w, int h, int posx, int posy, SDL_WindowFlags flag)
+void Grapic::init(const char* name, int w, int h, int posx, int posy, SDL_WindowFlags flag, std::string render_driver)
 {
     SDL_version compiled;
     SDL_version linked;
@@ -77,7 +77,9 @@ void Grapic::init(const char* name, int w, int h, int posx, int posy, SDL_Window
         assert(0);
         exit(1);
     }
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
+
+    if (render_driver!="")
+        SDL_SetHint(SDL_HINT_RENDER_DRIVER, render_driver.c_str()); //"opengl");
 
     if (TTF_Init() != 0)
     {

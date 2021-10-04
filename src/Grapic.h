@@ -67,7 +67,7 @@ class Grapic
 {
 public:
     Grapic();
-    void init(const char* name, int w, int h, int posx=-1, int posy=-1, SDL_WindowFlags flag = SDL_WindowFlags(0) );
+    void init(const char* name, int w, int h, int posx=-1, int posy=-1, SDL_WindowFlags flag = SDL_WindowFlags(0), std::string render_driver="");
     bool manageEvent();
 
     void clear();
