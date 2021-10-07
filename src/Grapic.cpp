@@ -450,7 +450,7 @@ void Grapic::backgroundColorf(float r, float g, float b, float a)
 int Grapic::inverseY(int y)
 {
     SDL_GetRendererOutputSize(m_renderer, &m_width, &m_height);
-    return m_height - y - 1;
+    return m_height - 1 - y;
 }
 
 
@@ -1312,7 +1312,7 @@ void Image::draw(int x, int y, int w, int h)
     r.y = y;
     r.w = (w<0)?surface()->w:w;
     r.h = (h<0)?surface()->h:h;
-    r.y = g.inverseY( r.y+r.h);
+    r.y = g.inverseY( r.y+r.h-1);
 
     if (*m_has_changed)
     {
