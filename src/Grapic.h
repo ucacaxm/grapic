@@ -823,8 +823,15 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
        \image html cb_activatePrj.jpg "Selection of the project in Codeblocks" width=400
      - And run the program !
 
-  - Compile and run with Visual Studio Code
+  - Compile and run with Visual Studio Code (VSCode): mostly for advanced users.
      - Install MinGW as described here: [https://code.visualstudio.com/docs/cpp/config-mingw](Using GCC with MinGW for Visual Studio Code on Windows) \n
+     - Add the path to your Mingw-w64 bin folder to the Windows PATH environment variable by using the following steps:
+       In the Windows search bar, type 'settings' to open your Windows Settings.
+          Search for Edit environment variables for your account.
+          Choose the Path variable and then select Edit.
+          Select New and add the Mingw-w64 destination folder path to the system path. The exact path depends on which version of Mingw-w64 you have installed and where you installed it. If you used the settings above to install Mingw-w64, then add this to the path: C:\msys64\mingw64\bin.
+          Select OK to save the updated PATH. You will need to reopen any console windows for the new PATH location to be available
+     - Install C++ extension for VSCode [https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools](C/C++ extension for VS Code)
      - Open Visual Studio Code, then menu File+Open Folder and select the grapic folder. You can save a grapic.code-workspace.\n
      - Open a terminal (Ctrl+ù or menu Terminal/new terminal)\n
      - Test if the installation of MinGW and the path setting are OK: run g++ and mingw32-make (or just make)\n

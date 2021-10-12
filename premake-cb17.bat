@@ -1,7 +1,9 @@
 
-del /S /Q build
+:: del /S /Q build
+
 .\script\premake4.exe --os=windows --file=premake4.lua --cb-version=cb17 codeblocks 
-copy extern\mingw-cb20\bin\*.dll bin
+
+copy extern\mingw-cb17\bin\*.dll bin
 
 :: .\script\premake4.exe --os=linux gmake
 :: .\script\premake4.exe --os=linux codeblocks

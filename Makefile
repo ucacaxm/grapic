@@ -54,7 +54,7 @@ clean: build/${OS}
 cleandoc:
 	rm -rf doc/html doc/xml
 
-cleanpremake: cleandoc
+premakeclean: cleandoc
 	rm -rf build ; rm -rf bin/* ; rm -rf obj ; chmod 755 script/premake*
 
 build/${OS}: premake4.lua premake
@@ -89,28 +89,28 @@ bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp dir
 
 premake-all: premake-WinCB20 premake-Linux premake-MacOS premake-WinVS2015
 	
-premake-WinCB17: remove_quarantine cleanpremake
+premake-WinCB17: remove_quarantine
 	@echo "premake CB17 OS=$(OS)"
 	cp extern/mingw-cb17/bin/*.dll bin
 	$(PREMAKE4) --os=windows --cb-version=cb17 codeblocks
 
-premake-WinCB20: remove_quarantine cleanpremake
+premake-WinCB20: remove_quarantine
 	@echo "premake CB20 OS=$(OS)"
 	cp extern/mingw-cb20/bin/*.dll bin
 	$(PREMAKE4) --os=windows --cb-version=cb20 codeblocks
 	$(PREMAKE4) --os=windows --cb-version=cb20 gmake
 
-premake-WinVS2015: remove_quarantine cleanpremake
+premake-WinVS2015: remove_quarantine
 	@echo "premake vs2015 OS=$(OS)"
 	cp extern/visual2015/bin/*.dll bin
 	$(PREMAKE5)  --os=windows vs2015
 		
-premake-Linux: remove_quarantine cleanpremake
+premake-Linux: remove_quarantine
 	@echo "premake linux OS=$(OS)"
 	$(PREMAKE4) --os=linux gmake
 	$(PREMAKE4) --os=linux codeblocks
 
-premake-MacOS: cleanpremake
+premake-MacOS:
 	@echo "premake macos OS=$(OS)"
 	$(PREMAKE4) --os=macosx gmake
 	$(PREMAKE5) xcode4

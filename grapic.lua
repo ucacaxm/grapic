@@ -4,8 +4,8 @@ newoption {
    value       = "version",
    description = "Choose a particular version of CB",
    allowed = {
-      { "cb20",	"Codeblocks 20" },
-      { "cb17",	"Codeblocks 17" },
+	{ "cb17",	"Codeblocks 17" },
+	{ "cb20",	"Codeblocks 20" },
    }
 }
 
@@ -18,6 +18,34 @@ newoption {
    trigger     = "lifami-beta",
    description = "activate creation of projects for LIFAMI-BETA",
 }
+
+function dump(o)
+	if type(o) == 'table' then
+	   local s = '{ '
+	   for k,v in pairs(o) do
+		  if type(k) ~= 'number' then k = '"'..k..'"' end
+		  s = s .. '['..k..'] = ' .. dump(v) .. ','
+	   end
+	   return s .. '} '
+	else
+	   return tostring(o)
+	end
+end
+ 
+function ostarget()
+	-- print("Options:", dump(_OPTIONS))
+	-- print("target:"..os.target())
+	-- print(os.get())
+	-- print("ceci=".._OPTIONS["os"])
+	if _PREMAKE_VERSION >="5.0" then
+		-- print("pre5 return "..os.host())
+		return os.host()
+	else
+		-- print("pre4 return "..os.get())
+		return os.get() --_OPTIONS["os"]
+	end
+end
+
 
 
 solution "grapic"
@@ -32,18 +60,28 @@ solution "grapic"
 
 	configurations { "Grapic" }
 
+	print("Options:", dump(_OPTIONS))
+	print("Action:", dump(_ACTION))
+
 	if not _OPTIONS["cb-version"] then
-		location (grapic_dir .. "/build/" .. os.get())
+		location (grapic_dir .. "/build/" .. ostarget().."-".._ACTION)
+	else
+		location (grapic_dir .. "/build/" .. ostarget().."-".._OPTIONS["cb-version"])
 	end
+
 
 	configuration { "windows" }
 		defines { "WIN32", "NVWIDGETS_EXPORTS", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS" }
 		defines { "NOMINMAX" } -- allow std::min() and std::max() in vc++
 
 
+	if _ACTION=="vscode" then
+		require "vscode"
+	end
+
+	
 	-- ##################### CB17
 	if _OPTIONS["cb-version"]=="cb17" then
-		location (grapic_dir .. "/build/" .. os.get().."-cb17")
 		configuration { "windows", "codeblocks" }
 			buildoptions { "-std=c++17" }
 			buildoptions { "-g"}
@@ -57,7 +95,6 @@ solution "grapic"
 
 	-- ##################### CB20
 	if _OPTIONS["cb-version"]=="cb20" then
-		location (grapic_dir .. "/build/" .. os.get().."-cb20")
 		configuration { "windows", "codeblocks"}
 			buildoptions { "-std=c++17" }
 			buildoptions { "-g"}
@@ -67,7 +104,7 @@ solution "grapic"
 			libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
 			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
 		configuration { "windows", "gmake"}
-			buildoptions { "-std=c++11" }
+			buildoptions { "-std=c++17" }
 			buildoptions { "-g"}
 			linkoptions { "-g"}
 			buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
