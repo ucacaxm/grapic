@@ -51,10 +51,10 @@ endif
 clean: build/${OS}
 	rm -rf bin/*.exe ; cd build/${OS} ; make clean
 
-cleandoc:
+docclean:
 	rm -rf doc/html doc/xml
 
-premakeclean: cleandoc
+premakeclean: docclean
 	rm -rf build ; rm -rf bin/* ; rm -rf obj ; chmod 755 script/premake*
 
 build/${OS}: premake4.lua premake
@@ -69,11 +69,7 @@ zip: dos2unix version $(GRAPIC_HOME)/bin/remove_correction.exe
 	$(GRAPIC_HOME)/script/make_zip.sh
 
 version: FORCE
-	#$(shell $(GRAPIC_HOME)/script/inc_version.sh))
 	sh $(GRAPIC_HOME)/script/inc_version.sh
-
-web-win: version zip docgen
-	/c/Program\ Files\ \(x86\)/WinSCP/winscp.com -script=$(GRAPIC_HOME)/script/scp_script_toWeb.txt
 
 web: zip docgen web-force
 

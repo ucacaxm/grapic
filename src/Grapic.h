@@ -824,14 +824,14 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
      - And run the program !
 
   - Compile and run with Visual Studio Code (VSCode): mostly for advanced users.
-     - Install MinGW as described here: [https://code.visualstudio.com/docs/cpp/config-mingw](Using GCC with MinGW for Visual Studio Code on Windows) \n
-     - Add the path to your Mingw-w64 bin folder to the Windows PATH environment variable by using the following steps:
-       In the Windows search bar, type 'settings' to open your Windows Settings.
-          Search for Edit environment variables for your account.
-          Choose the Path variable and then select Edit.
-          Select New and add the Mingw-w64 destination folder path to the system path. The exact path depends on which version of Mingw-w64 you have installed and where you installed it. If you used the settings above to install Mingw-w64, then add this to the path: C:\msys64\mingw64\bin.
-          Select OK to save the updated PATH. You will need to reopen any console windows for the new PATH location to be available
-     - Install C++ extension for VSCode [https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools](C/C++ extension for VS Code)
+     - Install MinGW as described here: [Using GCC with MinGW for Visual Studio Code on Windows](https://code.visualstudio.com/docs/cpp/config-mingw) \n
+     - Add the path to your Mingw-w64 bin folder to the Windows PATH environment variable by using the following steps: \n
+       In the Windows search bar, type 'settings' to open your Windows Settings. \n
+          - Search for Edit environment variables for your account. \n
+          - Choose the Path variable and then select Edit. \n
+          - Select New and add the Mingw-w64 destination folder path to the system path. The exact path depends on which version of Mingw-w64 you have installed and where you installed it. If you used the settings above to install Mingw-w64, then add this to the path: `C:\msys64\mingw64\bin`. \n
+          - Select OK to save the updated PATH. You will need to reopen any console windows for the new PATH location to be available \n
+     - Install C++ extension for VSCode [C/C++ extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
      - Open Visual Studio Code, then menu File+Open Folder and select the grapic folder. You can save a grapic.code-workspace.\n
      - Open a terminal (Ctrl+ù or menu Terminal/new terminal)\n
      - Test if the installation of MinGW and the path setting are OK: run g++ and mingw32-make (or just make)\n
@@ -980,16 +980,24 @@ If you are following the course LIFAMI, run lifami.bat on windows or enter "make
 <br>
 <br>
 <br>
-\subsection tuto8 Tutoria 8: Plot/Graph
+\subsection tuto8 Tutorial 8: Plot/Graph
 \image html tuto_plot.jpg "The plot code illustrates the drawing of a graph entering values of a function" width=200px
 \include "../apps/tutorials/tuto8_Plot.cpp"
 
 <br>
 <br>
 <br>
-\subsection tutoDemo Tutoria 9: Demo
+\subsection tuto9 Tutorial 9: Image
+\image html tuto_image.jpg "The demo code illustrates image functionalities of Grapic" width=200px
+\include "../apps/tutorials/tuto9_Image.cpp"
+
+
+<br>
+<br>
+<br>
+\subsection tuto10 Tutorial 10: Demo
 \image html tuto_demo.jpg "The demo code illustrates many functionalities of Grapic" width=200px
-\include "../apps/tutorials/tuto9_Demo.cpp"
+\include "../apps/tutorials/tuto10_Demo.cpp"
 
 
 <br>
