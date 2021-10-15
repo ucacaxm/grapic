@@ -957,8 +957,8 @@ void grid(int xmin, int ymin, int xmax, int ymax, int nx, int ny)
 {
     int i;
     //Grapic& g = Grapic::singleton();
-    float stepx = static_cast<float>(xmax - xmin + 1) / (nx);
-    float stepy = static_cast<float>(ymax - ymin + 1) / (ny);
+    float stepx = static_cast<float>(xmax - xmin ) / (nx);
+    float stepy = static_cast<float>(ymax - ymin ) / (ny);
     for (i = 0; i <= nx; ++i)
         line(xmin + stepx*i, ymin, xmin + stepx*i, ymax);
     for (i = 0; i <= ny; ++i)
