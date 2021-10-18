@@ -17,3 +17,9 @@ apps/LIFAMI/
 bin/
 
 src/imgui.ini
+
+doc/Doxyfile.bak
+
+doc/VERSION.old
+
+tmp/

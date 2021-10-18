@@ -13,19 +13,20 @@ else
 UNAME_S = $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	OS = macosxx
+	OSGMAKE = ${OS}-gmake
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.macosxx
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.macosxx
 	Filename="${Filename##*/}"
-	apps_linux = $(shell ls build/macosxx/*.make 2>/dev/null | cut -d '/' -f 3 | cut -d . -f 1  )				# ls build/macosxx/*.make | cut -d '/' -f 3 | cut -d . -f 1   OR basename
+	apps_linux = $(shell ls build/${OSGMAKE}/*.make 2>/dev/null | cut -d '/' -f 3 | cut -d . -f 1  )				# ls build/macosxx/*.make | cut -d '/' -f 3 | cut -d . -f 1   OR basename
 else
 	OS = linux
+	OSGMAKE = ${OS}-gmake
 	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.linux.sh
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.linux
-	apps_linux = $(shell ls build/linux/*.make 2>/dev/null | cut -d '/' -f 3 | cut -d . -f 1 ) 				# basename --suffix=.make build/linux/*.make  )
+	apps_linux = $(shell ls build/${OSGMAKE}/*.make 2>/dev/null | cut -d '/' -f 3 | cut -d . -f 1 ) 				# basename --suffix=.make build/linux/*.make  )
 endif
 endif
 
-OSGMAKE = ${OS}-gmake
 
 #$(info $(apps_linux))
 #ifeq ($(wildcard build/*),)		# if the premake was never runned, apps_linux contains "*" => remove it

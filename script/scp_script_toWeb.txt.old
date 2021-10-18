@@ -1,0 +1,33 @@
+# Automatically abort script on errors
+option batch abort
+
+# Disable overwrite confirmations that conflict with the previous
+option confirm off
+
+# Change local directory
+lls
+lcd doc
+lls
+lpwd
+#session
+
+# Connect
+open sftp://ameyer@liris.cnrs.fr
+
+# Change remote directory
+cd /home/ameyer/grapic
+pwd
+
+# Force binary mode transfer
+option transfer binary
+
+# Upload the file to current working directory
+#put -filemask=doc/*
+#synchronize remote -delete  d:/alex/src/grapic.git/doc /home/ameyer/grapic
+synchronize remote  d:/alex/src/grapic.git/doc /home/ameyer/grapic
+
+# Disconnect
+close
+
+# Exit WinSCP
+exit
