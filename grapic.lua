@@ -35,11 +35,14 @@ end
 function ostarget()
 	-- print("Options:", dump(_OPTIONS))
 	-- print("target:"..os.target())
-	-- print(os.get())
+	-- -- print(os.get())
 	-- print("ceci=".._OPTIONS["os"])
 	if _PREMAKE_VERSION >="5.0" then
+		-- print("pre5 return ")
+		-- print("pre5 return ".._OPTIONS["os"])
 		-- print("pre5 return "..os.host())
-		return os.host()
+		return os.target()
+		-- return _OPTIONS["os"]
 	else
 		-- print("pre4 return "..os.get())
 		return os.get() --_OPTIONS["os"]

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! [ -f "tmp/run" ]; then
+    echo "DO NOT RUN make web=> run:  script/make_wep.sh"
+	exit 1
+fi
+
 pause()
 {
 	read -p "Press [Enter] to continue..."
@@ -12,8 +17,6 @@ echo "##########################################################################
 echo "pwd=`pwd`"
 mkdir -p doc/download
 
-#APPS="apps"
-#GRAPIC="grapic.github"
 GRAPIC=`pwd`
 DOWN="${GRAPIC}/.."
 VERSION=`cat doc/VERSION`
@@ -25,9 +28,9 @@ VERSION=`cat doc/VERSION`
 TOZIP_SHORT="apps bin data src Makefile grapic.lua premake4.lua README.md"
 TOZIP_MINGW20="${TOZIP_SHORT}    extern/mingw-cb20 script premake-cb20.bat lifami-cb20.bat"
 TOZIP_MINGW17="${TOZIP_SHORT}    extern/mingw-cb17 script premake-cb17.bat lifami-cb17.bat"
-TOZIP_VISUAL2015="${TOZIP_SHORT} extern/visual2015 script premake-vs2015.bat"
-TOZIP_LINUX="${TOZIP_SHORT}               script/premake4.linux.sh script/premake5.linux.sh script/premake5.linux"
-TOZIP_MACOS="${TOZIP_SHORT} extern/grapic-extern-macosx.zip script/premake4.macosx   script/premake5.macosx script/premake4.linux.sh script/premake5.linux.sh script/premake5.linux"
+TOZIP_VISUAL2019="${TOZIP_SHORT} extern/visual2019 script premake-vs2019.bat"
+TOZIP_LINUX="${TOZIP_SHORT}      script/premake4.linux.sh script/premake5.linux.sh script/premake5.linux"
+TOZIP_MACOS="${TOZIP_SHORT} extern/grapic-extern-macosx.zip script/premake4.macosx   script/premake5.macosx"
 
 # add $SAVE_SHORT path to the filename of the zip files list
 # TOZIP=`for i in ${TOZIP_SHORT};do printf "${SAVE_SHORT}/$i ";done`
@@ -35,7 +38,7 @@ TOZIP_MACOS="${TOZIP_SHORT} extern/grapic-extern-macosx.zip script/premake4.maco
 # TOZIP_MINGW20=`for i in ${TOZIP_MINGW20_SHORT};do printf "${SAVE_SHORT}/$i ";done`
 # TOZIP_MINGW17=`for i in ${TOZIP_MINGW17_SHORT};do printf "${SAVE_SHORT}/$i ";done`
 # TOZIP_MAC=`for i in ${TOZIP_MAC_SHORT};do printf "${SAVE_SHORT}/$i ";done`
-# TOZIP_VISUAL2015=`for i in ${TOZIP_VISUAL2015_SHORT};do printf "${SAVE_SHORT}/$i ";done`
+# TOZIP_VISUAL2019=`for i in ${TOZIP_VISUAL2019_SHORT};do printf "${SAVE_SHORT}/$i ";done`
 
 
 echo "GRAPIC=${GRAPIC}"
@@ -45,7 +48,7 @@ echo "TOZIP_LINUX=${TOZIP_LINUX}"
 echo "TOZIP_MINGW20=${TOZIP_MINGW20}"
 echo "TOZIP_MINGW17=${TOZIP_MINGW17}"
 echo "TOZIP_MAC=${TOZIP_MAC}"
-echo "TOZIP_VISUAL2015=${TOZIP_VISUAL2015}"
+echo "TOZIP_VISUAL2019=${TOZIP_VISUAL2019}"
 
 #pause
 
@@ -75,7 +78,7 @@ remove_correction()
 	cd ${GRAPIC}
 	make bin/remove_correction.exe
 	cd $1
-	find apps -name "*.cpp" -exec ${GRAPIC}/bin/remove_correction.exe {} {} \;
+	find ./apps -name "*.cpp" -exec ${GRAPIC}/bin/remove_correction.exe {} {} \;
 }
 
 
@@ -146,7 +149,7 @@ makezip ()
 	eval ${RUN}
 	cd ${GRAPIC}
 	
-	# to debug
+	# to debug comment next line
 	rm -rf ${SAVE_DIR}
 	#pause
 }
@@ -154,17 +157,17 @@ makezip ()
 ZIP_COMMAND="${ZIP} -q -r"
 TGZ_COMMAND="tar cfvz"
 
-make cleanpremake
+make premake-clean
 
-makezip WinCB20 zip "$ZIP_COMMAND" "${TOZIP_MINGW20}"
+makezip wincb20 zip "$ZIP_COMMAND" "${TOZIP_MINGW20}"
 
-makezip WinCB17 zip "$ZIP_COMMAND" "${TOZIP_MINGW17}"
+makezip wincb17 zip "$ZIP_COMMAND" "${TOZIP_MINGW17}"
 
-makezip WinVS2015 zip "$ZIP_COMMAND" "${TOZIP_VISUAL2015}"
+makezip winvs2019 zip "$ZIP_COMMAND" "${TOZIP_VISUAL2019}"
 
-makezip MacOS zip "$ZIP_COMMAND" "${TOZIP_MACOS}"
+makezip macosx zip "$ZIP_COMMAND" "${TOZIP_MACOS}"
 
-makezip Linux tgz "$TGZ_COMMAND" "${TOZIP_LINUX}"
+makezip linux tgz "$TGZ_COMMAND" "${TOZIP_LINUX}"
 
 #pause
 
