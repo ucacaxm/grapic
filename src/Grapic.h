@@ -834,19 +834,18 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
           - Choose the Path variable and then select Edit. \n
           - Select New and add the Mingw-w64 destination folder path to the system path. The exact path depends on which version of Mingw-w64 you have installed and where you installed it. If you used the settings above to install Mingw-w64, then add this to the path: `C:\msys64\mingw64\bin`. \n
           - Select OK to save the updated PATH. You will need to reopen any console windows for the new PATH location to be available \n
-     - Install C++ extension for VSCode [C/C++ extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)\\
+     - [Install C++ extension for VSCode](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)\\
   - Compile and Run: first option with the file tasks.json 
      - Open Visual Studio Code, then menu File+Open Folder and select grapic.code-workspace in the the grapic folder.\n
      - Compile/Build: Ctrl+Shift+B. It calls the makefile and compile the default file which is apps/start/main_start.cpp.
      - Run/Test: Ctrl+Shift+P and enter `run test`. It runs the default executable: bin\start.exe. You can add a shortcut.
-     - Edit the file `.vscode/tasks.json`to change the target
+     - Edit the file `.vscode/tasks.json`to change the project
   - Compile and Run: second option with the terminal
      - Open a terminal (Ctrl+ù or menu Terminal/new terminal)\n
-     - Test if the installation of MinGW and the path setting are OK: run g++ and mingw32-make (or just make)\n
-     - cd build\\windows-cb20 \n
-     - mingw32-make for building all projects\n
-     - mingw32-make -f Start.make\n
-     - run with  ..\\..\\bin\\Start.exe \\
+     - Test if the installation of MinGW and the path setting are OK: run `g++` and `mingw32-make` just to see if ok\n
+     - Change directory (and stay always in this directory): `cd build\\windows-cb20`
+     - To compile: `mingw32-make -f Start.make`
+     - To run: `..\\..\\bin\\Start.exe`
   - Compile and Run: third option with CMake
      - install cmake support for Visual Code and open script/cmake/CMakeLists.txt
 
@@ -884,9 +883,9 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 
   - <b>If you have a Mac M1 (ARM processor ARM, not an INTEL), you need Rosetta 2</b>
     - In a terminal, run this: `softwareupdate --install-rosetta`
-    - Or see: (https://infoidevice.fr/comment-installer-rosetta-2-sur-mac-apple-silicon/)
+    - Or see: https://infoidevice.fr/comment-installer-rosetta-2-sur-mac-apple-silicon/
 
-  - Install grapic (https://licence-infi.univ-lyon1.fr/grapic)
+  - Install grapic https://licence-infi.univ-lyon1.fr/grapic
     - Download the zip file for MacOS (grapic-V.V.VV-MacOS.zip)
     - Unzip it 
 
@@ -905,14 +904,14 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
         cd .../grapic-V.V.VV-MacOS          # trouver le chemin vers l'endroit où vous avez décompressé le .zip
         make
         \endcode
-    - This one to run: `bin/Start`
+    - To run: `bin/Start`
     - It should open the grapic app with squares
 
   
 
 
 \subsection replit Run on Replit (web without any installation)
-  - You can try Grapic on the web with Replit: (https://repl.it/@ucax217/grapic-light#main.cpp)
+  - You can try Grapic on the web with Replit: https://repl.it/@ucax217/grapic-light#main.cpp
   - Create an account on repli.it
   - Fork the project to be abble to change it
   - All the code is in the file main.cpp
