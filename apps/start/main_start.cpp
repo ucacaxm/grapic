@@ -16,7 +16,7 @@ void init(World& d)
 void draw(World& d)
 {
     int i;
-    d.n ++;
+    d.n = int((1.f+cos(elapsedTime()))*10.f);
     for(i=0;i<d.n;i++)
     {
         color(20*i, 255-20*i, 128);

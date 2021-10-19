@@ -129,7 +129,7 @@ makezip ()
 	copy "$4" ${SAVE_DIR}
 	
 	cd ${SAVE_DIR}
-	if [[ $1 == "MacOS" ]]; then
+	if [[ $1 == "macosx" ]]; then
 		cd extern
 		unzip grapic-extern-macosx.zip
 		cd ..

@@ -12,12 +12,12 @@ ifeq ($(OS),Windows_NT)
 else
 UNAME_S = $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
-	OS = macosxx
+	OS = macosx
 	OSGMAKE = ${OS}-gmake
-	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.macosxx
-	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.macosxx
+	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.macosx
+	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.macosx
 	Filename="${Filename##*/}"
-	apps_linux = $(shell ls build/${OSGMAKE}/*.make 2>/dev/null | cut -d '/' -f 3 | cut -d . -f 1  )				# ls build/macosxx/*.make | cut -d '/' -f 3 | cut -d . -f 1   OR basename
+	apps_linux = $(shell ls build/${OSGMAKE}/*.make 2>/dev/null | cut -d '/' -f 3 | cut -d . -f 1  )				# ls build/macosx/*.make | cut -d '/' -f 3 | cut -d . -f 1   OR basename
 else
 	OS = linux
 	OSGMAKE = ${OS}-gmake
@@ -129,7 +129,7 @@ premake: remove_quarantine premake-cb20 dir
 else ifeq ($(OS),linux)
 premake: remove_quarantine premake-linux dir
 	@echo "premake linux OS=$(OS)"
-else ifeq ($(OS),macosxx)
+else ifeq ($(OS),macosx)
 premake: remove_quarantine premake-macosx dir
 	@echo "premake macosx OS=$(OS)"
 else
@@ -144,9 +144,9 @@ ifeq ($(OS),Windows_NT)
 else ifeq ($(OS),linux)
 	$(PREMAKE4) --target=beta --os=linux gmake
 	$(PREMAKE4) --target=beta --os=linux codeblocks
-else ifeq ($(OS),macosxx)
-	$(PREMAKE4) --target=beta --os=macosxx gmake
-	$(PREMAKE4) --target=beta --os=macosxx xcode3
+else ifeq ($(OS),macosx)
+	$(PREMAKE4) --target=beta --os=macosx gmake
+	$(PREMAKE4) --target=beta --os=macosx xcode3
 else
 	@echo "ERROR: Your OS is not detected in the makefile"
 endif
@@ -160,9 +160,9 @@ ifeq ($(OS),Windows_NT)
 else ifeq ($(OS),linux)
 	$(PREMAKE4) --os=linux --file=premake4.lua --lifami gmake
 	$(PREMAKE4) --os=linux --file=premake4.lua --lifami codeblocks
-else ifeq ($(OS),macosxx)
-	$(PREMAKE4) --os=macosxx --file=premake4.lua --lifami gmake
-	$(PREMAKE4) --os=macosxx --file=premake4.lua --lifami xcode3
+else ifeq ($(OS),macosx)
+	$(PREMAKE4) --os=macosx --file=premake4.lua --lifami gmake
+	$(PREMAKE4) --os=macosx --file=premake4.lua --lifami xcode3
 	$(PREMAKE5) --file=lifami.lua xcode4
 endif
 

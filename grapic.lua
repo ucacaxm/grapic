@@ -140,7 +140,7 @@ solution "grapic"
 
 
 	-- ##################### MACOS
-	configuration "macosx"
+	configuration { "macosx" }
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing" }
 		buildoptions { "-std=c++17" }
 		includedirs {	"extern/macosx/SDL2.framework/Versions/A/Headers/",
