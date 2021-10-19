@@ -875,55 +875,48 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 
 
 \subsection mac Run on MacOS
-  - Mettre à jour son mac à la dernière version
-    * Cliquer sur le menu pomme en haut à gauche quand vous êtes sur le bureau
-    * Cliquer sur Préférence Système
-    * Cliquer sur Mise à jour du logiciel
-    * Mettre à jour si nécessaire
+  - Update MacOS to the last version
 
-  - Installer la dernière maj de XCode
-    * Ouvrez l'application App Store
-    * Cliquez sur Mise à jour
-    * Mettre à jour si nécessaire
+  - Update XCode
+    - Open App Store
+    - Look in the top right for the updates section
+    - Find Xcode & click Update
 
-  - <b>Si vous avez un Mac M1 (processeur ARM et non INTEL), vous devez installer Rosetta</b>
-    * (https://support.apple.com/fr-fr/HT211861)[https://support.apple.com/fr-fr/HT211861]
+  - <b>If you have a Mac M1 (ARM processor ARM, not an INTEL), you need Rosetta 2</b>
+    - In a terminal, run this: `softwareupdate --install-rosetta`
+    - Or see: (https://infoidevice.fr/comment-installer-rosetta-2-sur-mac-apple-silicon/)
 
-  - Installer grapic (https://licence-infi.univ-lyon1.fr/grapic)
-    * Télécharger le fichier d'installation (.zip) pour Mac
-    * Exécutez le pour extraire le fichier grapic-V.V.VV-MacOS (les V représnte le numéro de version)
+  - Install grapic (https://licence-infi.univ-lyon1.fr/grapic)
+    - Download the zip file for MacOS (grapic-V.V.VV-MacOS.zip)
+    - Unzip it 
 
-  - Lancer dans le terminal la commande
-    \code
-    xcode-select --install
-    \endcode
-    * Et télécharger le fichier de mise à jour
+  - With XCode
+    - Run a terminal this command to launch XCode, or launch XCode from the menu
+      \code
+      xcode-select --install
+      \endcode
+    - Open a project in this path: grapic-V.V.VV-macosx/build/macosx/Start.xcodeproj
+    - Compile and run
 
-  - Lancer dans le terminal les commandes
-    \code
-    cd .../grapic-V.V.VV-MacOS          # trouver le chemin vers l'endroit où vous avez décompressé le .zip
-    make
-    bin/Start
-    \endcode
-    Une fenêtre terminal va s'ouvrir avec des carrés de couleurs.
 
-  - Avec XCode
-    *Ouvrir XCode
-    *Open a project or file
-    *Suivre et ouvrir le chemin suivant ....../grapic-V.V.VV-MacOS/build/macosx/Start.xcodeproj
-    *Compiler
+  - Run in a terminal (bash)
+    - Enter these commands to compile:
+        \code
+        cd .../grapic-V.V.VV-MacOS          # trouver le chemin vers l'endroit où vous avez décompressé le .zip
+        make
+        \endcode
+    - This one to run: `bin/Start`
+    - It should open the grapic app with squares
 
+  
 
 
 \subsection replit Run on Replit (web without any installation)
-You can try Grapic on the web with Replit:
-(https://repl.it/@ucax217/grapic-light#main.cpp)[https://repl.it/@ucax217/grapic-light#main.cpp]
-
+  - You can try Grapic on the web with Replit: (https://repl.it/@ucax217/grapic-light#main.cpp)
   - Create an account on repli.it
-  - Fork the project
+  - Fork the project to be abble to change it
   - All the code is in the file main.cpp
   - "run": compilation errors are in the terminal on the right. Execution is on the top right.
-
 
 
 
@@ -931,6 +924,7 @@ You can try Grapic on the web with Replit:
 The kernel source code of grapic is in grapic/src. The source codes of the programs/demos/tutorials are in grapic/apps.
 You can edit your first program by editing the file grapic/apps/start/main_start.cpp
 \image html cb_editStart.jpg width=10
+
 
 \subsection create Create a new project
 You can create your own project.
