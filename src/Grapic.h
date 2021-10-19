@@ -915,14 +915,14 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 
 
 
-\subsection{Grapic on Replit}
+\subsection replit Run on Replit (web without any installation)
 You can try Grapic on the web with Replit:
-https://repl.it/@ucax217/grapic-light#main.cpp 
+(https://repl.it/@ucax217/grapic-light#main.cpp)[https://repl.it/@ucax217/grapic-light#main.cpp]
 
-1) Create an account on repli.it
-2) Fork the project
-3) All the code is in the file main.cpp
-4) "run": compilation errors are in the terminal on the right. Execution is on the top right.
+  - Create an account on repli.it
+  - Fork the project
+  - All the code is in the file main.cpp
+  - "run": compilation errors are in the terminal on the right. Execution is on the top right.
 
 
 
