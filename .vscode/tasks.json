@@ -1,0 +1,54 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+		{
+			"label": "Compilation with makefile",
+			"type": "shell",
+			"command": "cd&cd",
+			"args": [
+				"build\\windows-cb20",
+				"&",
+				"mingw32-make",
+				"-f",
+				"start.make"				// NOM DU PROJET A CHANGER SI VOUS VOULEZ CIBLER UN AUTRE PROJET
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "Run",
+			"type": "shell",
+			"command": "bin\\start.exe",	// NOM DE L'EXECUTABLE A CHANGER SI VOUS VOULEZ CIBLER UN AUTRE PROJET
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Compilation",
+			"type": "shell",
+			"command": "g++",
+			"args": [
+				"-std=c++17",
+				"-o",
+				"${workspaceFolder}\\bin\\start.exe",
+				"${workspaceFolder}\\apps\\start\\main_start.cpp",
+				"${workspaceFolder}\\src\\Grapic.cpp",
+				"-I${workspaceFolder}\\src",
+				"-I${workspaceFolder}\\extern\\mingw-cb20\\include",
+				"-I${workspaceFolder}\\extern\\mingw-cb20\\include\\SDL2",
+				"-Lextern\\mingw-cb20\\lib",
+				"-lmingw32",
+				"-lSDL2main",
+				"-lSDL2",
+				"-lSDL2_ttf",
+				"-lSDL2_image"
+			]
+		}
+	]
+}

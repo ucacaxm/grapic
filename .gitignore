@@ -1,6 +1,5 @@
 log*
 *~
-.vscode
 debug*
 vrac*
 debug
@@ -23,3 +22,4 @@ doc/Doxyfile.bak
 doc/VERSION.old
 
 tmp/
+script/make_zip.sh

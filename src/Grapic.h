@@ -811,7 +811,7 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 <br>
 \section start How to start ?
 
-\subsection win Run on Windows
+\subsection win Run on Windows with Codeblocks (the default)
   - Install Codeblocks 20.03 (IMPORTANT) from: [http://www.codeblocks.org/downloads](http://www.codeblocks.org/downloads)\n
     Take the one with MinGW like codeblocks-20.03mingw-setup.exe
 
@@ -822,23 +822,34 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
      - Select in the projects manager (on the left) the project you want with the right button "Activate project":
        \image html cb_activatePrj.jpg "Selection of the project in Codeblocks" width=400
      - And run the program !
-
-  - Compile and run with Visual Studio Code (VSCode): mostly for advanced users.
-     - Install MinGW as described here: [Using GCC with MinGW for Visual Studio Code on Windows](https://code.visualstudio.com/docs/cpp/config-mingw) \n
+\\
+\\
+\subsection winVSCode Run on Windows with Visual Code/VSCode (mostly for advanced users).
+  - VSCode is not Visual Studio
+  - Install MinGW as described here: 
+     - [Using GCC with MinGW for Visual Studio Code on Windows](https://code.visualstudio.com/docs/cpp/config-mingw) \n
      - Add the path to your Mingw-w64 bin folder to the Windows PATH environment variable by using the following steps: \n
        In the Windows search bar, type 'settings' to open your Windows Settings. \n
           - Search for Edit environment variables for your account. \n
           - Choose the Path variable and then select Edit. \n
           - Select New and add the Mingw-w64 destination folder path to the system path. The exact path depends on which version of Mingw-w64 you have installed and where you installed it. If you used the settings above to install Mingw-w64, then add this to the path: `C:\msys64\mingw64\bin`. \n
           - Select OK to save the updated PATH. You will need to reopen any console windows for the new PATH location to be available \n
-     - Install C++ extension for VSCode [C/C++ extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
-     - Open Visual Studio Code, then menu File+Open Folder and select the grapic folder. You can save a grapic.code-workspace.\n
+     - Install C++ extension for VSCode [C/C++ extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)\\
+  - Compile and Run: first option with the file tasks.json 
+     - Open Visual Studio Code, then menu File+Open Folder and select grapic.code-workspace in the the grapic folder.\n
+     - Compile/Build: Ctrl+Shift+B. It calls the makefile and compile the default file which is apps/start/main_start.cpp.
+     - Run/Test: Ctrl+Shift+P and enter `run test`. It runs the default executable: bin\start.exe. You can add a shortcut.
+     - Edit the file `.vscode/tasks.json`to change the target
+  - Compile and Run: second option with the terminal
      - Open a terminal (Ctrl+ù or menu Terminal/new terminal)\n
      - Test if the installation of MinGW and the path setting are OK: run g++ and mingw32-make (or just make)\n
      - cd build\\windows-cb20 \n
      - mingw32-make for building all projects\n
      - mingw32-make -f Start.make\n
-     - run with  ..\\..\\bin\\Start.exe
+     - run with  ..\\..\\bin\\Start.exe \\
+  - Compile and Run: third option with CMake
+     - install cmake support for Visual Code and open script/cmake/CMakeLists.txt
+
 
 \subsection linux Run on Linux
   - Install SDL2, SDL_Image for SDL2 and SDL_ttf for SDL2 ; for instance with
@@ -864,7 +875,6 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 
 
 \subsection mac Run on MacOS
-
   - Mettre à jour son mac à la dernière version
     * Cliquer sur le menu pomme en haut à gauche quand vous êtes sur le bureau
     * Cliquer sur Préférence Système
@@ -875,6 +885,9 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
     * Ouvrez l'application App Store
     * Cliquez sur Mise à jour
     * Mettre à jour si nécessaire
+
+  - <b>Si vous avez un Mac M1 (processeur ARM et non INTEL), vous devez installer Rosetta</b>
+    * (https://support.apple.com/fr-fr/HT211861)[https://support.apple.com/fr-fr/HT211861]
 
   - Installer grapic (https://licence-infi.univ-lyon1.fr/grapic)
     * Télécharger le fichier d'installation (.zip) pour Mac
@@ -901,6 +914,15 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
     *Compiler
 
 
+
+\subsection{Grapic on Replit}
+You can try Grapic on the web with Replit:
+https://repl.it/@ucax217/grapic-light#main.cpp 
+
+1) Create an account on repli.it
+2) Fork the project
+3) All the code is in the file main.cpp
+4) "run": compilation errors are in the terminal on the right. Execution is on the top right.
 
 
 

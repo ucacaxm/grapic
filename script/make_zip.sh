@@ -26,7 +26,7 @@ VERSION=`cat doc/VERSION`
 
 # files which will be included in each zip file
 TOZIP_SHORT="apps bin data src Makefile grapic.lua premake4.lua README.md"
-TOZIP_MINGW20="${TOZIP_SHORT}    extern/mingw-cb20 script premake-cb20.bat lifami-cb20.bat"
+TOZIP_MINGW20="${TOZIP_SHORT}    extern/mingw-cb20 script premake-cb20.bat lifami-cb20.bat .vscode grapic.code-workspace"
 TOZIP_MINGW17="${TOZIP_SHORT}    extern/mingw-cb17 script premake-cb17.bat lifami-cb17.bat"
 TOZIP_VISUAL2019="${TOZIP_SHORT} extern/visual2019 script premake-vs2019.bat"
 TOZIP_LINUX="${TOZIP_SHORT}      script/premake4.linux.sh script/premake5.linux.sh script/premake4.linux script/premake5.linux"
