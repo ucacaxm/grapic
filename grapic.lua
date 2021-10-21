@@ -143,10 +143,9 @@ solution "grapic"
 	configuration { "macosx" }
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing" }
 		buildoptions { "-std=c++17" }
-		includedirs {	"extern/macosx/SDL2.framework/Versions/A/Headers/",
-						"extern/macosx/SDL2.framework/Versions/A/Headers/SDL2",
-						"extern/macosx/SDL2_image.framework/Headers",
-						"extern/macosx/SDL2_ttf.framework/Versions/A/Headers" }
+		includedirs {	"extern/macosx/**",
+						"../../extern/macosx/**",
+					 }
 		linkoptions {	"../../extern/macosx/SDL2.framework/Versions/A/SDL2",
 						"../../extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
 						"../../extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
