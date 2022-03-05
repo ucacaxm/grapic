@@ -326,6 +326,8 @@ public:
 
     void setTicks();
 
+    void resetBounds();
+
     virtual void draw() const = 0;
 
     virtual ~Axis();

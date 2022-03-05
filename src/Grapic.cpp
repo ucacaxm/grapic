@@ -1659,6 +1659,15 @@ void Axis::setTicks(const std::vector<float>& ticks)
     this->m_ticksSet = true;
 }
 
+void Axis::resetBounds()
+{
+    if (!m_boundsSet)
+    {
+        m_max = -std::numeric_limits<float>::infinity();
+        m_min =  std::numeric_limits<float>::infinity();
+    }
+}
+
 void Axis::updateTicks(std::size_t tickCount)
 {
     if (!m_ticksSet)
@@ -2253,6 +2262,11 @@ void Plot::clear()
 {
     for (auto& ps : m_pointsData)
     { ps.clear(); }
+
+    xaxis->resetBounds();
+    yaxis->resetBounds();
+
+    recomputeLayout();
 }
 
 void Plot::recomputeLayout()
