@@ -331,7 +331,7 @@ public:
     virtual void draw() const = 0;
 
     virtual ~Axis();
-private:
+protected:
     AxisTheme* m_theme;
     std::string m_title;
     
