@@ -2263,8 +2263,8 @@ void Plot::clear()
     for (auto& ps : m_pointsData)
     { ps.clear(); }
 
-    xaxis->resetBounds();
-    yaxis->resetBounds();
+    m_xaxis->resetBounds();
+    m_yaxis->resetBounds();
 
     recomputeLayout();
 }
