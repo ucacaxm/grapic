@@ -163,7 +163,7 @@ const SDL_Surface* Image::surface() const
     bool Image::isInit() const { return m_surface && m_texture; }
 
 
-Menu::Menu() : m_select(0), m_visible(true) {}
+Menu::Menu() : m_select(0), m_has_changed(false), m_visible(true) {}
 
 void Menu::change(int i, const std::string& str)
 {
