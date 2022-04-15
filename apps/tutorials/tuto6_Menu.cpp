@@ -42,6 +42,24 @@ int main(int , char** )
     {
         winClear();
         menu_draw(m, 5,5, 100, 102);
+        switch(menu_has_changed(m))
+        {
+            case 0:
+                std::cout << "Selecting 0-th item" << std::endl;
+                break;
+            case 1:
+                std::cout << "Selecting 1-th item" << std::endl;
+                break;
+            case 2:
+                std::cout << "Selecting 2-th item" << std::endl;
+                break;
+            case 3:
+                std::cout << "Selecting 3-th item" << std::endl;
+                break;
+            default:
+                break;
+        }
+
         switch(menu_select(m))
         {
             case 0 : dat.n = 5; draw(dat); break;
