@@ -26,9 +26,9 @@ void draw(Data& d)
         rectangle( d.x1, d.y1, d.x2, d.y2);
     }
 
+    int x,y;
     if (isMousePressed(SDL_BUTTON_LEFT))
     {
-        int x,y;
         mousePos(x, y);
         if (d.etat!=1)
         {
@@ -46,6 +46,13 @@ void draw(Data& d)
     {
         if (d.etat==1) d.etat=2;
     }
+
+
+    color(255,0,0);
+    mousePosGlobal(x, y);
+    print( 10, 480, "mouseXYGlobal=");
+    print( 150, 480, x);
+    print( 180, 480, y);
 
 }
 

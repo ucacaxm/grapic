@@ -21,7 +21,10 @@ void draw(World& d)
     {
         color(20*i, 255-20*i, 128);
         rectangle( DIMW/2 - 10*i, DIMW/2 - 10*i, DIMW/2 + 10*i, DIMW/2 + 10*i);
+//        circle( DIMW/2, DIMW/2, 10*i);
     }
+//    for(i=0;i<200;i++)
+//        circle( DIMW/2, DIMW/2, i);
 }
 
 int main(int , char** )

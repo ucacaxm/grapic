@@ -973,6 +973,18 @@ void mousePos(int& x, int& y)
     y = g.inverseY(y);
 }
 
+
+void mousePosGlobal(int& x, int& y)
+{
+    SDL_PumpEvents();
+    //SDL_GetMouseState(&x, &y);
+//    SDL_GetMouseState(&x, &y);
+    SDL_GetGlobalMouseState( &x, &y);
+    Grapic& g = Grapic::singleton();
+    y = g.inverseY(y);
+}
+
+
 void print(int x, int y, const char* txt)
 {
     Grapic& g = Grapic::singleton();

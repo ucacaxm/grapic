@@ -458,6 +458,16 @@ inline bool isMousePressed(int button)
 */
 void mousePos(int& x, int& y);
 
+/** \brief After this function (x,y) store the mouse position
+    ~~~~~~~~~~~~~~~{.c}
+    int x,y;
+    mousePosGlobal(x,y);                                                                          // test if the left button of the mouse is pressed
+    if ((isMousePressed(SDL_BUTTON_LEFT)) && (x>10) && (y>10) && (x<50) && (y<50)) { ... }  // if the user clicks if the square (10,10)(50,50)
+    ~~~~~~~~~~~~~~~
+*/
+void mousePosGlobal(int& x, int& y);
+
+
 /** \brief Manage standard event like key 'ESC', quit, etc.
 */
 inline bool winManageEvent()
@@ -826,7 +836,7 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 \\
 \subsection winVSCode Run on Windows with Visual Code/VSCode (mostly for advanced users).
   - VSCode is not Visual Studio
-  - Install MinGW as described here: 
+  - Install MinGW as described here:
      - [Using GCC with MinGW for Visual Studio Code on Windows](https://code.visualstudio.com/docs/cpp/config-mingw) \n
      - Add the path to your Mingw-w64 bin folder to the Windows PATH environment variable by using the following steps: \n
        In the Windows search bar, type 'settings' to open your Windows Settings. \n
@@ -835,7 +845,7 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
           - Select New and add the Mingw-w64 destination folder path to the system path. The exact path depends on which version of Mingw-w64 you have installed and where you installed it. If you used the settings above to install Mingw-w64, then add this to the path: `C:\msys64\mingw64\bin`. \n
           - Select OK to save the updated PATH. You will need to reopen any console windows for the new PATH location to be available \n
      - [Install C++ extension for VSCode](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)\\
-  - Compile and Run: first option with the file tasks.json 
+  - Compile and Run: first option with the file tasks.json
      - Open Visual Studio Code, then menu File+Open Folder and select grapic.code-workspace in the the grapic folder.\n
      - Compile/Build: Ctrl+Shift+B. It calls the makefile and compile the default file which is apps/start/main_start.cpp.
      - Run/Test: Ctrl+Shift+P and enter `run test`. It runs the default executable: bin\start.exe. You can add a shortcut.
@@ -887,7 +897,7 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
 
   - Install grapic https://licence-infi.univ-lyon1.fr/grapic
     - Download the zip file for MacOS (grapic-V.V.VV-MacOS.zip)
-    - Unzip it 
+    - Unzip it
 
   - With XCode
     - Run a terminal this command to launch XCode, or launch XCode from the menu
@@ -907,7 +917,7 @@ Or you can clone a version from the GitHub repo : [https://github.com/ucacaxm/gr
     - To run: `bin/Start`
     - It should open the grapic app with squares
 
-  
+
 
 
 \subsection replit Run on Replit (web without any installation)

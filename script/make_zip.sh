@@ -30,7 +30,8 @@ TOZIP_MINGW20="${TOZIP_SHORT}    extern/mingw-cb20 script premake-cb20.bat lifam
 TOZIP_MINGW17="${TOZIP_SHORT}    extern/mingw-cb17 script premake-cb17.bat lifami-cb17.bat"
 TOZIP_VISUAL2019="${TOZIP_SHORT} extern/visual2019 script premake-vs2019.bat"
 TOZIP_LINUX="${TOZIP_SHORT}      script/premake4.linux.sh script/premake5.linux.sh script/premake4.linux script/premake5.linux"
-TOZIP_MACOS="${TOZIP_SHORT} extern/grapic-extern-macosx.zip script/premake4.macosx   script/premake5.macosx script/premake4.linux.sh script/premake5.linux.sh script/premake4.linux script/premake5.linux"
+#TOZIP_MACOS="${TOZIP_SHORT} extern/grapic-extern-macosx.zip script/premake4.macosx   script/premake5.macosx script/premake4.linux.sh script/premake5.linux.sh script/premake4.linux script/premake5.linux"
+TOZIP_MACOS="${TOZIP_SHORT} extern/macosx script/premake4.macosx   script/premake5.macosx script/premake4.linux.sh script/premake5.linux.sh script/premake4.linux script/premake5.linux"
 
 # add $SAVE_SHORT path to the filename of the zip files list
 # TOZIP=`for i in ${TOZIP_SHORT};do printf "${SAVE_SHORT}/$i ";done`
@@ -129,11 +130,11 @@ makezip ()
 	copy "$4" ${SAVE_DIR}
 	
 	cd ${SAVE_DIR}
-	if [[ $1 == "macosx" ]]; then
-		cd extern
-		unzip grapic-extern-macosx.zip
-		cd ..
-	fi
+	# if [[ $1 == "macosx" ]]; then
+	# 	cd extern
+	# 	unzip grapic-extern-macosx.zip
+	# 	cd ..
+	# fi
 	make premake-$1
 	
 	#pause 
