@@ -1,4 +1,6 @@
-// {
+{
+    "liveServer.settings.port": 5501
+} // {
 //     "cmake.sourceDirectory": "${workspaceFolder}/script/cmake",
 //     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 // }

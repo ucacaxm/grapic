@@ -98,6 +98,7 @@ solution "grapic"
 
 	-- ##################### CB20
 	if _OPTIONS["cb-version"]=="cb20" then
+		--		configuration { "windows", "codeblocks", "x64" }
 		configuration { "windows", "codeblocks"}
 			buildoptions { "-std=c++17" }
 			buildoptions { "-g"}

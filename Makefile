@@ -177,6 +177,12 @@ run: all
 list:
 	@echo "apps_linux=$(apps_linux)"	
 
+EMCC = 	emcc -std=c++1z -Wimplicit-const-int-float-conversion -Isrc --preload-file data/ttf -s USE_SDL=2 -s FULL_ES2=1 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS="['png']"
+emcc:
+	echo "run: source /mnt/d/alex/CORRECTIONS/emsdk/emsdk_env.sh"
+	${EMCC} src/Grapic.cpp apps/start/main_start.cpp -o bin/Start.html
+
+
 ${apps_linux}: %: remove_quarantine 
 	@echo "Build app:\n   app_linux=${apps_linux}\n   OS=$(OS)"
 	cd build/${OSGMAKE} ; make -f $@.make

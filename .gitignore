@@ -13,7 +13,7 @@ doc/xml*
 
 apps/LIFAMI/
 
-bin/
+/bin/
 
 src/imgui.ini
 
