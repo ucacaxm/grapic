@@ -84,6 +84,7 @@ public:
     void setFont(int s, const char* ttf=NULL);
     int keyHasBeenPressed(unsigned int sc);
     void setKeyRepeatMode(bool kr);
+    float framesPerSecond();
 
     const SDL_Window* window() const { return m_window; }
     SDL_Window* window() { return m_window; }
@@ -116,10 +117,15 @@ protected:
     std::vector<int> m_keyStates;
     bool m_keyRepeatMode;
     int imagesSavedCount;
+    float m_framePerSecond[60];
+    float m_averageFramePerSecond;
 
     void initKeyArray();
     void help() const;
     bool manageOneEvent(SDL_Event event);
+
+    void initFrameCounter();
+    void updateFrameCounter();
 
     static Grapic* currentGrapic;
     friend void winInit(const char* name, int w, int h, int posx, int posy);
@@ -302,6 +308,13 @@ inline void winQuit()
 inline void savePerformanceMode(bool reduceFPS)
 {
     SDL_GL_SetSwapInterval(reduceFPS);
+}
+
+/** \brief Returns the average number of frames per second
+*/
+inline float framesPerSecond()
+{
+    return Grapic::singleton().framesPerSecond();
 }
 
 /** \brief Change the default color (unsigned char values between 0 and 255)

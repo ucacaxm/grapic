@@ -152,6 +152,8 @@ void Grapic::init(const char* name, int w, int h, int posx, int posy, SDL_Window
 
     initKeyArray();
     help();
+
+    initFrameCounter();
 }
 
 
@@ -312,6 +314,37 @@ bool Grapic::manageOneEvent(SDL_Event event)
 }
 
 
+void Grapic::initFrameCounter()
+{
+    for(int i = 0; i < 60 ; i++)
+    {
+        m_frameTime[i] = 1;
+    }
+}
+
+
+void Grapic::updateFrameCounter()
+{
+    static unsigned int lastTime = SDL_GetTicks();
+    const unsigned int currentTime = SDL_GetTicks();
+
+    unsigned int frameSum = 0;
+
+    for(int i = 0; i < 60 - 1; i++)
+    {
+        m_frameTime[i] = m_frameTime[i + 1];
+        frameSum += m_frameTime[i];
+    }
+
+    m_frameTime[59] = currentTime - lastTime;
+    frameSum += m_frameTime[59];
+
+    m_averageFramePerSecond = 1.0 / ((float) frameSum / 60.0 * 0.001f);
+
+    lastTime = SDL_GetTicks();
+}
+
+
 void Grapic::clearEvent()
 {
     SDL_Event events;
@@ -381,6 +414,7 @@ void Grapic::clear()
 bool Grapic::display()
 {
     manageEvent();
+    updateFrameCounter();
     SDL_RenderPresent(m_renderer);
     return m_quit;
 }
@@ -402,6 +436,13 @@ void Grapic::setKeyRepeatMode(bool kr)
 {
     m_keyRepeatMode = kr;
 }
+
+
+float Grapic::framesPerSecond()
+{
+    return m_averageFramePerSecond;
+}
+
 
 void Grapic::color(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
