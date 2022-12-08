@@ -31,7 +31,7 @@ function dump(o)
 	   return tostring(o)
 	end
 end
- 
+
 function ostarget()
 	-- print("Options:", dump(_OPTIONS))
 	-- print("target:"..os.target())
@@ -82,7 +82,7 @@ solution "grapic"
 		require "vscode"
 	end
 
-	
+
 	-- ##################### CB17
 	if _OPTIONS["cb-version"]=="cb17" then
 		configuration { "windows", "codeblocks" }
@@ -230,6 +230,7 @@ make_project( "tuto5_Mouse", 		"apps/tutorials/tuto5_Mouse.cpp" )
 make_project( "tuto6_Menu", 		"apps/tutorials/tuto6_Menu.cpp" )
 make_project( "tuto7_Animation", 	"apps/tutorials/tuto7_Animation.cpp" )
 make_project( "tuto8_Plot",			"apps/tutorials/tuto8_Plot.cpp" )
+make_project( "tuto8b_Plot",		"apps/tutorials/tuto8b_Plot.cpp" )
 make_project( "tuto9_Image",		"apps/tutorials/tuto9_Image.cpp" )
 make_project( "tuto10_Demo",		"apps/tutorials/tuto10_Demo.cpp" )
 

@@ -977,6 +977,12 @@ inline void plot_title(Plot& p, const char* title)
     p.setTitle(title);
 }
 
+//! \brief Set plot title
+inline void plot_setSize(Plot& p, int _size)
+{
+    p.setSize(_size);
+}
+
 //! \brief Set x axis title
 inline void plot_xaxisTitle(Plot& p, const char* title)
 {
