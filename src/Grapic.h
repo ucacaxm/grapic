@@ -85,6 +85,7 @@ public:
     int keyHasBeenPressed(unsigned int sc);
     void setKeyRepeatMode(bool kr);
     float framesPerSecond();
+    unsigned int lastFrameTime();
 
     const SDL_Window* window() const { return m_window; }
     SDL_Window* window() { return m_window; }
@@ -117,8 +118,13 @@ protected:
     std::vector<int> m_keyStates;
     bool m_keyRepeatMode;
     int imagesSavedCount;
-    float m_framePerSecond[60];
+    
+    // vars used for framerate calculation
+    unsigned int m_frameTime[60];
     float m_averageFramePerSecond;
+    unsigned int m_lastTime;
+    unsigned int m_frameNumber;
+    unsigned long m_frameSum;
 
     void initKeyArray();
     void help() const;
@@ -315,6 +321,14 @@ inline void savePerformanceMode(bool reduceFPS)
 inline float framesPerSecond()
 {
     return Grapic::singleton().framesPerSecond();
+}
+
+/** \brief Returns the time elapsed between the last frame in milliseconds.
+ * It can be used to sync animations with the frame rate
+*/
+inline unsigned int lastFrameTime()
+{
+    return Grapic::singleton().lastFrameTime();
 }
 
 /** \brief Change the default color (unsigned char values between 0 and 255)

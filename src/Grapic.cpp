@@ -320,6 +320,10 @@ void Grapic::initFrameCounter()
     {
         m_frameTime[i] = 1;
     }
+
+    m_lastTime = SDL_GetTicks();
+    m_frameNumber = 0;
+    m_frameSum = 60;
 }
 
 
@@ -327,21 +331,17 @@ void Grapic::updateFrameCounter()
 {
     static unsigned int lastTime = SDL_GetTicks();
     const unsigned int currentTime = SDL_GetTicks();
+    const unsigned int frameTime = currentTime - m_lastTime;
 
-    unsigned int frameSum = 0;
+    m_frameNumber = (m_frameNumber + 1) % 60;
 
-    for(int i = 0; i < 60 - 1; i++)
-    {
-        m_frameTime[i] = m_frameTime[i + 1];
-        frameSum += m_frameTime[i];
-    }
+    m_frameSum -= m_frameTime[m_frameNumber];  // remove oldest frame
+    m_frameTime[m_frameNumber] = frameTime;  // add new frame to the array
+    m_frameSum += frameTime;  // add new frame time to the sum
 
-    m_frameTime[59] = currentTime - lastTime;
-    frameSum += m_frameTime[59];
+    m_averageFramePerSecond = 1.0 / ((float) m_frameSum / 60.0 * 0.001f);  // recompute frame rate
 
-    m_averageFramePerSecond = 1.0 / ((float) frameSum / 60.0 * 0.001f);
-
-    lastTime = SDL_GetTicks();
+    m_lastTime = currentTime;  // save last time
 }
 
 
@@ -441,6 +441,12 @@ void Grapic::setKeyRepeatMode(bool kr)
 float Grapic::framesPerSecond()
 {
     return m_averageFramePerSecond;
+}
+
+
+unsigned int Grapic::lastFrameTime()
+{
+    return m_frameTime[m_frameNumber];
 }
 
 
