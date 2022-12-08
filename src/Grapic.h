@@ -36,11 +36,6 @@ along with Grapic.  If not, see <http://www.gnu.org/licenses/>.
 #include <chrono>
 #include <vector>
 #include <algorithm>
-#include <limits>
-#include <sstream>
-#include <list>
-#include <array>
-#include <memory>
 
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -169,16 +164,8 @@ protected:
 
 
 
-/**
-//==================================================================================================
-//==================================================================================================
-//==================================================================================================
-//================================= MENU CLASS ===================================================
-//==================================================================================================
-//==================================================================================================
-//==================================================================================================
-* @brief Menu
-*/
+
+
 class Menu
 {
 public:
@@ -198,295 +185,30 @@ protected:
 
 
 
-/**
-//==================================================================================================
-//==================================================================================================
-//==================================================================================================
-//================================= PLOT CLASS ===================================================
-//==================================================================================================
-//==================================================================================================
-//==================================================================================================
-* @brief The Grapic class
-*/
-
-
-class NumberFormatter
-{
-public:
-    virtual std::string format(float number) const = 0;
-
-    virtual ~NumberFormatter();
-};
-
-class FixedPrecisionFormatter : public NumberFormatter
-{
-public:
-    FixedPrecisionFormatter(unsigned int precision = 2);
-
-    std::string format(float number) const override;
-private:
-    unsigned int precision;
-};
-
-class ScientificFormatter : public NumberFormatter
-{
-public:
-    ScientificFormatter(unsigned int precision = 2);
-
-    std::string format(float number) const override;
-private:
-    unsigned int precision;
-};
-
-struct AxisTheme
-{
-public:
-    // Ownership would be unclear with raw pointer...
-    // To keep member public (which should by design),
-    // std::shared_ptr will enforce proper deletion
-    // while keeping copy constructor active
-    std::shared_ptr<NumberFormatter> formatter;
-
-    SDL_Color axisColor;
-    SDL_Color gridColor;
-
-    bool showGrid;
-    bool showTicks;
-    bool showTitle;
-    int defaultTicksCount;
-
-    int ticksSize;
-    int ticksSpacing;
-    int titleFontSize;
-    int ticksFontSize;
-};
-
-struct PlotTheme
-{
-    SDL_Color titleColor;
-    SDL_Color backgroundColor;
-    SDL_Color borderColor;
-
-    int titleFontSize;
-};
-
-struct LegendTheme
-{
-    int legendEntrySpacing;
-    int legendPadding;
-    int legendDescSize;
-    int legendDescSpacing;
-
-    int legendTitleFontsize;
-    int legendEntryFontsize;
-
-    SDL_Color legendEntryColor;
-    SDL_Color legendTitleColor;
-    SDL_Color backgroundColor;
-};
-
-struct Theme
-{
-    Theme();
-
-    AxisTheme axisTheme;
-    PlotTheme plotTheme;
-    LegendTheme legendTheme;
-
-    std::array<SDL_Color, 10> defaultColorPalette;
-
-    static Theme defaultTheme;
-};
-
-struct Point
-{
-    Point();
-    Point(int x, int y);
-
-    int x, y;
-};
-
-struct Size
-{
-    Size();
-    Size(int w, int h);
-
-    int width;
-    int height;
-};
-
-struct Rect
-{
-    Rect();
-    Rect(const Point& p, const Size& s);
-    Rect(int x, int y, int w, int h);
-
-    Point pos;
-    Size size;
-};
-
-class Axis
-{
-public:
-    Axis();
-
-    virtual Size measure() const = 0;
-    virtual float map(float value) const = 0;
-
-    // Design choice : operator= and abstract classes...
-    virtual void copyParams(Axis* to) const;
-
-    void setTheme(AxisTheme* theme);
-    void setTitle(const std::string& title);
-    void setPlotarea(const Rect& area);
-
-    bool inBounds(float value) const;
-    void setBounds(float min, float max);
-    bool updateBounds(float value);
-
-    void setTicks(const std::vector<float>& ticks);
-    void updateTicks(std::size_t tick_count);
-
-    void setTicks();
-
-    void resetBounds();
-
-    virtual void draw() const = 0;
-
-    virtual ~Axis();
-protected:
-    AxisTheme* m_theme;
-    std::string m_title;
-
-    float m_max;
-    float m_min;
-    std::vector<float> m_ticks;
-
-    bool m_boundsSet;
-    bool m_ticksSet;
-
-    Rect m_plotarea;
-};
-
-class VerticalAxis : public Axis
-{
-public:
-    Size measure() const override;
-    virtual float map(float value) const override;
-    void draw() const override;
-private:
-};
-
-class HorizontalAxis : public Axis
-{
-public:
-    Size measure() const override;
-    virtual float map(float value) const override;
-    void draw() const override;
-};
-
-class VerticalLogAxis : public VerticalAxis
-{
-public:
-    virtual float map(float value) const override;
-};
-
-class HorizontalLogAxis : public HorizontalAxis
-{
-public:
-    virtual float map(float value) const override;
-};
-
-struct DrawData
-{
-    enum class DrawType
-    {
-        NONE,
-        POINT,
-        LINE
-    } type;
-    SDL_Color color;
-    std::string name;
-
-    DrawData();
-};
-
-class Legend
-{
-public:
-    Legend();
-
-    void setTitle(const std::string& title);
-    void setTheme(LegendTheme* theme);
-    void setData(std::vector<DrawData>* data);
-    void setPosition(const Point& p);
-    void clear();
-
-    Size measure() const;
-    void draw  () const;
-private:
-    LegendTheme* m_theme;
-
-    Point m_position;
-    std::string m_title;
-    std::vector<DrawData>* m_data;
-};
-
+typedef std::vector< std::pair<float,float> > Curve;
 class Plot
 {
 public:
-    using Points = std::list<std::pair<float, float>>;
-
     Plot();
-
-    void setTitle(const std::string& title);
-    void setTheme(const Theme& theme);
-    void setDrawarea(const Rect& drawarea);
-
-    void setXaxisType(const std::string& type);
-    void setYaxisType(const std::string& type);
-    void setXaxisTitle(const std::string& title);
-    void setYaxisTitle(const std::string& title);
-    void setXRange(float x, float y);
-    void setYRange(float x, float y);
-
-    void setCurveName(const std::string& name, int n);
-    void setCurveColor(const SDL_Color& color, int n);
-    void setCurveType(const std::string& type, int n);
-
-    void setLegendTitle(const std::string& title);
-    void setLegendLocation(const std::string& loc);
-
-
-    void addPlot(float x, float y, int n);
-    void setDrawdata(const DrawData& data, int n);
-
-
     void clear();
-    void draw();
+    void setSize(const int n);
+    void add(float x, float y, int curve_n);
+    void draw(int xmin, int ymin, int xmax, int ymax, bool clearOrNot) const;
+    void draw( const Curve& cu, int xmin, int ymin, int xmax, int ymax, float fxmin, float fymin, float fxmax, float fymax) const;
+    void minMax(float& fxmin, float& fymin, float& fxmax, float& fymax, int& maxsize) const;
 
-    ~Plot();
-private:
-    void createPlot(int n);
-    void recomputeLayout();
-    void drawdata(const Plot::Points& p, const DrawData& d) const;
-
-private:
-    std::vector<Points> m_pointsData;
-    std::vector<DrawData> m_drawData;
-
-    Rect m_drawarea;
-    Rect m_plotarea;
-
-    std::string m_title;
-    std::string m_legendLocation;
-
-    Theme m_theme;
-
-    Legend m_legend;
-    Axis* m_xaxis;
-    Axis* m_yaxis;
+protected:
+    std::vector< Curve  > m_dat;
+    int m_nb_plot_max;
 };
+
+
+
+/// \endcond
+
+
+
+
 
 
 //==================================================================================================
@@ -967,105 +689,35 @@ inline int caseToPixel(const Menu& m, int c, int ymin, int ymax)
     return m.caseToPixel(c,ymin,ymax);
 }
 
-
 //! @todo: plot: setColor for each curves
 //! @todo: setRangeXMinMax for each curves
-
-//! \brief Set plot title
-inline void plot_title(Plot& p, const char* title)
-{
-    p.setTitle(title);
-}
-
-//! \brief Set plot title
-inline void plot_setSize(Plot& p, int _size)
-{
-    p.setSize(_size);
-}
-
-//! \brief Set x axis title
-inline void plot_xaxisTitle(Plot& p, const char* title)
-{
-    p.setXaxisTitle(title);
-}
-
-//! \brief Set x axis type. Types are "lin" for linear or "log" for log-scaled axis.
-inline void plot_xaxisType(Plot& p, const char* type)
-{
-    p.setXaxisType(type);
-}
-
-//! \brief Set y axis title.
-inline void plot_yaxisTitle(Plot& p, const char* title)
-{
-    p.setYaxisTitle(title);
-}
-
-//! \brief Set y axis type. Types are "lin" for linear or "log" for log-scaled axis.
-inline void plot_yaxisType(Plot& p, const char* type)
-{
-    p.setYaxisType(type);
-}
-
-//! \brief Add a point (x,y=f(x)) to the curve number curve_n.
-inline void plot_add(Plot& p, float x, float y, int n)
-{
-    p.addPlot(x, y, n);
-}
-
-//! \brief Set name of the curve number n.
-inline void plot_curveName(Plot& p, int n, const char* name)
-{
-    p.setCurveName(name, n);
-}
-
-//! \brief Set color of the curve number n.
-inline void plot_curveColor(Plot& p, int n, unsigned char r, unsigned char g, unsigned char b, unsigned char a = 255)
-{
-    p.setCurveColor({r, g, b, a}, n);
-}
-
-//! \brief Set type of the curve number n. Types are "scatter" for points or "line" for line plot.
-inline void plot_curveType(Plot& p, int n, const char* type)
-{
-    p.setCurveType(type, n);
-}
-
-//! \brief Set the area where the plot is drawn.
-inline void plot_area(Plot& p, int xmin, int ymin, int xmax, int ymax)
-{
-    p.setDrawarea(Rect(xmin, ymin, xmax - xmin, ymax - ymin));
-}
-
-//! \brief Set the location of the legend. Location are "[top|bot|center]|[left|right|center]"
-inline void plot_legendLocation(Plot& p, const char* location)
-{
-    p.setLegendLocation(location);
-}
-
-//! \brief Set legend title
-inline void plot_legendTitle(Plot& p, const char* title)
-{
-    p.setLegendTitle(title);
-}
-
-//! \brief Draw the plot
-inline void plot_draw(Plot& p)
-{
-    p.draw();
-}
-
-inline void plot_draw(Plot& p, int xmin, int ymin, int xmax, int ymax)
-{
-    p.setDrawarea(Rect(xmin, ymin, xmax - xmin, ymax - ymin));
-    p.draw();
-}
 
 //! \brief Clear the data stored
 inline void plot_clear(Plot& p )
 {
     p.clear();
 }
+
+//! \brief Define the size of the stored value of the funtion (<0 means infinity)
+inline void plot_setSize(Plot& p, const int n)
+{
+    p.setSize(n);
+}
+
+//! \brief Add a point (x,y=f(x)) to the curve number curve_n
+inline void plot_add(Plot& p, float x, float y, int curve_n=0)
+{
+    p.add(x,y,curve_n);
+}
+
+//! \brief Draw the curve in the rectangle (xmin,ymin,xmax,ymax); clear the rectangle if clearOrNot is true
+inline void plot_draw( const Plot& p, int xmin, int ymin, int xmax, int ymax, bool clearOrNot=true)
+{
+    p.draw(xmin,ymin,xmax,ymax,clearOrNot);
+}
+
+
+
 
 /**
     \brief Draw a triangle from the vertices (x1, y1), (x2, y2) and (x3, y3). (Code provided by Bastien DOIGNIES, many thanks)

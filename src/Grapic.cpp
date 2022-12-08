@@ -173,6 +173,22 @@ void Menu::change(int i, const std::string& str)
         std::cerr<<"menu_change(...): i is not in the range of the menu"<<std::endl;
 }
 
+    Plot::Plot() : m_nb_plot_max(-1) {}
+
+    void Plot::clear()
+    {
+        for(int i=0; i<m_dat.size(); ++i)
+            m_dat[i].clear();
+        m_dat.clear();
+    }
+
+    void Plot::setSize(const int n)
+    {
+        clear();
+        m_nb_plot_max = n;
+    }
+
+
 int Menu::select() const
 {
     return m_select;
@@ -571,8 +587,7 @@ int filledEllipseRGBA(SDL_Renderer* m_renderer, Sint16 x, Sint16 y, Sint16 rx, S
     * Set color
     */
     result = 0;
-    // TODO : CHeck this line. It is commented because it destroys any other drawing using alpha mode (see lines 590, 708, 791)
-    // result |= SDL_SetRenderDrawBlendMode(m_renderer, (a == 255) ? SDL_BLENDMODE_NONE : SDL_BLENDMODE_BLEND);
+    result |= SDL_SetRenderDrawBlendMode(m_renderer, (a == 255) ? SDL_BLENDMODE_NONE : SDL_BLENDMODE_BLEND);
     result |= SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
 
     /*
@@ -688,9 +703,7 @@ int filledEllipseRGBA(SDL_Renderer* m_renderer, Sint16 x, Sint16 y, Sint16 rx, S
 int pixelRGBA(SDL_Renderer * renderer, Sint16 x, Sint16 y, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
     int result = 0;
-    
-    // TODO : CHeck this line. It is commented because it destroys any other drawing using alpha mode (see lines 590, 708, 791)
-    // result |= SDL_SetRenderDrawBlendMode(renderer, (a == 255) ? SDL_BLENDMODE_NONE : SDL_BLENDMODE_BLEND);
+    result |= SDL_SetRenderDrawBlendMode(renderer, (a == 255) ? SDL_BLENDMODE_NONE : SDL_BLENDMODE_BLEND);
     result |= SDL_SetRenderDrawColor(renderer, r, g, b, a);
     result |= SDL_RenderDrawPoint(renderer, x, y);
     return result;
@@ -771,9 +784,7 @@ int aaellipseRGBA(SDL_Renderer * renderer, Sint16 x, Sint16 y, Sint16 rx, Sint16
 
     /* Draw */
     result = 0;
-    
-    // TODO : CHeck this line. It is commented because it destroys any other drawing using alpha mode (see lines 590, 708, 791)
-    // result |= SDL_SetRenderDrawBlendMode(renderer, (a == 255) ? SDL_BLENDMODE_NONE : SDL_BLENDMODE_BLEND);
+    result |= SDL_SetRenderDrawBlendMode(renderer, (a == 255) ? SDL_BLENDMODE_NONE : SDL_BLENDMODE_BLEND);
 
     /* "End points" */
     result |= pixelRGBA(renderer, xp, yp, r, g, b, a);
@@ -984,21 +995,6 @@ void print(int x, int y, const char* txt)
     SDL_FreeSurface(textSurface);
     SDL_Rect renderQuad = { x, g.inverseY(y+text_height), text_width, text_height };
     SDL_RenderCopy( g.renderer(), text, nullptr, &renderQuad);
-    SDL_DestroyTexture(text);
-}
-
-/* Expose this function ? */
-void print_rotated(int x, int y, double angle, const char* txt)
-{
-    Grapic& g = Grapic::singleton();
-    SDL_Surface* textSurface = TTF_RenderText_Solid( g.font(), txt, g.getColor() );
-    SDL_Texture* text = SDL_CreateTextureFromSurface( g.renderer(), textSurface);
-    int text_width = textSurface->w;
-    int text_height = textSurface->h;
-    SDL_FreeSurface(textSurface);
-
-    SDL_Rect renderQuad = { x, g.inverseY(y+text_height), text_width, text_height };
-    SDL_RenderCopyEx( g.renderer(), text, nullptr, &renderQuad, angle, NULL, SDL_FLIP_NONE);
     SDL_DestroyTexture(text);
 }
 
@@ -1493,955 +1489,126 @@ struct sort_pred
     }
 };
 
-
-NumberFormatter::~NumberFormatter() {} 
-
-FixedPrecisionFormatter::FixedPrecisionFormatter(unsigned int precision) :
-    precision(precision)
-{ }
-
-std::string FixedPrecisionFormatter::format(float number) const
+void Plot::add(float x, float y, int curve_n)
 {
-    std::ostringstream out;
-    out.precision(precision);
-    out << std::fixed << number;
-    return out.str();
-}
-
-ScientificFormatter::ScientificFormatter(unsigned int precision) :
-    precision(precision)
-{ }
-
-std::string ScientificFormatter::format(float number) const
-{
-    std::ostringstream out;
-    out.precision(precision);
-    out << std::scientific << number;
-    return out.str();
-}
-
-Theme Theme::defaultTheme;
-
-Theme::Theme()
-{
-    // Default theme settings
-    axisTheme.axisColor = {0, 0, 0, 255};
-    axisTheme.gridColor = {100, 100, 100, 100};
-
-    axisTheme.showGrid = true;
-    axisTheme.showTicks = true;
-    axisTheme.showTitle = true;
-    axisTheme.defaultTicksCount = 5;
-    
-    axisTheme.ticksSize = 3;
-    axisTheme.ticksSpacing = 5; 
-
-    axisTheme.ticksFontSize = 13;
-    axisTheme.titleFontSize = 11;
-
-    axisTheme.formatter = std::make_shared<FixedPrecisionFormatter>();
-
-    plotTheme.titleColor = { 0, 0, 0, 255};
-    plotTheme.backgroundColor = { 255, 255, 255, 255 };
-    plotTheme.borderColor = { 0, 0, 0, 255 };
-    plotTheme.titleFontSize = 15;
-
-    legendTheme.legendEntrySpacing = 10;
-    legendTheme.legendPadding      =  5;
-    legendTheme.legendDescSize     = 20;
-    legendTheme.legendDescSpacing  = 10;
-
-    legendTheme.legendTitleFontsize = 13;
-    legendTheme.legendEntryFontsize = 11;
-
-    legendTheme.legendEntryColor = {0, 0, 0, 255};
-    legendTheme.legendTitleColor = {0, 0, 0, 255};
-    legendTheme.backgroundColor  = {255, 255, 255, 255};
-
-    defaultColorPalette[0] = { 0x1f, 0x77, 0xb4, 0xff };
-    defaultColorPalette[1] = { 0xff, 0x7f, 0x0e, 0xff };
-    defaultColorPalette[2] = { 0x2c, 0xa0, 0x2c, 0xff };
-    defaultColorPalette[3] = { 0xd6, 0x27, 0x28, 0xff };
-    defaultColorPalette[4] = { 0x94, 0x67, 0xbd, 0xff };
-    defaultColorPalette[5] = { 0x8c, 0x56, 0x4b, 0xff };
-    defaultColorPalette[6] = { 0xe3, 0x77, 0xc2, 0xff };
-    defaultColorPalette[7] = { 0x7f, 0x7f, 0x7f, 0xff };
-    defaultColorPalette[8] = { 0xbc, 0xbd, 0x22, 0xff };
-    defaultColorPalette[9] = { 0x17, 0xbe, 0xcf, 0xff };
-}
-
-Point::Point() : x(0), y(0)
-{ }
-
-Point::Point(int x, int y) : x(x), y(y)
-{ }
-
-Size::Size() : width(0), height(0)
-{ }
-
-Size::Size(int x, int y) : width(x), height(y)
-{ }
-
-Rect::Rect() : pos(), size()
-{ }
-
-Rect::Rect(const Point& p, const Size& s) : pos(p), size(s)
-{ }
-
-Rect::Rect(int x, int y, int w, int h) : pos(x, y), size(w, h) 
-{ }
-
-Axis::Axis() :
-    m_theme(nullptr),
-    m_title(""),
-    m_max(-std::numeric_limits<float>::infinity()),
-    m_min( std::numeric_limits<float>::infinity()),
-    m_ticks{},
-    m_boundsSet(false),
-    m_ticksSet(false),
-    m_plotarea(0, 0, 0, 0)
-{ }
-
-void Axis::copyParams(Axis* to) const
-{
-    if (to)
+    if (curve_n<0)
     {
-        to->m_theme = m_theme;
-        to->m_title = m_title;
-        to->m_max = m_max;
-        to->m_min = m_min;
-        to->m_ticks = m_ticks;
-        to->m_boundsSet = m_boundsSet;
-        to->m_ticksSet = m_ticksSet;
-        to->m_plotarea = m_plotarea;
+        cerr<<"error==> plot_add: curve number invalid"<<endl;
+        return;
     }
-}
-
-void Axis::setTheme(AxisTheme* theme) 
-{
-    this->m_theme = theme;
-}
-
-void Axis::setTitle(const std::string& title)
-{
-    this->m_title = title;
-}
-
-void Axis::setPlotarea(const Rect& area)
-{
-    m_plotarea = area;
-}
-
-bool Axis::inBounds(float value) const
-{
-    return value >= m_min && value <= m_max;
-}
-
-void Axis::setBounds(float min, float max)
-{
-    this->m_min = min;
-    this->m_max = max;
-    this->m_boundsSet = true;
-    updateTicks(m_theme->defaultTicksCount);
-}
-
-bool Axis::updateBounds(float value)
-{
-    if (!m_boundsSet)
+    if (curve_n>=m_dat.size()) m_dat.resize(curve_n+1);
+    Curve& curve = m_dat[curve_n];
+    if ((m_nb_plot_max<0) || (curve.size()<m_nb_plot_max))
     {
-        std::size_t minLength = m_theme->formatter->format(m_min).size();
-        std::size_t maxLength = m_theme->formatter->format(m_max).size();
-
-        m_min = std::min(m_min, value);
-        m_max = std::max(m_max, value);
-        updateTicks(m_theme->defaultTicksCount);
-
-        std::size_t newMinLength = m_theme->formatter->format(m_min).size();
-        std::size_t newMaxLength = m_theme->formatter->format(m_max).size();
-
-        return (minLength != newMinLength) || (maxLength != newMaxLength);
-    }
-
-    return false;
-}
-
-void Axis::setTicks(const std::vector<float>& ticks)
-{
-    this->m_ticks = ticks;
-    this->m_ticksSet = true;
-}
-
-void Axis::resetBounds()
-{
-    if (!m_boundsSet)
-    {
-        m_max = -std::numeric_limits<float>::infinity();
-        m_min =  std::numeric_limits<float>::infinity();
-    }
-}
-
-void Axis::updateTicks(std::size_t tickCount)
-{
-    if (!m_ticksSet)
-    {
-        m_ticks.resize(tickCount);
-        const float tickSpacing = (m_max - m_min) / (tickCount - 1);
-
-        for (std::size_t i = 0; i < tickCount; i++)
-            m_ticks[i] = m_min + i * tickSpacing;
-    }
-}
-
-Axis::~Axis() { }
-
-// Axis definition
-Size VerticalAxis::measure() const 
-{
-    if (m_theme)
-    {
-            Grapic& g = Grapic::singleton();
-
-        const int tickSize = m_theme->ticksSize;
-        const int spacing  = m_theme->ticksSpacing;
-
-        const float startX = m_plotarea.pos.x;
-        const float startY = m_plotarea.pos.y;
-        const float endX   = m_plotarea.pos.x + m_plotarea.size.width;
-        const float endY   = m_plotarea.pos.y + m_plotarea.size.height;
-
-        // Main line
-        int tmpW, tmpH;
-        int maxH = -std::numeric_limits<int>::infinity();
-        int maxW  = -std::numeric_limits<int>::infinity();
-        // Draw ticks
-        
-        fontSize(m_theme->ticksFontSize);
-        for (int i = 0; i < m_ticks.size(); i++)
-        {   
-            std::string strValue = m_theme->formatter->format(m_ticks.at(i));
-            TTF_SizeText(g.font(), strValue.c_str(), &tmpW, &tmpH);
-
-            maxW = std::max(maxW, tmpW);
-            maxH = std::max(maxH, tmpH);
-        }
-
-        fontSize(m_theme->titleFontSize);
-        TTF_SizeText(g.font(), m_title.c_str(), &tmpW, &tmpH);
-
-        return Size(tickSize + 2 * spacing + maxW + tmpH, maxH / 2);
-    }
-
-    return Size();
-}
-
-float VerticalAxis::map(float value) const
-{
-    return m_plotarea.pos.y + (value - m_min) * m_plotarea.size.height / (m_max - m_min);
-}
-
-void VerticalAxis::draw() const
-{
-    if (m_theme)
-    {
-        Grapic& g = Grapic::singleton();
-
-        // TODO : Extract those, they are also used in measure function
-        const int tickSize = m_theme->ticksSize;
-        const int spacing  = m_theme->ticksSpacing;
-
-        const float startX = m_plotarea.pos.x;
-        const float startY = m_plotarea.pos.y;
-        const float endX   = m_plotarea.pos.x + m_plotarea.size.width;
-        const float endY   = m_plotarea.pos.y + m_plotarea.size.height;
-
-        // Main line
-        color(m_theme->axisColor.r, m_theme->axisColor.g, m_theme->axisColor.b, m_theme->axisColor.a);
-        line(startX, startY, startX, endY);
-
-        int tmpW, tmpH;
-        int maxW = -std::numeric_limits<int>::infinity();
-
-        // Draw ticks
-        fontSize(m_theme->ticksFontSize);
-        for (int i = 0; i < m_ticks.size(); i++)
-        {   
-            std::string strValue = m_theme->formatter->format(m_ticks.at(i));
-            TTF_SizeText(g.font(), strValue.c_str(), &tmpW, &tmpH);
-
-            const float axisValue = map(m_ticks.at(i)); 
-
-            // Ticks
-            color(m_theme->axisColor.r, m_theme->axisColor.g, m_theme->axisColor.b, m_theme->axisColor.a);
-            line(startX - tickSize, axisValue, startX + tickSize, axisValue);
-            print(
-                startX - tmpW - tickSize - spacing, 
-                axisValue - tmpH / 2,
-                strValue.c_str()
-            );
-
-            // Grid                
-            color(m_theme->gridColor.r, m_theme->gridColor.g, m_theme->gridColor.b, m_theme->gridColor.a);
-            line(startX, axisValue, endX, axisValue);
-            
-            maxW = std::max(maxW, tmpW);
-        }
-
-        color(m_theme->axisColor.r, m_theme->axisColor.g, m_theme->axisColor.b, m_theme->axisColor.a);
-        fontSize(m_theme->titleFontSize);
-        
-        TTF_SizeText(g.font(), m_title.c_str(), &tmpW, &tmpH);
-
-        print_rotated(
-            startX - maxW - tickSize - spacing - spacing - tmpH,
-            startY + m_plotarea.size.height / 2 - tmpW / 2,
-            -90,
-            m_title.c_str()
-        );
-    }
-}        
-
-Size HorizontalAxis::measure() const 
-{
-    if (m_theme)
-    {
-            Grapic& g = Grapic::singleton();
-
-        // TODO : Extract those, they are also used in measure function
-        const int tickSize = m_theme->ticksSize;
-        const int spacing  = m_theme->ticksSpacing;
-
-        const float startX = m_plotarea.pos.x;
-        const float startY = m_plotarea.pos.y;
-        const float endX   = m_plotarea.pos.x + m_plotarea.size.width;
-        const float endY   = m_plotarea.pos.y + m_plotarea.size.height;
-
-        int tmpW, tmpH;
-        int maxW = -std::numeric_limits<int>::infinity();
-        int maxH = -std::numeric_limits<int>::infinity();
-        
-        fontSize(m_theme->ticksFontSize);
-        for (int i = 0; i < m_ticks.size(); i++)
-        {   
-            std::string strValue = m_theme->formatter->format(m_ticks.at(i));
-            TTF_SizeText(g.font(), strValue.c_str(), &tmpW, &tmpH);
-            maxW = std::max(maxW, tmpW);
-            maxH = std::max(maxH, tmpH);
-        }
-
-        fontSize(m_theme->titleFontSize);
-        TTF_SizeText(g.font(), m_title.c_str(), &tmpW, &tmpH);
-
-        return Size(maxW / 2, tickSize + 2 * spacing + maxH + tmpH);
-    }
-
-    return Size();
-}
-
-float HorizontalAxis::map(float value) const
-{        
-    return m_plotarea.pos.x + (value - m_min) * m_plotarea.size.width / (m_max - m_min);
-}
-
-void HorizontalAxis::draw() const
-{
-    if (m_theme)
-    {
-        Grapic& g = Grapic::singleton();
-
-        // TODO : Extract those, they are also used in measure function
-        const int tickSize = m_theme->ticksSize;
-        const int spacing  = m_theme->ticksSpacing;
-
-        const float startX = m_plotarea.pos.x;
-        const float startY = m_plotarea.pos.y;
-        const float endX   = m_plotarea.pos.x + m_plotarea.size.width;
-        const float endY   = m_plotarea.pos.y + m_plotarea.size.height;
-        
-        // Main line
-        color(m_theme->axisColor.r, m_theme->axisColor.g, m_theme->axisColor.b, m_theme->axisColor.a);
-        line(startX, startY, endX, startY);
-
-        int tmpW, tmpH;
-        int maxH = -std::numeric_limits<int>::infinity();
-        // Draw ticks
-        fontSize(m_theme->ticksFontSize);
-        for (int i = 0; i < m_ticks.size(); i++)
-        {   
-            std::string strValue = m_theme->formatter->format(m_ticks.at(i));
-            TTF_SizeText(g.font(), strValue.c_str(), &tmpW, &tmpH);
-
-            const float axisValue = map(m_ticks.at(i));
-
-            // Ticks
-            color(m_theme->axisColor.r, m_theme->axisColor.g, m_theme->axisColor.b, m_theme->axisColor.a);
-            line(axisValue, startY - tickSize, axisValue, startY + tickSize);
-            print(
-                axisValue - tmpW / 2,
-                startY - tmpH - tickSize - spacing,
-                strValue.c_str()
-            );
-
-            // Grid                
-            color(m_theme->gridColor.r, m_theme->gridColor.g, m_theme->gridColor.b, m_theme->gridColor.a);
-            line(axisValue, startY, axisValue, endY);
-
-            maxH = std::max(maxH, tmpH);
-        }
-
-        color(m_theme->axisColor.r, m_theme->axisColor.g, m_theme->axisColor.b, m_theme->axisColor.a);
-        fontSize(m_theme->titleFontSize);
-        TTF_SizeText(g.font(), m_title.c_str(), &tmpW, &tmpH);
-        print(
-            startX + m_plotarea.size.width / 2 - tmpW / 2,
-            startY - maxH - tickSize - spacing - spacing - tmpH,
-            m_title.c_str()
-        );
-    }
-}        
-
-float VerticalLogAxis::map(float value) const
-{
-    const float base = 10.f;
-    auto sign = [](float val) -> int { return (0.f < val) - (val < 0.f); };
-    auto log = [&](float val) -> float {
-        return sign(val) * std::log(1 + std::abs(val)) / std::log(base);
-    };
-    auto exp = [&](float val) -> float {
-        return sign(val) * (std::exp(std::abs(val) * std::log(base)) - 1.f);
-    }; 
-
-    const float max = log(m_max);
-    const float min = log(m_min);
-    const float val = log(value);
-    const float percentage = (value - m_min) / (m_max - m_min);
-    
-    const float mapped_value = exp(min + percentage * (max - min));
-    
-    return m_plotarea.pos.y + (mapped_value - m_min) * m_plotarea.size.height / (m_max - m_min);
-}
-
-float HorizontalLogAxis::map(float value) const
-{
-    const float base = 10.f;
-    auto sign = [](float val) -> int { return (0.f < val) - (val < 0.f); };
-    auto log = [&](float val) -> float {
-        return sign(val) * std::log(1 + std::abs(val)) / std::log(base);
-    };
-    auto exp = [&](float val) -> float {
-        return sign(val) * (std::exp(std::abs(val) * std::log(base)) - 1.f);
-    }; 
-
-    const float max = log(m_max);
-    const float min = log(m_min);
-    const float val = log(value);
-    const float percentage = (value - m_min) / (m_max - m_min);
-    
-    const float mapped_value = exp(min + percentage * (max - min));
-    
-    return m_plotarea.pos.x + (mapped_value - m_min) * m_plotarea.size.width / (m_max - m_min);
-}
-
-DrawData::DrawData() : 
-    type(DrawData::DrawType::NONE),
-    color{ 0, 0, 0, 0},
-    name("")
-{ }
-
-Legend::Legend() : 
-    m_theme(nullptr),
-    m_position(0, 0),
-    m_title("T"),
-    m_data(nullptr)
-{
-}
-
-void Legend::setTitle(const std::string& title)
-{
-    this->m_title = title;
-}
-
-void Legend::setTheme(LegendTheme* theme)
-{
-    this->m_theme = theme;
-}
-
-void Legend::setData(std::vector<DrawData>* data)
-{
-    this->m_data = data;
-}
-
-void Legend::setPosition(const Point& p)
-{
-    this->m_position = p;
-}
-
-Size Legend::measure() const
-{
-    if (m_theme && m_data)
-    {
-        Grapic& g = Grapic::singleton();
-
-        int tmpW, tmpH;
-        int width = 0;
-        int height = m_theme->legendPadding;
-        
-        fontSize(m_theme->legendTitleFontsize);
-        TTF_SizeText(g.font(), m_title.c_str(), &tmpW, &tmpH);
-
-        height += m_theme->legendPadding + tmpH;
-        width = tmpW;
-        height += m_theme->legendEntrySpacing;
-
-        fontSize(m_theme->legendEntryFontsize);
-        for (std::size_t i = 0; i < m_data->size(); ++i)
-        {
-            height += m_theme->legendEntrySpacing;
-            TTF_SizeText(g.font(), m_data->at(i).name.c_str(), &tmpW, &tmpH);
-            width = std::max(tmpW + m_theme->legendDescSize + m_theme->legendDescSpacing, width);
-            height += tmpH;
-        }
-        height += m_theme->legendPadding;
-        return Size(width + 2 * m_theme->legendPadding, height);
-    }
-
-    return Size(0, 0);
-}
-
-void Legend::draw() const
-{
-    if (m_theme && m_data)
-    {
-        Grapic& g = Grapic::singleton();
-        Size size = measure();
-
-        color(
-            m_theme->backgroundColor.r, 
-            m_theme->backgroundColor.g, 
-            m_theme->backgroundColor.b, 
-            m_theme->backgroundColor.a
-        );
-        rectangleFill(
-            m_position.x, 
-            m_position.y, 
-            m_position.x + size.width, 
-            m_position.y - size.height
-        );
-        color(0, 0, 0, 255);
-        rectangle(
-            m_position.x, 
-            m_position.y, 
-            m_position.x + size.width, 
-            m_position.y - size.height
-        );
-
-
-        int tmpW, tmpH;
-        int width = 0;
-        int height = m_position.y - m_theme->legendPadding;
-        
-        color(
-            m_theme->legendTitleColor.r, 
-            m_theme->legendTitleColor.g, 
-            m_theme->legendTitleColor.b, 
-            m_theme->legendTitleColor.a 
-        );
-        fontSize(m_theme->legendTitleFontsize);
-        TTF_SizeText(g.font(), m_title.c_str(), &tmpW, &tmpH);
-        print(m_position.x + size.width / 2 - tmpW / 2, height - tmpH, m_title.c_str());
-        
-        height -= (m_theme->legendPadding + tmpH);
-        width = tmpW;
-        height -= m_theme->legendEntrySpacing;
-
-        fontSize(m_theme->legendEntryFontsize);
-        for (std::size_t i = 0; i < m_data->size(); ++i)
-        {
-            TTF_SizeText(g.font(), m_data->at(i).name.c_str(), &tmpW, &tmpH);
-            height -= (m_theme->legendEntrySpacing);
-
-            color(
-                m_data->at(i).color.r, 
-                m_data->at(i).color.g,
-                m_data->at(i).color.b,
-                m_data->at(i).color.a
-            );
-
-            switch(m_data->at(i).type)
-            {
-            case DrawData::DrawType::POINT:
-                circleFill(
-                    m_position.x + m_theme->legendPadding + m_theme->legendDescSize / 2,
-                    height + tmpH / 2,
-                    tmpH / 3
-                );
-                break;
-            case DrawData::DrawType::LINE:
-                line(
-                    m_position.x + m_theme->legendPadding,
-                    height + tmpH / 2,
-                    m_position.x + m_theme->legendPadding + m_theme->legendDescSize,
-                    height + tmpH / 2
-                );
-                break;
-            default:
-                break;
-            }
-
-            color(
-                m_theme->legendEntryColor.r, 
-                m_theme->legendEntryColor.g, 
-                m_theme->legendEntryColor.b, 
-                m_theme->legendEntryColor.a 
-            );
-            print(
-                m_position.x + m_theme->legendPadding + m_theme->legendDescSize + m_theme->legendDescSpacing, 
-                height, 
-                m_data->at(i).name.c_str()
-            );
-            width = std::max(tmpW, width);
-            height -= tmpH;
-        }
-        height -= m_theme->legendPadding;
-    }
-}
-
-Plot::Plot()
-{
-    m_xaxis = new HorizontalAxis();
-    m_yaxis = new VerticalAxis();
-
-    m_xaxis->setTitle("x");
-    m_yaxis->setTitle("y");
-
-    m_legendLocation = "topright";
-
-    m_legend.setData(&m_drawData);
-    setTheme(Theme::defaultTheme);
-}
-
-void Plot::setTitle(const std::string& title)
-{
-    this->m_title = title;
-    recomputeLayout();
-}
-
-void Plot::setTheme(const Theme& theme)
-{
-    this->m_theme = theme;
-    m_xaxis->setTheme(&m_theme.axisTheme); 
-    m_yaxis->setTheme(&m_theme.axisTheme);
-    m_legend.setTheme(&m_theme.legendTheme);
-    recomputeLayout();
-}
-
-void Plot::setDrawarea(const Rect& drawarea)
-{
-    this->m_drawarea = drawarea;
-}
-
-void Plot::setXaxisType(const std::string& type)
-{
-    Axis* newaxis = nullptr;
-
-    if (type == "log") newaxis = new HorizontalLogAxis();
-    else newaxis = new HorizontalAxis();
-    
-    m_xaxis->copyParams(newaxis);
-    delete m_xaxis;
-    m_xaxis = newaxis;
-    recomputeLayout();
-}
-
-void Plot::setYaxisType(const std::string& type)
-{
-    Axis* newaxis = nullptr;
-    if (type == "log") newaxis = new VerticalLogAxis();
-    else newaxis = new VerticalAxis();
-    
-    m_yaxis->copyParams(newaxis);
-    delete m_yaxis;
-    m_yaxis = newaxis;
-    recomputeLayout();
-}
-
-void Plot::setXaxisTitle(const std::string& title)
-{
-    m_xaxis->setTitle(title);
-    recomputeLayout();
-}
-
-void Plot::setYaxisTitle(const std::string& title)
-{
-    m_yaxis->setTitle(title);
-    recomputeLayout();
-}
-
-void Plot::setXRange(float x, float y)
-{
-    m_xaxis->setBounds(x, y);
-    recomputeLayout();
-}
-
-void Plot::setYRange(float x, float y)
-{
-    m_xaxis->setBounds(x, y);
-    recomputeLayout();
-}
-
-void Plot::setLegendTitle(const std::string& title)
-{
-    m_legend.setTitle(title);
-    recomputeLayout();
-}
-
-void Plot::setCurveName(const std::string& name, int n)
-{
-    createPlot(n);
-    m_drawData[n].name = name;
-    recomputeLayout();
-}
-
-void Plot::setCurveColor(const SDL_Color& color, int n)
-{
-    createPlot(n);
-    m_drawData[n].color = color;
-}
-
-void Plot::setCurveType(const std::string& type, int n)
-{
-    createPlot(n);
-    if (type == "scatter" || type == "point") 
-    {
-        m_drawData[n].type = DrawData::DrawType::POINT;
-    }
-    else if (type == "line" || type == "plot")
-    {
-        m_drawData[n].type = DrawData::DrawType::LINE;
-    }
-}
-
-void Plot::setLegendLocation(const std::string& loc)
-{
-    m_legendLocation = loc;
-}
-
-void Plot::addPlot(float x, float y, int n)
-{
-    auto data = std::make_pair(x, y);
-    bool recompute_x = m_xaxis->updateBounds(x);
-    bool recompute_y = m_yaxis->updateBounds(y);
-    bool recompute = recompute_x || recompute_y;
-
-    if (n >= m_pointsData.size())
-    {
-        createPlot(n);
-    }
-
-    if (m_pointsData[n].size() == 0) 
-    {
-        m_pointsData[n].push_back(move(data));
+        curve.push_back( std::make_pair(x,y) );
+        std::sort(curve.begin(), curve.end(), sort_pred() );
     }
     else
     {
-        auto insertLoc = std::lower_bound(m_pointsData[n].begin(), m_pointsData[n].end(), data, sort_pred());
-        m_pointsData[n].insert(insertLoc, std::move(data));
-    }
-
-    if (recompute) recomputeLayout();
-}
-
-void Plot::setDrawdata(const DrawData& data, int n)
-{
-    createPlot(n);
-    m_drawData[n] = data;
-}
-
-void Plot::createPlot(int n)
-{
-    if (n >= m_pointsData.size())
-    {
-        m_pointsData.resize(n + 1);
-        m_drawData.resize(n + 1);
-
-        int max_color = m_theme.defaultColorPalette.size();
-        m_drawData[n].type = DrawData::DrawType::LINE;
-        m_drawData[n].color = m_theme.defaultColorPalette.at(n % max_color);
-        m_drawData[n].name = std::to_string(n);
+        curve.push_back( std::make_pair(x,y) );
+        std::sort(curve.begin(), curve.end(), sort_pred() );
+        curve.erase( curve.begin() );
     }
 }
 
-void Plot::clear()
+void Plot::minMax(float& fxmin, float& fymin, float& fxmax, float& fymax, int& maxsize) const
 {
-    for (auto& ps : m_pointsData)
-    { ps.clear(); }
+    int i,j;
+    if (m_dat.size()==0) return;
 
-    m_xaxis->resetBounds();
-    m_yaxis->resetBounds();
-
-    recomputeLayout();
-}
-
-void Plot::recomputeLayout()
-{
-    Grapic& g = Grapic::singleton();
-
-    int tmpX, tmpY;
-    fontSize(m_theme.plotTheme.titleFontSize);
-    TTF_SizeText(g.font(), m_title.c_str(), &tmpX, &tmpY);
-
-    Size m_xaxisSize = m_xaxis->measure();
-    Size m_yaxisSize = m_yaxis->measure();
-
-    Point axisOrigin = Point(
-        this->m_drawarea.pos.x +m_yaxisSize.width,
-        this->m_drawarea.pos.y +m_xaxisSize.height
-    );
-    Size plotSize = Size(
-        this->m_drawarea.size.width  -m_yaxisSize.width  -m_xaxisSize.width,
-        this->m_drawarea.size.height -m_xaxisSize.height -m_yaxisSize.height - tmpY     
-    );
-
-    m_plotarea = Rect(axisOrigin, plotSize);
-    m_xaxis->setPlotarea(m_plotarea);
-    m_yaxis->setPlotarea(m_plotarea);
-
-    Size legendSize = m_legend.measure();
-
-    // default is top left
-    int x = axisOrigin.x;
-    int y = axisOrigin.y + plotSize.height; 
-    
-    if (m_legendLocation.find("bot") != std::string::npos)
+    fxmin = fxmax = m_dat[0][0].first;
+    fymin = fymax = m_dat[0][0].second;
+    maxsize = m_dat[0].size();
+    for(j=0; j<m_dat.size(); ++j)
     {
-        y = axisOrigin.y + legendSize.height;
-    }
-    else if (m_legendLocation.find("center") == 0)
-    {
-        y = axisOrigin.y + plotSize.height / 2 + legendSize.height / 2;
-    }
-
-    if (m_legendLocation.find("right") != std::string::npos)
-    {
-        x = axisOrigin.x + plotSize.width - legendSize.width;
-    }
-    else
-    {
-        std::size_t centerPos = m_legendLocation.find_last_of("center");
-            // 3 = min length {top, bot, center}
-        if (centerPos >= 3 && centerPos != std::string::npos) 
+        const Curve& cu = m_dat[j];
+        if (cu.size()>maxsize) maxsize = cu.size();
+        for(i=0; i<cu.size(); ++i)
         {
-            x = axisOrigin.x + plotSize.width / 2 - legendSize.width / 2;
+            if (cu[i].first>fxmax) fxmax = cu[i].first;
+            if (cu[i].first<fxmin) fxmin = cu[i].first;
+            if (cu[i].second>fymax) fymax = cu[i].second;
+            if (cu[i].second<fymin) fymin = cu[i].second;
         }
     }
-    
-    
-    m_legend.setPosition(Point(x, y));
 }
 
-void Plot::drawdata(const Plot::Points& p, const DrawData& d) const
+void Plot::draw( const Curve& cu, int xmin, int ymin, int xmax, int ymax, float fxmin, float fymin, float fxmax, float fymax) const
 {
-    color(d.color.r, d.color.g, d.color.b, d.color.a);
-    switch(d.type)
+    int i;
+    float x1, y1, x2, y2;
+    if (cu.size()<2) return;
+    for(i=0; i<cu.size()-1; ++i)
     {
-    case DrawData::DrawType::LINE:
-        if (p.size() > 1)
-        {
-            auto current = p.begin();
 
-            for (auto it = ++p.begin(); it != p.end(); ++it)
-            {
-                if (m_xaxis->inBounds(current->first)  && m_xaxis->inBounds(it->first) &&
-                    m_yaxis->inBounds(current->second) && m_yaxis->inBounds(it->second))
-                {
-                    line(
-                        m_xaxis->map(current->first), m_yaxis->map(current->second),
-                        m_xaxis->map(it->first), m_yaxis->map(it->second)
-                    );
-                }
-                current = it;
-            } 
-        }
-        break;
-    case DrawData::DrawType::POINT:
-        for (auto it = p.begin(); it != p.end(); ++it)
-        {
-            if (m_xaxis->inBounds(it->first) && m_yaxis->inBounds(it->second))
-            {
-                circleFill(m_xaxis->map(it->first), m_yaxis->map(it->second), 3);
-            }
-        }
-        break;
-    case DrawData::DrawType::NONE:
-    default:
-        std::cout << "Default" << std::endl;
-        break;
+        x1 = cu[i].first;
+        y1 = cu[i].second;
+        x2 = cu[i+1].first;
+        y2 = cu[i+1].second;
+
+        x1 = xmin + ((x1-fxmin)/(fxmax-fxmin)) * (xmax-xmin);
+        x2 = xmin + ((x2-fxmin)/(fxmax-fxmin)) * (xmax-xmin);
+        y1 = ymin + ((y1-fymin)/(fymax-fymin)) * (ymax-ymin);
+        y2 = ymin + ((y2-fymin)/(fymax-fymin)) * (ymax-ymin);
+
+        line( x1, y1, x2, y2);
     }
 }
 
-void Plot::draw()
+void Plot::draw(int xmin, int ymin, int xmax, int ymax, bool clearOrNot) const
 {
-    Grapic& g = Grapic::singleton();
-    
-    // Clear area
-    color(
-        m_theme.plotTheme.backgroundColor.r,
-        m_theme.plotTheme.backgroundColor.g,
-        m_theme.plotTheme.backgroundColor.b,
-        m_theme.plotTheme.backgroundColor.a
-    );
-    rectangleFill(
-        m_drawarea.pos.x, 
-        m_drawarea.pos.y, 
-        m_drawarea.pos.x + m_drawarea.size.width, 
-        m_drawarea.pos.y + m_drawarea.size.height
-    );
-    color(
-        m_theme.plotTheme.borderColor.r,
-        m_theme.plotTheme.borderColor.g,
-        m_theme.plotTheme.borderColor.b,
-        m_theme.plotTheme.borderColor.a
-    );
-    rectangle(
-        m_drawarea.pos.x, 
-        m_drawarea.pos.y, 
-        m_drawarea.pos.x + m_drawarea.size.width, 
-        m_drawarea.pos.y + m_drawarea.size.height
-    );
+    SDL_Color bg = Grapic::singleton().getBackgroundColor();
+    SDL_Color col = Grapic::singleton().getColor();
 
-    // Print title
-    // Centered on drawArea, but it might be better to
-    // center it on plot drawarea
-    int tmpX, tmpY;
-    fontSize(m_theme.plotTheme.titleFontSize);
-    color(
-        m_theme.plotTheme.titleColor.r, 
-        m_theme.plotTheme.titleColor.g, 
-        m_theme.plotTheme.titleColor.b, 
-        m_theme.plotTheme.titleColor.a
-    );
-    TTF_SizeText(g.font(), m_title.c_str(), &tmpX, &tmpY);
-    print(
-        m_plotarea.pos.x + m_plotarea.size.width / 2 - tmpX / 2, 
-        m_drawarea.pos.y + m_drawarea.size.height - tmpY, 
-        m_title.c_str()
-    );
+    float fymin;
+    float fymax;
+    float fxmin;
+    float fxmax;
 
-    m_xaxis->draw();
-    m_yaxis->draw();
-
-    for (std::size_t i = 0; i < m_pointsData.size(); ++i)
+    if (clearOrNot)
     {
-        drawdata(m_pointsData.at(i), m_drawData.at(i));
+        color( bg.r, bg.g, bg.b);
+        rectangleFill( xmin, ymin, xmax, ymax);
+
+        backgroundColor( bg.r, bg.g, bg.b);
+        color(col.r, col.g, col.b);
     }
 
-    m_legend.draw();
+    // Draw axis
+    xmin+=25;
+    ymin+=20;
+    rectangle(xmin,ymin,xmax,ymax);
+
+    //fxmin = cu[0].first;
+    //fxmax = cu[ cu.size()-1 ].first;
+    int maxsize;
+    minMax( fxmin, fymin, fxmax, fymax, maxsize);
+    if (m_nb_plot_max>0)
+        fxmax = fxmin + ((fxmax-fxmin) * ((float)(m_nb_plot_max))) / maxsize;
+
+    fontSize(11);
+    print( xmin-25, ymin-5, fymin);
+    print( xmin-25, ymax-15, fymax);
+
+    print( xmin-5, ymin-20, fxmin);
+    print( xmax-30, ymin-20, fxmax);
+
+    Grapic& gr = Grapic::singleton();
+    SDL_Color save = gr.getColor();
+    const int N = 5;
+    static const SDL_Color colcu[] = { {0,255,255, 255}, {0,255,0, 255}, {0,0,255, 255}, {255,255,0, 255}, {255,0,255, 255} };
+    int i;
+    for(i=0; i<m_dat.size(); ++i)
+    {
+        color( colcu[i%N].r, colcu[i%N].g, colcu[i%N].b, colcu[i%N].a );
+        draw( m_dat[i], xmin, ymin, xmax, ymax, fxmin, fymin, fxmax, fymax);
+    }
+    color(save.r,save.g,save.b,save.a);
 }
 
-Plot::~Plot()
-{
-    delete m_xaxis;
-    delete m_yaxis;
-}
+
+
+
 
 //=========================================================================================================================
 //=========================================================================================================================
@@ -2772,5 +1939,25 @@ void polygon(int p[][2], unsigned int number)
         grapic::line(p[i % number][0], p[i % number][1], p[(i + 1) % number][0], p[(i + 1)% number][1]);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 } // namespace
