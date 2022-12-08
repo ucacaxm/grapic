@@ -169,8 +169,16 @@ protected:
 
 
 
-
-
+/**
+//==================================================================================================
+//==================================================================================================
+//==================================================================================================
+//================================= MENU CLASS ===================================================
+//==================================================================================================
+//==================================================================================================
+//==================================================================================================
+* @brief Menu
+*/
 class Menu
 {
 public:
@@ -188,15 +196,29 @@ protected:
     bool m_visible;
 };
 
-struct NumberFormatter
+
+
+/**
+//==================================================================================================
+//==================================================================================================
+//==================================================================================================
+//================================= PLOT CLASS ===================================================
+//==================================================================================================
+//==================================================================================================
+//==================================================================================================
+* @brief The Grapic class
+*/
+
+
+class NumberFormatter
 {
 public:
     virtual std::string format(float number) const = 0;
-    
+
     virtual ~NumberFormatter();
 };
 
-struct FixedPrecisionFormatter : public NumberFormatter
+class FixedPrecisionFormatter : public NumberFormatter
 {
 public:
     FixedPrecisionFormatter(unsigned int precision = 2);
@@ -206,7 +228,7 @@ private:
     unsigned int precision;
 };
 
-struct ScientificFormatter : public NumberFormatter
+class ScientificFormatter : public NumberFormatter
 {
 public:
     ScientificFormatter(unsigned int precision = 2);
@@ -218,8 +240,9 @@ private:
 
 struct AxisTheme
 {
+public:
     // Ownership would be unclear with raw pointer...
-    // To keep member public (which should by design), 
+    // To keep member public (which should by design),
     // std::shared_ptr will enforce proper deletion
     // while keeping copy constructor active
     std::shared_ptr<NumberFormatter> formatter;
@@ -243,7 +266,7 @@ struct PlotTheme
     SDL_Color titleColor;
     SDL_Color backgroundColor;
     SDL_Color borderColor;
-    
+
     int titleFontSize;
 };
 
@@ -280,7 +303,7 @@ struct Point
     Point();
     Point(int x, int y);
 
-    int x, y;  
+    int x, y;
 };
 
 struct Size
@@ -316,7 +339,7 @@ public:
     void setTheme(AxisTheme* theme);
     void setTitle(const std::string& title);
     void setPlotarea(const Rect& area);
-    
+
     bool inBounds(float value) const;
     void setBounds(float min, float max);
     bool updateBounds(float value);
@@ -334,7 +357,7 @@ public:
 protected:
     AxisTheme* m_theme;
     std::string m_title;
-    
+
     float m_max;
     float m_min;
     std::vector<float> m_ticks;
@@ -378,11 +401,11 @@ struct DrawData
 {
     enum class DrawType
     {
-        NONE, 
-        POINT, 
+        NONE,
+        POINT,
         LINE
     } type;
-    SDL_Color color;  
+    SDL_Color color;
     std::string name;
 
     DrawData();
@@ -418,8 +441,8 @@ public:
 
     void setTitle(const std::string& title);
     void setTheme(const Theme& theme);
-    void setDrawarea(const Rect& drawarea); 
-    
+    void setDrawarea(const Rect& drawarea);
+
     void setXaxisType(const std::string& type);
     void setYaxisType(const std::string& type);
     void setXaxisTitle(const std::string& title);
@@ -437,7 +460,7 @@ public:
 
     void addPlot(float x, float y, int n);
     void setDrawdata(const DrawData& data, int n);
-    
+
 
     void clear();
     void draw();
@@ -447,7 +470,7 @@ private:
     void createPlot(int n);
     void recomputeLayout();
     void drawdata(const Plot::Points& p, const DrawData& d) const;
-    
+
 private:
     std::vector<Points> m_pointsData;
     std::vector<DrawData> m_drawData;
@@ -948,7 +971,7 @@ inline int caseToPixel(const Menu& m, int c, int ymin, int ymax)
 //! @todo: plot: setColor for each curves
 //! @todo: setRangeXMinMax for each curves
 
-//! \brief Set plot title 
+//! \brief Set plot title
 inline void plot_title(Plot& p, const char* title)
 {
     p.setTitle(title);
@@ -978,7 +1001,7 @@ inline void plot_yaxisType(Plot& p, const char* type)
     p.setYaxisType(type);
 }
 
-//! \brief Add a point (x,y=f(x)) to the curve number curve_n. 
+//! \brief Add a point (x,y=f(x)) to the curve number curve_n.
 inline void plot_add(Plot& p, float x, float y, int n)
 {
     p.addPlot(x, y, n);
@@ -1002,7 +1025,7 @@ inline void plot_curveType(Plot& p, int n, const char* type)
     p.setCurveType(type, n);
 }
 
-//! \brief Set the area where the plot is drawn. 
+//! \brief Set the area where the plot is drawn.
 inline void plot_area(Plot& p, int xmin, int ymin, int xmax, int ymax)
 {
     p.setDrawarea(Rect(xmin, ymin, xmax - xmin, ymax - ymin));
@@ -1023,6 +1046,12 @@ inline void plot_legendTitle(Plot& p, const char* title)
 //! \brief Draw the plot
 inline void plot_draw(Plot& p)
 {
+    p.draw();
+}
+
+inline void plot_draw(Plot& p, int xmin, int ymin, int xmax, int ymax)
+{
+    p.setDrawarea(Rect(xmin, ymin, xmax - xmin, ymax - ymin));
     p.draw();
 }
 
