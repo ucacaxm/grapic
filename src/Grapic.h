@@ -299,6 +299,13 @@ inline void winQuit()
     }
 }
 
+/** \brief If set to true, limit the framerate (to monitor framerate) to save ressources on low end pcs
+*/
+inline void savePerformanceMode(bool reduceFPS)
+{
+    SDL_GL_SetSwapInterval(reduceFPS);
+}
+
 /** \brief Change the default color (unsigned char values between 0 and 255)
 */
 inline void color(unsigned char _r = 255, unsigned char _g = 255, unsigned char _b = 255, unsigned char _a = 255)
