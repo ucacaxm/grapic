@@ -147,6 +147,7 @@ void Grapic::init(const char* name, int w, int h, int posx, int posy, SDL_Window
     m_height = h;
     m_quit = false;
     m_anim = false;
+    press_q_quit = true;
 
     SDL_SetRenderDrawBlendMode( m_renderer, SDL_BLENDMODE_BLEND);
 
@@ -282,7 +283,7 @@ bool Grapic::manageOneEvent(SDL_Event event)
             //last_key= event.key;    // conserver le dernier evenement
         }
 
-        if ((event.key.keysym.sym == SDLK_ESCAPE) || (event.key.keysym.sym == SDLK_q))
+        if ((event.key.keysym.sym == SDLK_ESCAPE) || (event.key.keysym.sym == SDLK_q && press_q_quit))
             m_quit = true;
         else if (event.key.keysym.sym == SDLK_F12)
         {
@@ -472,6 +473,10 @@ void Grapic::setFont(int s, const char* ttf)
         assert(0);
         exit(1);
     }
+}
+
+void Grapic::qToQuit(bool enable) {
+	press_q_quit = enable;
 }
 
 
@@ -1019,6 +1024,10 @@ Uint32 image_get(SDL_Surface *surface, int x, int y)
     default:
         return 0;
     }
+}
+
+void qToQuit(bool enable) {
+	Grapic::singleton().qToQuit(enable);
 }
 
 

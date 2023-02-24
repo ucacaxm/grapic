@@ -84,6 +84,7 @@ public:
     void setFont(int s, const char* ttf=NULL);
     int keyHasBeenPressed(unsigned int sc);
     void setKeyRepeatMode(bool kr);
+	void qToQuit(bool enable);
 
     const SDL_Window* window() const { return m_window; }
     SDL_Window* window() { return m_window; }
@@ -111,6 +112,7 @@ protected:
     int m_fontSize;
     bool m_quit;
     bool m_anim;
+	bool press_q_quit;
     SDL_Color m_currentColor;
     SDL_Color m_backgroundColor;
     std::vector<int> m_keyStates;
@@ -295,13 +297,6 @@ inline void winQuit()
         delete Grapic::currentGrapic;
         Grapic::currentGrapic = nullptr;
     }
-}
-
-/** \brief If set to true, limit the framerate (to monitor framerate) to save ressources on low end pcs
-*/
-inline void savePerformanceMode(bool reduceFPS)
-{
-    SDL_GL_SetSwapInterval(reduceFPS);
 }
 
 /** \brief Change the default color (unsigned char values between 0 and 255)
@@ -779,6 +774,15 @@ void polygonFill(int p[][2], unsigned int number);
     ~~~~~~~~~~~~~~~
  */
 void polygon(int p[][2], unsigned int number);
+
+
+/** \brief Permet à l'utilisateur d'activer/désactiver la fermeture de la fenêtre sur l'appui de la touche 'q'
+    ~~~~~~~~~~~~~~~{.c}
+    qToQuit(false); // Taper la touche 'q' ne fermera pas la fenêtre
+    qToQuit(true); // Taper la touche 'q' fermera la fenêtre
+    ~~~~~~~~~~~~~~~
+ */
+void qToQuit(bool enable = true);
 
 
 
