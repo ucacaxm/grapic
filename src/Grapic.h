@@ -789,7 +789,7 @@ void polygon(int p[][2], unsigned int number);
     qToQuit(true); // Taper la touche 'q' fermera la fenêtre
     ~~~~~~~~~~~~~~~
  */
-void qToQuit(bool enable = true);
+void qToQuit(bool enable);
 
 
 
