@@ -477,6 +477,12 @@ void Grapic::setFont(int s, const char* ttf)
 
 void Grapic::qToQuit(bool enable) {
 	press_q_quit = enable;
+	// Affiche si l'utilisateur peut ou non utiliser 'q' pour quitter
+	if (press_q_quit) {
+		std::cout << "L'utilisateur peut utiliser 'q' pour quitter la fenetre Grapic" << std::endl;
+	} else {
+		std::cout << "Utilisation de la touche 'q' pour quitter la fenetre Grapic desactivee" << std::endl;
+	}
 }
 
 
