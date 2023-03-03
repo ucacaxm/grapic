@@ -23,8 +23,8 @@ int main(int , char** )
     x = 0.f;
     while( !stop )                              // The application is running in a loop and call the draw function all the time.
     {
-        //x = elapsedTime();
-        x += 0.01f;
+        //x += 0.01f;
+        x += lastFrameTime() / 1000.0f;         // 1 x step every second
         y = cos(x);
         y2 = 0.5*sin(x);
 
