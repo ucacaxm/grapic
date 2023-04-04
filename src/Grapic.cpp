@@ -522,6 +522,10 @@ void Grapic::setFont(int s, const char* ttf)
     }
 }
 
+int Grapic::getFontSize() {
+	return m_fontSize;
+}
+
 void Grapic::qToQuit(bool enable) {
 	press_q_quit = enable;
 	// Affiche si l'utilisateur peut ou non utiliser 'q' pour quitter
