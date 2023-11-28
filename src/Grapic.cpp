@@ -166,7 +166,7 @@ const SDL_Surface* Image::surface() const
     bool Image::isInit() const { return m_surface && m_texture; }
 
 
-Menu::Menu() : m_select(0), m_visible(true) {}
+Menu::Menu() : m_select(0), m_has_changed(false), m_visible(true) {}
 
 void Menu::change(int i, const std::string& str)
 {
@@ -174,6 +174,16 @@ void Menu::change(int i, const std::string& str)
         m_txt[i] = str;
     else
         std::cerr<<"menu_change(...): i is not in the range of the menu"<<std::endl;
+}
+
+bool Menu::has_changed()
+{
+    if (m_has_changed)
+    {
+        m_has_changed = false;
+        return true;
+    }
+    return false;
 }
 
     Plot::Plot() : m_nb_plot_max(-1) {}
@@ -200,7 +210,11 @@ void Menu::setSelect(int s)
 {
     assert(s>=0);
     assert(s<m_txt.size());
-    m_select=s;
+    if (s != m_select)
+    {
+        m_has_changed = true;
+        m_select = s;
+    }
 }
 int Menu::caseToPixel(int c, int ymin, int ymax) const
 {
@@ -1517,7 +1531,12 @@ void Menu::draw(int xmin, int ymin, int xmax, int ymax)
         mousePos(x, y);
         if ((x>xmin) && (x<xmax) && (y>ymin) && (y<ymax))
         {
-            m_select = m_txt.size()-1 - (y-ymin) / ((ymax-ymin)/m_txt.size());
+            int new_select = m_txt.size()-1 - (y-ymin) / ((ymax-ymin)/m_txt.size()); 
+            if (new_select != m_select)
+            {
+                m_has_changed = true;
+                m_select = new_select;
+            } 
         }
     }
 

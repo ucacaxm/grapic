@@ -190,10 +190,12 @@ public:
     int caseToPixel(int c, int ymin, int ymax) const;
     void draw(int xmin, int ymin, int xmax, int ymax);
     void add(const std::string& str);
+    bool has_changed();
 
 protected:
     std::vector<std::string> m_txt;
     int m_select;
+    bool m_has_changed;
     bool m_visible;
 };
 
@@ -692,6 +694,20 @@ inline void menu_add(Menu& m, const std::string& str)
 inline void menu_change(Menu& m, int i, const std::string& str)
 {
     m.change(i,str);
+}
+
+//! \brief Check if the menu item was changed.
+//
+// This functions returns the newly selected item only once per change. 
+// Therefore, it can be used to perform 'in-loop' initialization. 
+inline int menu_has_changed(Menu& m)
+{
+    if (m.has_changed())
+    {
+        return m.select();
+    }
+    // Invalid item
+    return -1;
 }
 
 //! \brief Draw the menu on the screen. See menu_add for an example of usage.
