@@ -62,10 +62,13 @@ solution "grapic"
 
 	configurations { "Grapic" }
 
-	require "script/premake-codeblocks/codeblocks"
+	if not _ACTION then
+		_ACTION="none"
+	end
 
 	print("Options:", dump(_OPTIONS))
 	print("Action:", dump(_ACTION))
+
 
 	if not _OPTIONS["cb-version"] then
 		location (grapic_dir .. "/build/" .. ostarget().."-".._ACTION)
@@ -79,8 +82,13 @@ solution "grapic"
 		defines { "NOMINMAX" } -- allow std::min() and std::max() in vc++
 
 
+	if _ACTION=="codeblocks" then
+		require "script/premake-codeblocks/codeblocks"
+	end
+
+
 	if _ACTION=="vscode" then
-		require "vscode"
+		require "script/premake-vscode/vscode"
 	end
 
 	
@@ -116,14 +124,12 @@ solution "grapic"
 		links { "SDL2", "SDL2_image", "SDL2_ttf" }
 
 
-	-- ##################### VS2015
-	configuration { "windows", "vs2015"}
-		if _PREMAKE_VERSION >="5.0" then
-			system "Windows"
-			architecture "x64"
-		end
-		includedirs { "extern/visual2015/include", "extern/visual2015/include/SDL2" }
-		libdirs { grapic_dir .. "/extern/visual2015/lib" }
+	-- ##################### VS2023
+	configuration { "windows", "vs2023"}
+		system "Windows"
+		architecture "x64"
+		includedirs { "extern/visual2023/include", "extern/visual2023/include/SDL2" }
+		libdirs { grapic_dir .. "/extern/visual2023/lib" }
 		links { "SDL2", "SDL2main", "SDL2_image", "SDL2_ttf"}
 
 
