@@ -63,6 +63,8 @@ solution "grapic"
 
 	configurations { "Grapic" }
 
+	require "script/premake-codeblocks/codeblocks"
+
 	print("Options:", dump(_OPTIONS))
 	print("Action:", dump(_ACTION))
 
@@ -210,7 +212,7 @@ function make_project(name, _filesToCompile)
 end
 
 
--- quand ce premake4.lua est inclus par un autre premake qui definit no_project=true (donc quand grapic est utilisé comme une lib),
+-- quand ce premake5.lua est inclus par un autre premake qui definit no_project=true (donc quand grapic est utilisé comme une lib),
 -- ceci stoppe la creation des projects suivants (tuto, etc.)
 if grapic_run_only_config then
 	do return end

@@ -7,21 +7,18 @@ apps_linux = "${MAKECMDGOALS}"
 
 ifeq ($(OS),Windows_NT)
 	OS = windows
-	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.exe
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.exe
 else
 UNAME_S = $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
 	OS = macosx
 	OSGMAKE = ${OS}-gmake
-	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.macosx
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.macosx
 	Filename="${Filename##*/}"
 	apps_linux = $(shell ls build/${OSGMAKE}/*.make 2>/dev/null | cut -d '/' -f 3 | cut -d . -f 1  )				# ls build/macosx/*.make | cut -d '/' -f 3 | cut -d . -f 1   OR basename
 else
 	OS = linux
 	OSGMAKE = ${OS}-gmake
-	PREMAKE4 = $(GRAPIC_HOME)/script/premake4.linux.sh
 	PREMAKE5 = $(GRAPIC_HOME)/script/premake5.linux
 	apps_linux = $(shell ls build/${OSGMAKE}/*.make 2>/dev/null | cut -d '/' -f 3 | cut -d . -f 1 ) 				# basename --suffix=.make build/linux/*.make  )
 endif
@@ -59,7 +56,7 @@ doc-clean:
 premake-clean: doc-clean
 	rm -rf build ; rm -rf bin/* ; rm -rf obj ; chmod 755 script/premake*
 
-build/${OSGMAKE}: premake4.lua premake
+build/${OSGMAKE}: premake5.lua premake
 
 docgen: $(GRAPIC_HOME)/doc $(GRAPIC_HOME)/doc/images $(GRAPIC_HOME)/src FORCE
 	cd doc ; doxygen
@@ -89,8 +86,8 @@ premake-exec:
 premake-wincb20: remove_quarantine
 	@echo "premake CB20 OS=$(OS)"
 	cp extern/mingw-cb20/bin/*.dll bin
-	$(PREMAKE4) --os=windows --cb-version=cb20 codeblocks
-	$(PREMAKE4) --os=windows --cb-version=cb20 gmake
+	$(PREMAKE5) --os=windows --cb-version=cb20 codeblocks
+	$(PREMAKE5) --os=windows --cb-version=cb20 gmake
 
 premake-winvs2019: remove_quarantine
 	@echo "premake vs2019 OS=$(OS)"
@@ -99,12 +96,12 @@ premake-winvs2019: remove_quarantine
 		
 premake-linux: premake-exec remove_quarantine
 	@echo "premake linux OS=$(OS)"
-	$(PREMAKE4) --os=linux gmake
-	$(PREMAKE4) --os=linux codeblocks
+	$(PREMAKE5) --os=linux gmake
+	$(PREMAKE5) --os=linux codeblocks
 
 premake-macosx: premake-exec
 	@echo "premake macosx OS=$(OS)"
-	$(PREMAKE4) --os=macosx gmake
+	$(PREMAKE5) --os=macosx gmake
 	$(PREMAKE5) --os=macosx xcode4
 
 	
@@ -125,13 +122,13 @@ premake-beta: remove_quarantine
 	rm -rf build ; chmod 755 script/premake*
 	@echo "OS=$(OS)"
 ifeq ($(OS),Windows_NT)
-	$(PREMAKE4) --target=beta --os=windows codeblocks
+	$(PREMAKE5) --target=beta --os=windows codeblocks
 else ifeq ($(OS),linux)
-	$(PREMAKE4) --target=beta --os=linux gmake
-	$(PREMAKE4) --target=beta --os=linux codeblocks
+	$(PREMAKE5) --target=beta --os=linux gmake
+	$(PREMAKE5) --target=beta --os=linux codeblocks
 else ifeq ($(OS),macosx)
-	$(PREMAKE4) --target=beta --os=macosx gmake
-	$(PREMAKE4) --target=beta --os=macosx xcode3
+	$(PREMAKE5) --target=beta --os=macosx gmake
+	$(PREMAKE5) --target=beta --os=macosx xcode3
 else
 	@echo "ERROR: Your OS is not detected in the makefile"
 endif
@@ -141,13 +138,13 @@ lifami: remove_quarantine
 	rm -rf build ; chmod 755 script/premake*
 	@echo "OS=$(OS)"
 ifeq ($(OS),Windows_NT)
-	$(PREMAKE4) --os=windows --file=premake4.lua --lifami codeblocks
+	$(PREMAKE5) --os=windows --file=premake5.lua --lifami codeblocks
 else ifeq ($(OS),linux)
-	$(PREMAKE4) --os=linux --file=premake4.lua --lifami gmake
-	$(PREMAKE4) --os=linux --file=premake4.lua --lifami codeblocks
+	$(PREMAKE5) --os=linux --file=premake5.lua --lifami gmake
+	$(PREMAKE5) --os=linux --file=premake5.lua --lifami codeblocks
 else ifeq ($(OS),macosx)
-	$(PREMAKE4) --os=macosx --file=premake4.lua --lifami gmake
-	$(PREMAKE4) --os=macosx --file=premake4.lua --lifami xcode3
+	$(PREMAKE5) --os=macosx --file=premake5.lua --lifami gmake
+	$(PREMAKE5) --os=macosx --file=premake5.lua --lifami xcode3
 	$(PREMAKE5) --file=lifami.lua xcode4
 endif
 
