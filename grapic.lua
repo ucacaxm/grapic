@@ -4,7 +4,6 @@ newoption {
    value       = "version",
    description = "Choose a particular version of CB",
    allowed = {
-	{ "cb17",	"Codeblocks 17" },
 	{ "cb20",	"Codeblocks 20" },
    }
 }
@@ -85,22 +84,8 @@ solution "grapic"
 	end
 
 	
-	-- ##################### CB17
-	if _OPTIONS["cb-version"]=="cb17" then
-		configuration { "windows", "codeblocks" }
-			buildoptions { "-std=c++17" }
-			buildoptions { "-g"}
-			linkoptions { "-g"}
-			buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
-			includedirs { "extern/mingw-cb17/include", "extern/mingw-cb17/include/SDL2" }
-			libdirs { grapic_dir .. "/extern/mingw-cb17/lib", grapic_dir .. "/extern/mingw-cb17/bin" }
-			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
-	--		platforms { "x32"  }
-	end
-
 	-- ##################### CB20
 	if _OPTIONS["cb-version"]=="cb20" then
-		--		configuration { "windows", "codeblocks", "x64" }
 		configuration { "windows", "codeblocks"}
 			buildoptions { "-std=c++17" }
 			buildoptions { "-g"}
