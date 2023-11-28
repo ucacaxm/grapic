@@ -6,15 +6,8 @@
 		{
 			"label": "Compilation with makefile",
 			"type": "shell",
-			"command": "cd&cd",
-			"args": [
-				"build\\windows-cb20",
-				"&",
-				"mingw32-make",
-				"-f",
-				"start.make"				// NOM DU PROJET A CHANGER SI VOUS VOULEZ CIBLER UN AUTRE PROJET
-			],
-			"group": {
+			"command": "cd build\\windows-cb20 ; mingw32-make -f start.make",	// NOM DU PROJET A CHANGER SI VOUS VOULEZ CIBLER UN AUTRE PROJET
+ 			"group": {
 				"kind": "build",
 				"isDefault": true
 			}
