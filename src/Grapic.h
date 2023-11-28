@@ -84,7 +84,8 @@ public:
     void setFont(int s, const char* ttf=NULL);
     int keyHasBeenPressed(unsigned int sc);
     void setKeyRepeatMode(bool kr);
-  	void qToQuit(bool enable);
+    int getFontSize();
+    void qToQuit(bool enable);
     float framesPerSecond();
     unsigned int lastFrameTime();
 
@@ -520,6 +521,12 @@ inline void fontSize(int s)
     Grapic::singleton().setFont(s);
 }
 
+/** \brief Changes the default font to the a the given path (must be a .ttf file)
+*/
+inline void selectFont(const char* path)
+{
+    Grapic::singleton().setFont(Grapic::singleton().getFontSize(), path);
+}
 
 /** \brief Print the text txt , up left corner is (x,y)
     ~~~~~~~~~~~~~~~{.c}
