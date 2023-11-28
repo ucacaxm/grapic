@@ -729,7 +729,7 @@ inline int menu_select(const Menu& m)
     return m.select();
 }
 
-//! \brief return the line selected in the menu. See menu_add for an example of usage.
+//! \brief modifies selected line of the menu. See menu_add for an example of usage.
 inline void menu_setSelect(Menu& m, int s)
 {
     m.setSelect(s);
