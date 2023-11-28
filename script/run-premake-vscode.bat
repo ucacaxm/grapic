@@ -1,6 +1,7 @@
 
 :: del /S /Q build
 
+cd ..
 .\script\premake5.exe gmake2
 .\script\premake5.exe --scripts=script/vscode vscode
 
