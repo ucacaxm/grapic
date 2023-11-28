@@ -67,14 +67,10 @@ docgen: $(GRAPIC_HOME)/doc $(GRAPIC_HOME)/doc/images $(GRAPIC_HOME)/src FORCE
 dos2unix:
 	dos2unix -q script/*.sh doc/VERSION ; chmod 755 script/*.sh
 
-zip: dos2unix version $(GRAPIC_HOME)/bin/remove_correction.exe
-	$(GRAPIC_HOME)/script/make_zip.sh
-	chmod 644 doc/download/*
-
 version: FORCE
 	sh $(GRAPIC_HOME)/script/inc_version.sh
 
-web: zip docgen web-force
+web: docgen web-force
 
 web-force:
 	@echo "==============================ERRORS================================="
@@ -88,18 +84,10 @@ web-force:
 		*) echo "stop";; \
 		esac )
 
-bin/remove_correction.exe: $(GRAPIC_HOME)/script/remove_correction.cpp dir
-	g++ -Wall $(GRAPIC_HOME)/script/remove_correction.cpp -o $(GRAPIC_HOME)/bin/remove_correction.exe
-
 premake-all: premake-wincb20 premake-linux premake-macosx premake-winvs2019
 	
 premake-exec:
 	chmod 755 script/premake*
-
-premake-wincb17: remove_quarantine
-	@echo "premake CB17 OS=$(OS)"
-	cp extern/mingw-cb17/bin/*.dll bin
-	$(PREMAKE4) --os=windows --cb-version=cb17 codeblocks
 
 premake-wincb20: remove_quarantine
 	@echo "premake CB20 OS=$(OS)"
