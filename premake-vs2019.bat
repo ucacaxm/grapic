@@ -1,9 +1,9 @@
 
 :: del /S /Q build
 
-.\script\premake5.exe vs2019
+.\script\premake5.exe vs2023
 
-copy extern\visual2019\bin\*.dll bin
+copy extern\visual2023\bin\*.dll bin
 
 
 pause

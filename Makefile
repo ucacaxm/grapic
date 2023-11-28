@@ -58,7 +58,7 @@ premake-clean: doc-clean
 
 build/${OSGMAKE}: premake5.lua premake
 
-docgen: $(GRAPIC_HOME)/doc $(GRAPIC_HOME)/doc/images $(GRAPIC_HOME)/src FORCE
+doc-gen: $(GRAPIC_HOME)/doc $(GRAPIC_HOME)/doc/images $(GRAPIC_HOME)/src FORCE
 	cd doc ; doxygen
 
 dos2unix:
@@ -67,7 +67,7 @@ dos2unix:
 version: FORCE
 	sh $(GRAPIC_HOME)/script/inc_version.sh
 
-web: docgen web-force
+web: doc-gen web-force
 
 web-force:
 	@echo "============================== WEB ================================="
