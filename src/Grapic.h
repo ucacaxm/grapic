@@ -856,7 +856,7 @@ The Grapic archive comes with the needed SDL part, you do not have to install SD
 <br>
 
 \section download Download
-Download and install the last version from here: https://github.com/ucacaxm/grapic/releases
+Download and install the last version from here: [https://github.com/ucacaxm/grapic/releases](https://github.com/ucacaxm/grapic/releases)
 
 Or you can clone the beta version from the GitHub repo : https://github.com/ucacaxm/grapic
 
