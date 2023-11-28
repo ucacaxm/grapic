@@ -73,14 +73,11 @@ version: FORCE
 web: docgen web-force
 
 web-force:
-	@echo "==============================ERRORS================================="
-	cat tmp/errors.log
-	@echo "==============================ERRORS================================="
+	@echo "============================== WEB ================================="
 	@echo "Continue?  [y/N]"
 	@( read -p "\n" sure && \
 		case "$$sure" in [yY]) \
-			rsync -ravuz --delete $(GRAPIC_HOME)/doc/ ameyer@connect.liris.cnrs.fr:/home-membres/ameyer/grapic/; \
-			touch tmp/rsync.ok;; \
+			rsync -ravuz --delete $(GRAPIC_HOME)/doc/ ameyer@connect.liris.cnrs.fr:/home-membres/ameyer/grapic/;; \
 		*) echo "stop";; \
 		esac )
 
