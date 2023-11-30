@@ -138,12 +138,12 @@ solution "grapic"
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing" }
 		buildoptions { "-std=c++17" }
 		xcodebuildsettings {  ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
-		includedirs {	"extern/macosx/**",
-						"../../extern/macosx/**",
+		includedirs {	grapic_dir .. "extern/macosx/**",
+						grapic_dir .. "../../extern/macosx/**",
 					 }
-		externalincludedirs {	"extern/macosx/**",
-								"../../extern/macosx/**"
-	 						} 
+		-- externalincludedirs {	grapic_dir .. "extern/macosx/**",
+		-- 						grapic_dir .. "../../extern/macosx/**"
+	 	-- 					} 
 		linkoptions {	"../../extern/macosx/SDL2.framework/Versions/A/SDL2",
 						"../../extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
 						"../../extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
