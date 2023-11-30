@@ -1,5 +1,4 @@
 
-@REM @ECHO OFF
 
 @echo "==================== del build ===================="
 del /S /Q build
