@@ -142,13 +142,13 @@ solution "grapic"
 						"../../extern/macosx/**",
 					 }
 		externalincludedirs {	"extern/macosx/**",
-						"../../extern/macosx/**",
-	 	} 
+								"../../extern/macosx/**"
+	 						} 
 		linkoptions {	"../../extern/macosx/SDL2.framework/Versions/A/SDL2",
 						"../../extern/macosx/SDL2_image.framework/Versions/A/SDL2_image",
 						"../../extern/macosx/SDL2_ttf.framework/Versions/A/SDL2_ttf",
 						"-rpath @executable_path/../extern/macosx"
-		}
+					}
 
 
 
