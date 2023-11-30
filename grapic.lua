@@ -80,7 +80,7 @@ solution "grapic"
 
 	
 	-- ##################### Windows: CB20 and gmake
-	filter  { "system:windows", "codeblocks"}
+	filter  { "system:windows", "action:codeblocks"}
 		buildoptions { "-std=c++17" }
 		buildoptions { "-g"}
 		linkoptions { "-g"}
@@ -88,7 +88,7 @@ solution "grapic"
 		includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
 		libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
 		links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
-	filter  { "system:windows", "gmake"}
+	filter  { "system:windows", "action:gmake"}
 		buildoptions { "-std=c++17" }
 		buildoptions { "-g"}
 		linkoptions { "-g"}
@@ -100,7 +100,6 @@ solution "grapic"
 
 	-- ##################### Linux
 	filter  { "system:linux" }
-		print("Linux alex")
 		includedirs { "/usr/include/SDL2" }
 		buildoptions { "-std=c++17" }
 		buildoptions { "-ggdb"}

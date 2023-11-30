@@ -1,10 +1,10 @@
 
-@echo "==================== del build ===================="
-del /S /Q build
+:: @echo "==================== del build ===================="
+:: del /S /Q build
 
 @echo "==================== premake CB ===================="
-.\script\premake5.exe --os=windows --file=premake5.lua --cb-version=cb20 --lifami codeblocks 
-.\script\premake5.exe --os=windows --file=premake5.lua --cb-version=cb20 --lifami gmake
+.\script\premake5.exe --os=windows --file=premake5.lua --lifami codeblocks 
+.\script\premake5.exe --os=windows --file=premake5.lua --lifami gmake
 
 
 @echo "==================== copy dll =>bin ===================="

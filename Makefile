@@ -86,8 +86,8 @@ premake-exec:
 premake-wincb20: remove_quarantine
 	@echo "premake CB20 OS=$(OS)"
 	cp extern/mingw-cb20/bin/*.dll bin
-	$(PREMAKE5) --os=windows --cb-version=cb20 codeblocks
-	$(PREMAKE5) --os=windows --cb-version=cb20 gmake
+	$(PREMAKE5) --os=windows codeblocks
+	$(PREMAKE5) --os=windows gmake
 
 premake-winvs2019: remove_quarantine
 	@echo "premake vs2019 OS=$(OS)"
