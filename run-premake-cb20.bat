@@ -3,7 +3,8 @@
 @echo "==================== del build ===================="
 del /S /Q build
 
-.\script\premake5.exe --help
+.\script\premake5.exe --version
+
 @echo "==================== premake CB ===================="
 .\script\premake5.exe --os=windows --file=premake5.lua --cb-version=cb20 codeblocks 
 @echo "==================== premake gmake ===================="

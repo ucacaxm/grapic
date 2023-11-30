@@ -77,7 +77,7 @@ solution "grapic"
 	end
 
 
-	configuration { "windows" }
+	filter  { "windows" }
 		defines { "WIN32", "NVWIDGETS_EXPORTS", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS" }
 		defines { "NOMINMAX" } -- allow std::min() and std::max() in vc++
 
@@ -94,7 +94,7 @@ solution "grapic"
 	
 	-- ##################### CB20
 	if _OPTIONS["cb-version"]=="cb20" then
-		configuration { "windows", "codeblocks"}
+		filter  { "windows", "codeblocks"}
 			buildoptions { "-std=c++17" }
 			buildoptions { "-g"}
 			linkoptions { "-g"}
@@ -102,7 +102,7 @@ solution "grapic"
 			includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
 			libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
 			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
-		configuration { "windows", "gmake"}
+		filter  { "windows", "gmake"}
 			buildoptions { "-std=c++17" }
 			buildoptions { "-g"}
 			linkoptions { "-g"}
@@ -115,7 +115,7 @@ solution "grapic"
 
 
 	-- ##################### Linux
-	configuration { "linux" }
+	filter  { "linux" }
 		includedirs { "/usr/include/SDL2" }
 		buildoptions { "-std=c++17" }
 		buildoptions { "-ggdb"}
@@ -125,7 +125,7 @@ solution "grapic"
 
 
 	-- ##################### VS2023
-	configuration { "windows", "vs2023"}
+	filter  { "windows", "vs2023"}
 		system "Windows"
 		architecture "x64"
 		includedirs { "extern/visual2023/include", "extern/visual2023/include/SDL2" }
@@ -134,14 +134,14 @@ solution "grapic"
 
 
 	-- ##################### MACOS
-	configuration { "macosx" }
+	filter  { "macosx" }
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing" }
 		buildoptions { "-std=c++17" }
 		xcodebuildsettings {  ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
 		includedirs {	"extern/macosx/**",
 						"../../extern/macosx/**",
 					 }
-		sysincludedirs {	"extern/macosx/**",
+		externalincludedirs {	"extern/macosx/**",
 						"../../extern/macosx/**",
 	 	} 
 		linkoptions {	"../../extern/macosx/SDL2.framework/Versions/A/SDL2",
@@ -171,7 +171,7 @@ using namespace grapic;\
 \
 int main(int , char**)\
 {\
-	winInit("vide",500,500);\
+	winInit(\"vide\",500,500);\
 	backgroundColor(120,70,200);\
 	bool stop = false;\
 	while( !stop )\
