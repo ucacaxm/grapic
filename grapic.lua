@@ -1,14 +1,5 @@
 
 newoption {
-   trigger     = "cb-version",
-   value       = "version",
-   description = "Choose a particular version of CB",
-   allowed = {
-	{ "cb20",	"Codeblocks 20" },
-   }
-}
-
-newoption {
    trigger     = "lifami",
    description = "activate creation of projects for LIFAMI",
 }
@@ -70,14 +61,10 @@ solution "grapic"
 	print("Action:", dump(_ACTION))
 
 
-	if not _OPTIONS["cb-version"] then
-		location (grapic_dir .. "/build/" .. ostarget().."-".._ACTION)
-	else
-		location (grapic_dir .. "/build/" .. ostarget().."-".._OPTIONS["cb-version"])
-	end
+	location (grapic_dir .. "/build/" .. ostarget().."-".._ACTION)
 
 
-	filter  { "windows" }
+	filter  { "system:windows" }
 		defines { "WIN32", "NVWIDGETS_EXPORTS", "_USE_MATH_DEFINES", "_CRT_SECURE_NO_WARNINGS" }
 		defines { "NOMINMAX" } -- allow std::min() and std::max() in vc++
 
@@ -92,30 +79,28 @@ solution "grapic"
 	end
 
 	
-	-- ##################### CB20
-	if _OPTIONS["cb-version"]=="cb20" then
-		filter  { "windows", "codeblocks"}
-			buildoptions { "-std=c++17" }
-			buildoptions { "-g"}
-			linkoptions { "-g"}
-			buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
-			includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
-			libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
-			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
-		filter  { "windows", "gmake"}
-			buildoptions { "-std=c++17" }
-			buildoptions { "-g"}
-			linkoptions { "-g"}
-			buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
-			includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
-			libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
-			links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
-	--		platforms { "x64"  }
-	end
+	-- ##################### Windows: CB20 and gmake
+	filter  { "system:windows", "codeblocks"}
+		buildoptions { "-std=c++17" }
+		buildoptions { "-g"}
+		linkoptions { "-g"}
+		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
+		includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
+		libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
+		links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
+	filter  { "system:windows", "gmake"}
+		buildoptions { "-std=c++17" }
+		buildoptions { "-g"}
+		linkoptions { "-g"}
+		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
+		includedirs { "extern/mingw-cb20/include", "extern/mingw-cb20/include/SDL2" }
+		libdirs { grapic_dir .. "/extern/mingw-cb20/lib", grapic_dir .. "/extern/mingw-cb20/bin" }
+		links { "mingw32", "SDL2main", "SDL2", "SDL2_image", "SDL2_ttf" }
 
 
 	-- ##################### Linux
-	filter  { "linux" }
+	filter  { "system:linux" }
+		print("Linux alex")
 		includedirs { "/usr/include/SDL2" }
 		buildoptions { "-std=c++17" }
 		buildoptions { "-ggdb"}
@@ -123,9 +108,8 @@ solution "grapic"
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-unused-but-set-variable -Wno-narrowing" }
 		links { "SDL2", "SDL2_image", "SDL2_ttf" }
 
-
-	-- ##################### VS2023
-	filter  { "windows", "vs2023"}
+	-- ##################### Windows VS2022
+	filter  { "system:windows", "vs2022"}
 		system "Windows"
 		architecture "x64"
 		includedirs { "extern/visual2023/include", "extern/visual2023/include/SDL2" }
@@ -134,7 +118,7 @@ solution "grapic"
 
 
 	-- ##################### MACOS
-	filter  { "macosx" }
+	filter  { "system:macosx" }
 		buildoptions { "-W -Wall -Wextra -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -Wno-comment -Wno-narrowing" }
 		buildoptions { "-std=c++17" }
 		xcodebuildsettings {  ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
