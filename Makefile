@@ -44,7 +44,7 @@ dir:
 	
 remove_quarantine:
 ifeq ($(UNAME_S),Darwin)
-	xattr -rd com.apple.quarantine ./
+	xattr -rd com.apple.quarantine ./*
 endif
 	
 clean: build/${OSGMAKE}
