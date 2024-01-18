@@ -958,12 +958,8 @@ Or you can clone the beta version from the GitHub repo : https://github.com/ucac
     - Look in the top right for the updates section
     - Find Xcode & click Update
 
-  - <b>If you have a Mac M1 (ARM processor ARM, not an INTEL), you need Rosetta 2</b>
-    - In a terminal, run this: `softwareupdate --install-rosetta`
-    - Or see: https://infoidevice.fr/comment-installer-rosetta-2-sur-mac-apple-silicon/
-
   - Install grapic https://licence-infi.univ-lyon1.fr/grapic
-    - Download the zip file for MacOS (grapic-vVV.VV.VV-MacOS.zip)
+    - Download the zip file for MacOS (grapic-vVV.VV.VV.zip)
     - Unzip it
 
   - With XCode
@@ -971,14 +967,14 @@ Or you can clone the beta version from the GitHub repo : https://github.com/ucac
       \code
       xcode-select --install
       \endcode
-    - Open a project in this path: grapic-vVV.VV.VV-macosx/build/macosx/Start.xcodeproj
+    - Open a project in this path: grapic-vVV.VV.VV/build/macosx/Start.xcodeproj
     - Compile and run
 
 
   - Run in a terminal (bash)
     - Enter these commands to compile:
         \code
-        cd .../grapic-vVV.VV.VV-MacOS          # trouver le chemin vers l'endroit où vous avez décompressé le .zip
+        cd .../grapic-vVV.VV.VV          # trouver le chemin vers l'endroit où vous avez décompressé le .zip
         make
         \endcode
     - To run: `bin/Start`
@@ -986,7 +982,7 @@ Or you can clone the beta version from the GitHub repo : https://github.com/ucac
 
 
 
-\subsection c5 Run on C5 (web without any installation, onle from c5.univ-lyon1.fr)
+\subsection c5 Run on C5 (web version without any installation, only for students from Univ-lyon1.fr)
   - You can try Grapic on the web with C5: https://c5.univ-lyon1.fr
 
 
