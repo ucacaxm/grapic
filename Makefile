@@ -128,7 +128,7 @@ else ifeq ($(OS),linux)
 	$(PREMAKE5) --target=beta --os=linux codeblocks
 else ifeq ($(OS),macosx)
 	$(PREMAKE5) --target=beta --os=macosx gmake
-	$(PREMAKE5) --target=beta --os=macosx xcode3
+	$(PREMAKE5) --target=beta --os=macosx xcode4
 else
 	@echo "ERROR: Your OS is not detected in the makefile"
 endif
@@ -144,8 +144,7 @@ else ifeq ($(OS),linux)
 	$(PREMAKE5) --os=linux --file=premake5.lua --lifami codeblocks
 else ifeq ($(OS),macosx)
 	$(PREMAKE5) --os=macosx --file=premake5.lua --lifami gmake
-	$(PREMAKE5) --os=macosx --file=premake5.lua --lifami xcode3
-	$(PREMAKE5) --file=lifami.lua xcode4
+	$(PREMAKE5) --os=macosx --file=premake5.lua --lifami xcode4
 endif
 
 define \n
