@@ -12,24 +12,30 @@ The Grapic archive comes with the needed SDL part, you do not have to install SD
 
 
 
-## Note for developpers and to produce the webpages
-Compiling from the github (which is not the standard way).
+## How to start using it
 
-* On Linux you need to install:
-- g++
-- doxygen
-- zip
-- lib-sdl2-dev lib-sdl2 sd2_image... sdl2_ttf...
-
-1. sudo apt install g++ premake5 zip doxygen libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev libsdl2_ttf-dev
-2. make premake
-3. make
-(4. script/make_linux_test.sh): to test the archive doc/download/grapic-linux.tgz
-(5. script/make_web.sh): to create the zip files in doc/download or to sync everything to the webpage (need passwd).
+[See here](https://perso.liris.cnrs.fr/alexandre.meyer/grapic/html/index.html#start])
 
 
+### Linux
 
-* On windows
-0. Install CB 20
-1. run premake-cb20.bat to generate the projects files    or     run premake-lifami.bat to generate lifami projects 
-2. open build/windows-cb20/grapic.workspace
+Install: - g++, doxygen, zip, lib-sdl2-dev lib-sdl2 sd2_imag sdl2_ttf
+
+1. `sudo apt install g++ premake5 zip doxygen libsdl2-dev libsdl2-mixer-dev libsdl2-image-dev libsdl2_ttf-dev`
+2. `make premake`
+3. `make`
+
+
+### Windows
+
+The easiest
+
+1. Install CodeBlocks 20
+2. run the script `run-premake-cb20.bat` or `run-lifami-cb20.bat`
+3. open build/windows-codeblocks/grapic.workspace with Codeblocks
+
+
+
+## Change doc of the web page
+
+`make web`: to create doc and sync everything to the webpage (need passwd).
