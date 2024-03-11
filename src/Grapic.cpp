@@ -1020,6 +1020,34 @@ void circleFill(int xc, int yc, int circleR)
     filledEllipseRGBA(g.renderer(), xc, g.inverseY(yc), circleR, circleR, c[0], c[1], c[2], c[3]);
 }
 
+void drawArrow(int xa, int ya, int xb, int yb)
+{
+    // Dessiner la tige de la flèche
+    line(xa, ya, xb, yb);
+
+    // Calculer les coordonnées pour la pointe de la flèche
+    int dx = xb - xa;
+    int dy = yb - ya;
+    int length = sqrt(dx*dx + dy*dy);
+    int arrowSize = 10; // Taille de la pointe de la flèche
+
+    int x1 = xb - (arrowSize * dx) / length;
+    int y1 = yb - (arrowSize * dy) / length;
+
+    // Dessiner la pointe de la flèche
+    line(xb, yb, x1, y1);
+
+    // Calculer les coordonnées pour les "ailes" de la flèche
+    int x2 = x1 + (arrowSize * dy) / length;
+    int y2 = y1 - (arrowSize * dx) / length;
+    int x3 = x1 - (arrowSize * dy) / length;
+    int y3 = y1 + (arrowSize * dx) / length;
+
+    // Dessiner les "ailes" de la flèche
+    line(xb, yb, x2, y2);
+    line(xb, yb, x3, y3);
+}
+
 void put_pixel(int x, int y, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     Grapic& gr = Grapic::singleton();
@@ -1535,12 +1563,12 @@ void Menu::draw(int xmin, int ymin, int xmax, int ymax)
         mousePos(x, y);
         if ((x>xmin) && (x<xmax) && (y>ymin) && (y<ymax))
         {
-            int new_select = m_txt.size()-1 - (y-ymin) / ((ymax-ymin)/m_txt.size()); 
+            int new_select = m_txt.size()-1 - (y-ymin) / ((ymax-ymin)/m_txt.size());
             if (new_select != m_select)
             {
                 m_has_changed = true;
                 m_select = new_select;
-            } 
+            }
         }
     }
 

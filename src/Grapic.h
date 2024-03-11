@@ -121,7 +121,7 @@ protected:
     std::vector<int> m_keyStates;
     bool m_keyRepeatMode;
     int imagesSavedCount;
-    
+
     // vars used for framerate calculation
     unsigned int m_frameTime[60];
     float m_averageFramePerSecond;
@@ -371,6 +371,10 @@ void circle(int xc, int yc, int radius);
 /** \brief Draw a filled circle from (xmin,ymin) to (xmax,ymax)
 */
 void circleFill(int xc, int yc, int radius);
+
+/** \brief Draw an arrow from (xa,ya) to (xb,yb), pointing to b
+*/
+void drawArrow(int xa, int ya, int xb, int yb);
 
 /** \brief Draw an ellipse at (xc, yc), horizontal radius and vertical radius, rotation optional (Thanks to Anass LAHNIN)
 */
@@ -705,8 +709,8 @@ inline void menu_change(Menu& m, int i, const std::string& str)
 
 //! \brief Check if the menu item was changed.
 //
-// This functions returns the newly selected item only once per change. 
-// Therefore, it can be used to perform 'in-loop' initialization. 
+// This functions returns the newly selected item only once per change.
+// Therefore, it can be used to perform 'in-loop' initialization.
 inline int menu_has_changed(Menu& m)
 {
     if (m.has_changed())
