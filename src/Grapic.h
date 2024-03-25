@@ -137,7 +137,7 @@ protected:
     void updateFrameCounter();
 
     static Grapic* currentGrapic;
-    friend void winInit(const char* name, int w, int h, int posx, int posy);
+    friend void winInit(const char* name, int w, int h, int posx, int posy, bool fullscreen);
     friend void winQuit();
 };
 
@@ -242,10 +242,12 @@ protected:
 /** \brief Initialize the window with a size w,h and a position (posx,posy).
     If posx<0 or posy<0, the position is centered.
 */
-inline void winInit(const char* name, int w, int h, int posx=-1, int posy=-1)
+inline void winInit(const char* name, int w, int h, int posx=-1, int posy=-1, bool fullscreen=false)
 {
     Grapic::currentGrapic = new Grapic();
-    Grapic::singleton(false).init(name,w,h,posx,posy);
+    SDL_WindowFlags flag;
+    if (fullscreen) flag = SDL_WINDOW_FULLSCREEN;
+    Grapic::singleton(false).init(name,w,h,posx,posy,flag);
 }
 
 /** \brief Clear the window with the default background color
@@ -277,6 +279,10 @@ inline void winClearEvent()
 {
     grapic::Grapic::singleton().clearEvent();
 }
+
+/** \brief Sets the reference-passed variables to the dimension of the screen (in pixels) or -1 if an error occured.
+*/
+void getScreenSize(int &w, int &h);
 
 /** \brief Change the size (w,h), the position(ps,py) or the fullscreen on/off
      Set a negative parameter to let him as it is.

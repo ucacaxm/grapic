@@ -566,6 +566,18 @@ inline SDL_Renderer* renderer()
     return Grapic::singleton().renderer();
 }
 
+void getScreenSize(int &w, int &h) {
+    SDL_DisplayMode DM;
+    if (SDL_GetCurrentDisplayMode(0, &DM) != 0) {
+        w = -1;
+        h = -1;
+        std::cout << "Erreur lors de l'obtention de la dÃ©finition de l'Ã©cran.";
+        return;
+    }
+    w = DM.w;
+    h = DM.h;
+}
+
 void winSetPosition(int w, int h, int px, int py, bool fullscreen)
 {
     if (fullscreen) SDL_SetWindowFullscreen( Grapic::singleton().window(), SDL_WINDOW_FULLSCREEN );
@@ -1022,28 +1034,28 @@ void circleFill(int xc, int yc, int circleR)
 
 void drawArrow(int xa, int ya, int xb, int yb)
 {
-    // Dessiner la tige de la flèche
+    // Dessiner la tige de la flï¿½che
     line(xa, ya, xb, yb);
 
-    // Calculer les coordonnées pour la pointe de la flèche
+    // Calculer les coordonnï¿½es pour la pointe de la flï¿½che
     int dx = xb - xa;
     int dy = yb - ya;
     int length = sqrt(dx*dx + dy*dy);
-    int arrowSize = 10; // Taille de la pointe de la flèche
+    int arrowSize = 10; // Taille de la pointe de la flï¿½che
 
     int x1 = xb - (arrowSize * dx) / length;
     int y1 = yb - (arrowSize * dy) / length;
 
-    // Dessiner la pointe de la flèche
+    // Dessiner la pointe de la flï¿½che
     line(xb, yb, x1, y1);
 
-    // Calculer les coordonnées pour les "ailes" de la flèche
+    // Calculer les coordonnï¿½es pour les "ailes" de la flï¿½che
     int x2 = x1 + (arrowSize * dy) / length;
     int y2 = y1 - (arrowSize * dx) / length;
     int x3 = x1 - (arrowSize * dy) / length;
     int y3 = y1 + (arrowSize * dx) / length;
 
-    // Dessiner les "ailes" de la flèche
+    // Dessiner les "ailes" de la flï¿½che
     line(xb, yb, x2, y2);
     line(xb, yb, x3, y3);
 }
