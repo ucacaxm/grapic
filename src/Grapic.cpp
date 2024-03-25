@@ -1034,28 +1034,28 @@ void circleFill(int xc, int yc, int circleR)
 
 void drawArrow(int xa, int ya, int xb, int yb)
 {
-    // Dessiner la tige de la fl�che
+    // Dessiner la tige de la flèche
     line(xa, ya, xb, yb);
 
-    // Calculer les coordonn�es pour la pointe de la fl�che
+    // Calculer les coordonnées pour la pointe de la flèche
     int dx = xb - xa;
     int dy = yb - ya;
     int length = sqrt(dx*dx + dy*dy);
-    int arrowSize = 10; // Taille de la pointe de la fl�che
+    int arrowSize = 10; // Taille de la pointe de la flèche
 
     int x1 = xb - (arrowSize * dx) / length;
     int y1 = yb - (arrowSize * dy) / length;
 
-    // Dessiner la pointe de la fl�che
+    // Dessiner la pointe de la flèche
     line(xb, yb, x1, y1);
 
-    // Calculer les coordonn�es pour les "ailes" de la fl�che
+    // Calculer les coordonnées pour les "ailes" de la flèche
     int x2 = x1 + (arrowSize * dy) / length;
     int y2 = y1 - (arrowSize * dx) / length;
     int x3 = x1 - (arrowSize * dy) / length;
     int y3 = y1 + (arrowSize * dx) / length;
 
-    // Dessiner les "ailes" de la fl�che
+    // Dessiner les "ailes" de la flèche
     line(xb, yb, x2, y2);
     line(xb, yb, x3, y3);
 }
