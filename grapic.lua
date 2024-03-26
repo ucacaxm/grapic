@@ -227,10 +227,21 @@ make_project( "demo_Pacman", 	{ "apps/demo_pacman/Jeu.cpp",     "apps/demo_pacma
 								"apps/demo_pacman/Pacman.cpp",  "apps/demo_pacman/main_pacman.cpp",
 								"apps/demo_pacman/Pacman.h" } )
 
-
-
-
-
+project("demo_path_tracer")
+	language "C++"
+	kind "ConsoleApp"
+	targetdir "bin"
+    if _PREMAKE_VERSION >="5.0" then
+        optimize "speed"
+    else
+        flags { "OptimizeSpeed" }
+    end
+    if os.is("linux") then
+		buildoptions { "-fopenmp"}
+		linkoptions { "-fopenmp"}
+	end
+	files { grapic_dir.."/src/Grapic.cpp",  grapic_dir.."/src/Grapic.h", }
+	files { "apps/demo_path_tracer/main.cpp" }
 
 
 if _OPTIONS["lifami"] then
