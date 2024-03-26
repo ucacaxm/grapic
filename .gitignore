@@ -24,3 +24,5 @@ doc/VERSION.old
 tmp/
 script/make_zip.sh
 extern/old
+
+.xmake
